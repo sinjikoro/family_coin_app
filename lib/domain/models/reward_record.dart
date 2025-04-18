@@ -42,4 +42,29 @@ class RewardRecord extends DomainModel {
 
   /// 更新日時
   final DateTime updatedAt;
+
+  /// コピー
+  RewardRecord copyWith({
+    Id? id,
+    Id? wishitemId,
+    Id? userId,
+    FamilyCoin? exchangedCoins,
+    ApprovalStatus? approvalStatus,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? exchangedAt,
+  }) => RewardRecord(
+    id: id ?? this.id,
+    wishitemId: wishitemId ?? this.wishitemId,
+    userId: userId ?? this.userId,
+    exchangedCoins: exchangedCoins ?? this.exchangedCoins,
+    approvalStatus: approvalStatus ?? this.approvalStatus,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    exchangedAt: exchangedAt ?? this.exchangedAt,
+  );
+
+  /// ほしいものの交換が可能か
+  bool enableExchange() =>
+      approvalStatus == ApprovalStatus.approved() && exchangedAt == null;
 }

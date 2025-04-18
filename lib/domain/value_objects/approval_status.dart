@@ -5,23 +5,41 @@ sealed class ApprovalStatus extends ValueObject {
   /// Constructor
   ApprovalStatus();
 
+  /// 未承認
+  factory ApprovalStatus.unapproved() => _Unapproved();
+
+  /// 承認
+  factory ApprovalStatus.approved() => _Approved();
+
+  /// 等価
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ApprovalStatus) return false;
+    return value == other.value;
+  }
+
+  /// ハッシュコード
+  @override
+  int get hashCode => value.hashCode;
+
   /// 承認
   ApprovalStatus approve() => switch (this) {
-    Unapproved() => Approved(),
+    _Unapproved() => _Approved(),
     _ => this,
   };
 
   /// 承認されているか
   bool get isApproved => switch (this) {
-    Approved() => true,
+    _Approved() => true,
     _ => false,
   };
 }
 
 /// 未承認
-final class Unapproved extends ApprovalStatus {
+final class _Unapproved extends ApprovalStatus {
   /// Constructor
-  Unapproved();
+  _Unapproved();
 
   /// 値
   @override
@@ -29,9 +47,9 @@ final class Unapproved extends ApprovalStatus {
 }
 
 /// 承認
-final class Approved extends ApprovalStatus {
+final class _Approved extends ApprovalStatus {
   /// Constructor
-  Approved();
+  _Approved();
 
   /// 値
   @override

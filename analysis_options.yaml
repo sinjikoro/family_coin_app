@@ -7,7 +7,7 @@ analyzer:
 linter:
   rules:
     - always_declare_return_types
-    - always_put_control_body_on_new_line
+    # - always_put_control_body_on_new_line return文をワンライナーで記載したい為、除外
     - always_put_required_named_parameters_first
     # - always_specify_types  コードが冗長になりやすい為、除外
     - always_use_package_imports
@@ -205,7 +205,7 @@ linter:
     - unnecessary_to_list_in_spreads
     - unnecessary_underscores
     - unreachable_from_main
-    - unrelated_type_equality_checks
+    # - unrelated_type_equality_checks 継承関係のチェックをしたい為、除外
     - unsafe_variance
     - use_build_context_synchronously
     - use_colored_box

@@ -13,6 +13,7 @@ class Task extends DomainModel {
     required this.userId,
     required this.earnCoins,
     required this.registrationStatus,
+    required this.detail,
   });
 
   /// ID

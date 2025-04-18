@@ -1,38 +1,45 @@
 import 'package:family_coin/domain/models/base/domain_model.dart';
-import 'package:family_coin/domain/models/wishitem_detail.dart';
 import 'package:family_coin/domain/value_objects/approval_status.dart';
 import 'package:family_coin/domain/value_objects/family_coin.dart';
 import 'package:family_coin/domain/value_objects/id.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/cupertino.dart';
 
-/// ほしいもの
 @immutable
-class Wishitem extends DomainModel {
+/// ほしいもの交換履歴
+class RewardRecord extends DomainModel {
   /// Constructor
-  const Wishitem({
+  const RewardRecord({
     required this.id,
-    required this.name,
+    required this.wishitemId,
     required this.userId,
+    required this.exchangedCoins,
     required this.approvalStatus,
-    required this.price,
-    this.detail = const WishitemDetail(),
+    required this.createdAt,
+    required this.updatedAt,
+    this.exchangedAt,
   });
 
   /// ID
   final Id id;
 
-  /// 名前
-  final String name;
+  /// ほしいものID
+  final Id wishitemId;
 
   /// ユーザーID
   final Id userId;
 
+  /// 名前
+  final FamilyCoin exchangedCoins;
+
   /// 承認ステータス
   final ApprovalStatus approvalStatus;
 
-  /// 価格
-  final FamilyCoin price;
+  /// 交換日時
+  final DateTime? exchangedAt;
 
-  /// 詳細
-  final WishitemDetail detail;
+  /// 作成日時
+  final DateTime createdAt;
+
+  /// 更新日時
+  final DateTime updatedAt;
 }

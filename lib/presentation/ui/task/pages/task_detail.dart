@@ -1,4 +1,4 @@
-import 'package:family_coin/domain/value_objects/task_id.dart';
+import 'package:family_coin/domain/value_objects/id.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +9,7 @@ class TaskDetail extends ConsumerWidget {
   const TaskDetail({required this.taskId, super.key});
 
   /// タスクID
-  final TaskId taskId;
+  final Id taskId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,6 +71,6 @@ class TaskDetail extends ConsumerWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<TaskId>('taskId', taskId));
+    properties.add(DiagnosticsProperty<Id>('taskId', taskId));
   }
 }

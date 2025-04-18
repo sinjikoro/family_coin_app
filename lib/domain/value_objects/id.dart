@@ -1,9 +1,9 @@
 import 'package:family_coin/domain/value_objects/base/value_object.dart';
 
-/// ファミリーコイン
-class UserId extends ValueObject<int> {
+/// ID
+class Id extends ValueObject<int> {
   /// Constructor
-  UserId({required this.value});
+  Id(this.value);
 
   /// 値
   @override

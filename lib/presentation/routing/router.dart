@@ -1,4 +1,4 @@
-import 'package:family_coin/domain/value_objects/task_id.dart';
+import 'package:family_coin/domain/value_objects/id.dart';
 import 'package:family_coin/domain/value_objects/wishitem_id.dart';
 import 'package:family_coin/presentation/ui/home/pages/home.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_detail.dart';
@@ -59,7 +59,7 @@ class TaskDetailRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    final taskId = TaskId(id);
+    final taskId = Id(id);
     return TaskDetail(taskId: taskId);
   }
 }

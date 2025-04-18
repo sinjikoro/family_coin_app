@@ -1,5 +1,9 @@
+import 'package:family_coin/domain/models/base/domain_model.dart';
+import 'package:meta/meta.dart';
+
 /// ほしいもの詳細
-class WishitemDetail {
+@immutable
+class WishitemDetail extends DomainModel {
   /// Constructor
   const WishitemDetail({this.description = '', this.url});
 

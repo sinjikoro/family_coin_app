@@ -3,6 +3,9 @@ import 'package:meta/meta.dart';
 /// 値オブジェクト 基底クラス
 @immutable
 abstract class ValueObject<T> {
+  /// Constructor
+  const ValueObject();
+
   /// 値
   T get value;
 

@@ -1,4 +1,4 @@
-import 'package:family_coin/domain/value_objects/base/value_object.dart';
+import 'package:family_coin/domain/value_object/base/value_object.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 /// ID

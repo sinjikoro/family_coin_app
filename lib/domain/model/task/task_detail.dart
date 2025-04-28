@@ -1,4 +1,4 @@
-import 'package:family_coin/domain/value_objects/difficuly.dart';
+import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'task_detail.freezed.dart';

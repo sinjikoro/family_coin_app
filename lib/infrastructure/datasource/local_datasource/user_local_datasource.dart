@@ -1,5 +1,5 @@
 // lib/infrastructure/datasource/local_data_store.dart
-import 'package:family_coin/domain/model/user.dart';
+import 'package:family_coin/domain/model/user/user.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/infrastructure/datasource/user_datasource.dart';

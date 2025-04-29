@@ -30,7 +30,7 @@ class Home extends ConsumerWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                '現在のコイン残高: ${user.familyCoinBalance}枚',
+                                '現在のコイン残高: ${user.familyCoinBalance.value}枚',
                                 style: const TextStyle(fontSize: 18),
                               ),
                             ],

@@ -1,4 +1,4 @@
-import 'package:family_coin/domain/model/user.dart';
+import 'package:family_coin/domain/model/user/user.dart';
 
 /// ユーザー情報を保存するデータソース
 abstract class UserDataSource {

@@ -1,4 +1,4 @@
-import 'package:family_coin/domain/model/user.dart';
+import 'package:family_coin/domain/model/user/user.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
 import 'package:get_it/get_it.dart';
 

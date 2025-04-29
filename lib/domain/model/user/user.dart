@@ -6,21 +6,24 @@ part 'user.freezed.dart';
 part 'user.g.dart';
 
 /// ユーザー
-@Freezed(fromJson: true, toJson: true)
+@freezed
 abstract class User with _$User {
   /// Constructor
   const factory User({
     @IdJsonConverter() required Id id,
     required String name,
-    @FamilyCoinJsonConverter() required FamilyCoin familyCoin,
+    @FamilyCoinJsonConverter() required FamilyCoin familyCoinBalance,
   }) = _User;
 
   /// Constructor
   const User._();
 
   /// 初期化
-  factory User.initial() =>
-      const User(id: Id.unassigned(), name: '', familyCoin: FamilyCoin(0));
+  factory User.initial() => const User(
+    id: Id.unassigned(),
+    name: '',
+    familyCoinBalance: FamilyCoin(0),
+  );
 
   /// fromJson
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

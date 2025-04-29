@@ -27,20 +27,36 @@
 - クラス名: パスカルケース（例: GetUserInfoUseCase）
 - 変数名: キャメルケース（例: userRepository）
 - 定数: 大文字のスネークケース（例: MAX_COIN_BALANCE）
+- Provider名: キャメルケース（例: userProvider）
 
 ## コーディング規約
 - インデント: 2スペース
 - 行の長さ: 最大80文字
 - クラスやメソッドには必ずドキュメントコメントを付ける
 - プライベートメンバーはアンダースコアで始める（例: _userRepository）
+- ProviderはRiverpod v2の形式を使用
+  - `@riverpod`アノテーションを使用
+  - `Ref`を使用して依存関係を注入
+  - コード生成を使用（`part 'ファイル名.g.dart'`）
 
 ## アーキテクチャルール
 - Clean Architectureを採用
 - 依存関係の方向: presentation → application → domain
 - ドメイン層は外部ライブラリに依存しない
-- プレゼンテーション層はRiverpodを使用
+- プレゼンテーション層はRiverpod v2を使用
+- 依存性注入は`get_it`を使用
+  - アプリケーション起動時に`configureDependencies()`で初期化
+  - シングルトンオブジェクトの管理に使用
+
+## Providerの配置ルール
+- Providerは`presentation/providers/`に配置
+- 関連するProviderは同じファイルにまとめる
+- Provider名は機能を表す名前にする（例: `userProvider`, `routerProvider`）
+- 複雑なロジックはUseCaseに委譲する
 
 ## その他のルール
 - テストはtest/ディレクトリに配置
 - 環境変数は.envファイルで管理
-- コミットメッセージは日本語で記述 
+- コミットメッセージは日本語で記述
+- コード生成が必要な場合は`build_runner`を使用
+  - `dart run build_runner build -d`

@@ -3,6 +3,7 @@
 ## プロジェクト構成
 - lib/
   - core/         # コア機能
+    - di/         # 依存性注入
     - error/      # エラー処理
     - extension/  # 拡張機能
     - util/       # ユーティリティ
@@ -45,14 +46,18 @@
 - ドメイン層は外部ライブラリに依存しない
 - プレゼンテーション層はRiverpod v2を使用
 - 依存性注入は`get_it`を使用
-  - アプリケーション起動時に`configureDependencies()`で初期化
+  - アプリケーション起動時に`DependencyInjection.initialize()`で初期化
   - シングルトンオブジェクトの管理に使用
+  - 外部リソースへのアクセスはインフラストラクチャ層で実装
+  - アプリケーション層はドメイン層のインターフェースにのみ依存
 
 ## Providerの配置ルール
 - Providerは`presentation/providers/`に配置
 - 関連するProviderは同じファイルにまとめる
 - Provider名は機能を表す名前にする（例: `userProvider`, `routerProvider`）
 - 複雑なロジックはUseCaseに委譲する
+- 外部リソースへのアクセスはUseCaseで行う
+- プレゼンテーション層はアプリケーション層のUseCaseのみを使用
 
 ## その他のルール
 - テストはtest/ディレクトリに配置

@@ -29,21 +29,28 @@ classDiagram
         +Future~void~ saveUser(User user)
     }
 
-    %% Presentation層
+    class SharedPreferences {
+        +Future~String~ getString(String key)
+        +Future~void~ setString(String key, String value)
+        +Future~int~ getInt(String key)
+        +Future~void~ setInt(String key, int value)
+    }
+
+    %% Providers
+    class sharedPreferencesProvider {
+        +FutureProvider~SharedPreferences~
+    }
+
     class userRepositoryProvider {
-        +Provider~UserRepository~
+        +FutureProvider~UserRepository~
+    }
+
+    class getUserInfoUseCaseProvider {
+        +FutureProvider~GetUserInfoUseCase~
     }
 
     class userProvider {
         +FutureProvider~User?~
-    }
-
-    class App {
-        +Widget build()
-    }
-
-    class Home {
-        +Widget build()
     }
 
     %% 依存関係
@@ -51,7 +58,7 @@ classDiagram
     UserRepositoryImpl --> SharedPreferences : uses
     GetUserInfoUseCase --> UserRepository : depends
     userRepositoryProvider --> UserRepositoryImpl : provides
-    userProvider --> GetUserInfoUseCase : uses
-    Home --> userProvider : watches
-    App --> routerProvider : uses
+    getUserInfoUseCaseProvider --> GetUserInfoUseCase : provides
+    userProvider --> getUserInfoUseCaseProvider : uses
+    userRepositoryProvider --> sharedPreferencesProvider : uses
 ```

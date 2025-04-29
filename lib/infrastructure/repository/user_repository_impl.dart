@@ -1,18 +1,17 @@
 import 'package:family_coin/domain/model/user.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
-import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// UserRepositoryの実装
 class UserRepositoryImpl implements UserRepository {
   /// Constructor
-  const UserRepositoryImpl();
+  const UserRepositoryImpl(this._prefs);
 
   static const _userIdKey = 'user_id';
   static const _userNameKey = 'user_name';
   static const _userCoinBalanceKey = 'user_coin_balance';
 
-  SharedPreferences get _prefs => GetIt.instance<SharedPreferences>();
+  final SharedPreferences _prefs;
 
   /// ユーザーを取得する
   @override

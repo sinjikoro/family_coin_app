@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 依存性注入の初期化
-  await DependencyInjection.initialize();
+  await DependencyInjection.local();
 
   // アプリケーションを起動
   runApp(const ProviderScope(child: App()));

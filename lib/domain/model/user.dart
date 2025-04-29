@@ -1,3 +1,6 @@
+import 'package:family_coin/domain/value_object/family_coin.dart';
+import 'package:family_coin/domain/value_object/id.dart';
+
 /// ユーザーモデル
 class User {
   /// Constructor
@@ -8,11 +11,11 @@ class User {
   });
 
   /// ユーザーID
-  final String id;
+  final Id id;
 
   /// ユーザー名
   final String name;
 
   /// FamilyCoin残高
-  final int familyCoinBalance;
+  final FamilyCoin familyCoinBalance;
 }

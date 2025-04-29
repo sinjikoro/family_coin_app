@@ -1,33 +1,19 @@
 import 'package:family_coin/domain/model/user.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:family_coin/infrastructure/datasource/user_datasource.dart';
 
 /// UserRepositoryの実装
 class UserRepositoryImpl implements UserRepository {
-  /// Constructor
-  const UserRepositoryImpl(this._prefs);
+  /// コンストラクタ
+  const UserRepositoryImpl(this._dataStore);
 
-  static const _userIdKey = 'user_id';
-  static const _userNameKey = 'user_name';
-  static const _userCoinBalanceKey = 'user_coin_balance';
-
-  final SharedPreferences _prefs;
+  final UserDataSource _dataStore;
 
   /// ユーザーを取得する
   @override
-  Future<User> getUser() async {
-    final id = _prefs.getString(_userIdKey) ?? '';
-    final name = _prefs.getString(_userNameKey) ?? '';
-    final coinBalance = _prefs.getInt(_userCoinBalanceKey) ?? 0;
-
-    return User(id: id, name: name, familyCoinBalance: coinBalance);
-  }
+  Future<User> getUser() async => await _dataStore.getUser();
 
   /// ユーザーを保存する
   @override
-  Future<void> saveUser(User user) async {
-    await _prefs.setString(_userIdKey, user.id);
-    await _prefs.setString(_userNameKey, user.name);
-    await _prefs.setInt(_userCoinBalanceKey, user.familyCoinBalance);
-  }
+  Future<void> saveUser(User user) async => await _dataStore.saveUser(user);
 }

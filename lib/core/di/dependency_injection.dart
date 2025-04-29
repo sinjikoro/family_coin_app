@@ -1,4 +1,5 @@
 import 'package:family_coin/domain/repository/user_repository.dart';
+import 'package:family_coin/infrastructure/datasource/local_datasource/user_local_datasource.dart';
 import 'package:family_coin/infrastructure/repository/user_repository_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,14 +8,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DependencyInjection {
   static final GetIt _getIt = GetIt.I;
 
-  /// 依存性を初期化
-  static Future<void> initialize() async {
+  /// ローカル実行の依存性を設定
+  static Future<void> local() async {
     // SharedPreferencesの初期化
     final prefs = await SharedPreferences.getInstance();
     _getIt
       ..registerSingleton<SharedPreferences>(prefs)
       // UserRepositoryの初期化
-      ..registerSingleton<UserRepository>(UserRepositoryImpl(prefs));
+      ..registerSingleton<UserRepository>(
+        UserRepositoryImpl(UserLocalDataSource(prefs)),
+      );
   }
 
   /// テスト用に依存性をリセット

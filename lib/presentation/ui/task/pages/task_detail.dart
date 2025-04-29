@@ -1,4 +1,4 @@
-import 'package:family_coin/domain/value_objects/id.dart';
+import 'package:family_coin/domain/value_object/id.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

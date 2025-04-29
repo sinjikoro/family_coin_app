@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 /// ファミリーコイン
 class FamilyCoin extends ValueObject<int> {
   /// Constructor
-  const FamilyCoin({required this.value});
+  const FamilyCoin(this.value);
 
   /// 値
   @override
@@ -17,7 +17,7 @@ class FamilyCoinJsonConverter implements JsonConverter<FamilyCoin, int> {
   const FamilyCoinJsonConverter();
 
   @override
-  FamilyCoin fromJson(int json) => FamilyCoin(value: json);
+  FamilyCoin fromJson(int json) => FamilyCoin(json);
 
   @override
   int toJson(FamilyCoin object) => object.value;

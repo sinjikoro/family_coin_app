@@ -1,5 +1,5 @@
-import 'package:family_coin/domain/value_objects/id.dart';
-import 'package:family_coin/domain/value_objects/wishitem_id.dart';
+import 'package:family_coin/domain/value_object/id.dart';
+import 'package:family_coin/domain/value_object/wishitem_id.dart';
 import 'package:family_coin/presentation/ui/home/pages/home.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_detail.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_list.dart';

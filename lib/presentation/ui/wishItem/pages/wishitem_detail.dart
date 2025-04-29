@@ -1,4 +1,4 @@
-import 'package:family_coin/domain/value_objects/wishitem_id.dart';
+import 'package:family_coin/domain/value_object/wishitem_id.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

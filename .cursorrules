@@ -1,0 +1,46 @@
+# Family Coin App プロジェクトルール
+
+## プロジェクト構成
+- lib/
+  - core/         # コア機能
+    - error/      # エラー処理
+    - extension/  # 拡張機能
+    - util/       # ユーティリティ
+  - application/  # アプリケーション層
+    - usecase/    # ユースケース
+    - service/    # サービス
+  - domain/       # ドメイン層
+    - model/      # ドメインモデル
+    - repository/ # リポジトリインターフェース
+    - value_object/ # 値オブジェクト
+  - infrastructure/ # インフラストラクチャ層
+    - repository/   # リポジトリ実装
+    - datasource/   # データソース
+    - api/          # APIクライアント
+  - presentation/ # プレゼンテーション層
+    - providers/  # Riverpodのプロバイダー
+    - ui/         # UIコンポーネント
+    - routing/    # ルーティング
+
+## 命名規則
+- ファイル名: スネークケース（例: get_user_info_usecase.dart）
+- クラス名: パスカルケース（例: GetUserInfoUseCase）
+- 変数名: キャメルケース（例: userRepository）
+- 定数: 大文字のスネークケース（例: MAX_COIN_BALANCE）
+
+## コーディング規約
+- インデント: 2スペース
+- 行の長さ: 最大80文字
+- クラスやメソッドには必ずドキュメントコメントを付ける
+- プライベートメンバーはアンダースコアで始める（例: _userRepository）
+
+## アーキテクチャルール
+- Clean Architectureを採用
+- 依存関係の方向: presentation → application → domain
+- ドメイン層は外部ライブラリに依存しない
+- プレゼンテーション層はRiverpodを使用
+
+## その他のルール
+- テストはtest/ディレクトリに配置
+- 環境変数は.envファイルで管理
+- コミットメッセージは日本語で記述 

@@ -1,4 +1,10 @@
 {
+  "dart.lineLength": 120,
+  "[dart]": {
+    "editor.rulers": [
+      120
+    ]
+  },
   "search.exclude": {
     "**/.fvm": true
   },
@@ -10,5 +16,5 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
     "*.dart": "$(capture).g.dart, $(capture).freezed.dart"
-  },
+  }
 }

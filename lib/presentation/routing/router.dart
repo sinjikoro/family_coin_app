@@ -18,9 +18,7 @@ final routerProvider = Provider<GoRouter>(
     initialLocation: '/',
     debugLogDiagnostics: true,
     // エラーページのハンドリング
-    errorBuilder:
-        (context, state) =>
-            Scaffold(body: Center(child: Text('エラー: ${state.error}'))),
+    errorBuilder: (context, state) => Scaffold(body: Center(child: Text('エラー: ${state.error}'))),
   ),
 );
 
@@ -37,9 +35,7 @@ class HomeRoute extends GoRouteData {
 /// タスク一覧画面のルート定義
 @TypedGoRoute<TaskListRoute>(
   path: '/tasks',
-  routes: <TypedGoRoute<GoRouteData>>[
-    TypedGoRoute<TaskDetailRoute>(path: ':id'),
-  ],
+  routes: <TypedGoRoute<GoRouteData>>[TypedGoRoute<TaskDetailRoute>(path: ':id')],
 )
 class TaskListRoute extends GoRouteData {
   /// Constructor
@@ -67,17 +63,14 @@ class TaskDetailRoute extends GoRouteData {
 /// ほしいもの一覧画面のルート定義
 @TypedGoRoute<WishitemListRoute>(
   path: '/wishitems',
-  routes: <TypedGoRoute<GoRouteData>>[
-    TypedGoRoute<WishitemDetailRoute>(path: ':id'),
-  ],
+  routes: <TypedGoRoute<GoRouteData>>[TypedGoRoute<WishitemDetailRoute>(path: ':id')],
 )
 class WishitemListRoute extends GoRouteData {
   /// constructor
   const WishitemListRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const WishitemList();
+  Widget build(BuildContext context, GoRouterState state) => const WishitemList();
 }
 
 /// ほしいもの詳細画面のルート定義

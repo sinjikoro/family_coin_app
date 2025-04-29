@@ -25,6 +25,5 @@ abstract class RewardRecord with _$RewardRecord {
   const RewardRecord._();
 
   /// fromJson
-  factory RewardRecord.fromJson(Map<String, dynamic> json) =>
-      _$RewardRecordFromJson(json);
+  factory RewardRecord.fromJson(Map<String, dynamic> json) => _$RewardRecordFromJson(json);
 }

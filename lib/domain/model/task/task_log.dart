@@ -25,6 +25,5 @@ abstract class TaskLog with _$TaskLog {
   const TaskLog._();
 
   /// fromJson
-  factory TaskLog.fromJson(Map<String, dynamic> json) =>
-      _$TaskLogFromJson(json);
+  factory TaskLog.fromJson(Map<String, dynamic> json) => _$TaskLogFromJson(json);
 }

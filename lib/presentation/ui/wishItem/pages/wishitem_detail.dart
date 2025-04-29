@@ -11,10 +11,8 @@ class WishitemDetail extends StatelessWidget {
   final WishitemId wishitemId;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('タスク詳細')),
-    body: const Center(child: Text('WishItemDetail')),
-  );
+  Widget build(BuildContext context) =>
+      Scaffold(appBar: AppBar(title: const Text('タスク詳細')), body: const Center(child: Text('WishItemDetail')));
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

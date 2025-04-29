@@ -50,8 +50,7 @@ final class _Approved extends ApprovalStatus {
 }
 
 /// 承認ステータスのJSONコンバーター
-class ApprovalStatusJsonConverter
-    implements JsonConverter<ApprovalStatus, String> {
+class ApprovalStatusJsonConverter implements JsonConverter<ApprovalStatus, String> {
   /// Constructor
   const ApprovalStatusJsonConverter();
 

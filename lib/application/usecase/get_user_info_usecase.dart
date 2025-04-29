@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 /// ユーザー情報を取得するUseCase
 class GetUserInfoUseCase {
   /// Constructor
-  const GetUserInfoUseCase();
+  GetUserInfoUseCase();
 
   /// ユーザー情報を取得する
   Future<User> call() async {

@@ -19,11 +19,7 @@ abstract class User with _$User {
   const User._();
 
   /// 初期化
-  factory User.initial() => const User(
-    id: Id.unassigned(),
-    name: '',
-    familyCoinBalance: FamilyCoin(0),
-  );
+  factory User.initial() => const User(id: Id.unassigned(), name: '', familyCoinBalance: FamilyCoin(0));
 
   /// fromJson
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

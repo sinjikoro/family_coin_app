@@ -4,33 +4,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Home画面
-class Home extends ConsumerWidget {
+class Home extends ConsumerStatefulWidget {
   /// Constructor
   const Home({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final userAsyncValue = ref.watch(userProvider);
+  ConsumerState<Home> createState() => _HomeState();
+}
+
+class _HomeState extends ConsumerState<Home> {
+  final _textEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final homeAsyncValue = ref.watch(homeProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 20,
           children: [
-            userAsyncValue.when(
+            homeAsyncValue.when(
               data:
-                  (user) =>
-                      user != null
+                  (state) =>
+                      state.user != null
                           ? Column(
                             children: [
-                              Text(
-                                'ユーザー名: ${user.name}',
+                              TextField(
+                                controller: _textEditingController..text = state.user!.name,
                                 style: const TextStyle(fontSize: 18),
+                                onSubmitted: (value) async {
+                                  await ref.read(homeProvider.notifier).updateUserName(value);
+                                },
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                '現在のコイン残高: ${user.familyCoinBalance.value}枚',
+                                '現在のコイン残高: ${state.user!.familyCoinBalance.value}枚',
                                 style: const TextStyle(fontSize: 18),
                               ),
                             ],
@@ -39,15 +56,12 @@ class Home extends ConsumerWidget {
               loading: () => const CircularProgressIndicator(),
               error: (error, stackTrace) => Text('エラー: $error'),
             ),
-            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async => await const TaskListRoute().push(context),
               child: const Text('タスク一覧'),
             ),
-            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed:
-                  () async => await const WishitemListRoute().push(context),
+              onPressed: () async => await const WishitemListRoute().push(context),
               child: const Text('ほしいもの一覧'),
             ),
           ],

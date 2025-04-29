@@ -26,10 +26,7 @@ class WishitemList extends ConsumerWidget {
             title: Text(wishItem['title']! as String),
             subtitle: Text("${wishItem['price']}コイン"),
             trailing: const Icon(Icons.arrow_forward_ios),
-            onTap:
-                () async => await WishitemDetailRoute(
-                  id: wishItem['id']! as int,
-                ).push(context),
+            onTap: () async => await WishitemDetailRoute(id: wishItem['id']! as int).push(context),
           );
         },
       ),

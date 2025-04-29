@@ -10,15 +10,12 @@ abstract class TaskDetail with _$TaskDetail {
   /// Constructor
   const factory TaskDetail({
     @Default('') String description,
-    @DifficultyJsonConverter()
-    @Default(Difficulty.normal)
-    Difficulty difficulty,
+    @DifficultyJsonConverter() @Default(Difficulty.normal) Difficulty difficulty,
   }) = _TaskDetail;
 
   /// Constructor
   const TaskDetail._();
 
   /// fromJson
-  factory TaskDetail.fromJson(Map<String, dynamic> json) =>
-      _$TaskDetailFromJson(json);
+  factory TaskDetail.fromJson(Map<String, dynamic> json) => _$TaskDetailFromJson(json);
 }

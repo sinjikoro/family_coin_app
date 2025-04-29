@@ -16,24 +16,9 @@ class TaskDetail extends ConsumerWidget {
     // 実際のアプリではここでIDを使ってデータを取得する
     // サンプルデータ
     final Map<String, Map<String, dynamic>> taskData = {
-      '1': {
-        'title': 'お風呂掃除',
-        'description': '浴槽、壁、床をきれいに洗う',
-        'coins': 50,
-        'deadline': '2023年12月10日',
-      },
-      '2': {
-        'title': 'ごみ出し',
-        'description': '燃えるごみを指定の場所に出す',
-        'coins': 30,
-        'deadline': '2023年12月11日',
-      },
-      '3': {
-        'title': '食器洗い',
-        'description': '夕食の食器を全て洗う',
-        'coins': 20,
-        'deadline': '2023年12月12日',
-      },
+      '1': {'title': 'お風呂掃除', 'description': '浴槽、壁、床をきれいに洗う', 'coins': 50, 'deadline': '2023年12月10日'},
+      '2': {'title': 'ごみ出し', 'description': '燃えるごみを指定の場所に出す', 'coins': 30, 'deadline': '2023年12月11日'},
+      '3': {'title': '食器洗い', 'description': '夕食の食器を全て洗う', 'coins': 20, 'deadline': '2023年12月12日'},
     };
 
     /// タスク
@@ -48,13 +33,7 @@ class TaskDetail extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'タスク: ${task['title']}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    Text('タスク: ${task['title']}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 10),
                     Text('説明: ${task['description']}'),
                     const SizedBox(height: 10),

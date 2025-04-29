@@ -1,16 +1,16 @@
 import 'package:family_coin/domain/repository/user_repository.dart';
+import 'package:get_it/get_it.dart';
 
 /// ユーザー名を更新するユースケース
 class UpdateUserNameUseCase {
   /// コンストラクタ
-  const UpdateUserNameUseCase(this._userRepository);
-
-  final UserRepository _userRepository;
+  UpdateUserNameUseCase();
 
   /// ユーザー名を更新する
   Future<void> execute(String name) async {
-    final user = await _userRepository.getUser();
+    final userRepository = GetIt.instance<UserRepository>();
+    final user = await userRepository.getUser();
     final updatedUser = user.copyWith(name: name);
-    await _userRepository.saveUser(updatedUser);
+    await userRepository.saveUser(updatedUser);
   }
 }

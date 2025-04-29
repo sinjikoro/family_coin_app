@@ -24,6 +24,5 @@ abstract class Wishitem with _$Wishitem {
   const Wishitem._();
 
   /// fromJson
-  factory Wishitem.fromJson(Map<String, dynamic> json) =>
-      _$WishitemFromJson(json);
+  factory Wishitem.fromJson(Map<String, dynamic> json) => _$WishitemFromJson(json);
 }

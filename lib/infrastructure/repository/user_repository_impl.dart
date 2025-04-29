@@ -5,15 +5,15 @@ import 'package:family_coin/infrastructure/datasource/user_datasource.dart';
 /// UserRepositoryの実装
 class UserRepositoryImpl implements UserRepository {
   /// コンストラクタ
-  const UserRepositoryImpl(this._dataStore);
+  const UserRepositoryImpl(this._dataSource);
 
-  final UserDataSource _dataStore;
+  final UserDataSource _dataSource;
 
   /// ユーザーを取得する
   @override
-  Future<User> getUser() async => await _dataStore.getUser();
+  Future<User> getUser() async => await _dataSource.getUser();
 
   /// ユーザーを保存する
   @override
-  Future<void> saveUser(User user) async => await _dataStore.saveUser(user);
+  Future<void> saveUser(User user) async => await _dataSource.saveUser(user);
 }

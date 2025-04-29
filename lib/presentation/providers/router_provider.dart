@@ -14,9 +14,6 @@ GoRouter router(Ref ref) => GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const Home()),
     GoRoute(path: '/tasks', builder: (context, state) => const TaskList()),
-    GoRoute(
-      path: '/wishitems',
-      builder: (context, state) => const WishitemList(),
-    ),
+    GoRoute(path: '/wishitems', builder: (context, state) => const WishitemList()),
   ],
 );

@@ -1,6 +1,7 @@
 import 'package:family_coin/presentation/providers/home_provider.dart';
 import 'package:family_coin/presentation/routing/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Home画面
@@ -46,6 +47,7 @@ class _HomeState extends ConsumerState<Home> {
                                 },
                               ),
                               const SizedBox(height: 10),
+                              Text(L10n.of(context)!.helloWorld),
                               Text(
                                 '現在のコイン残高: ${state.user!.familyCoinBalance.value}枚',
                                 style: const TextStyle(fontSize: 18),

@@ -1,5 +1,5 @@
+import 'package:family_coin/app.dart';
 import 'package:family_coin/core/di/dependency_injection.dart';
-import 'package:family_coin/presentation/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

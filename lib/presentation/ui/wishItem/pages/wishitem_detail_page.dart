@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// ほしいもの詳細
-class WishitemDetail extends StatelessWidget {
+class WishitemDetailPage extends StatelessWidget {
   /// constructor
-  const WishitemDetail({required this.wishitemId, super.key});
+  const WishitemDetailPage({required this.wishitemId, super.key});
 
   /// ほしいものID
   final WishitemId wishitemId;

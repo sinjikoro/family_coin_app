@@ -1,10 +1,10 @@
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/domain/value_object/wishitem_id.dart';
-import 'package:family_coin/presentation/ui/home/pages/home.dart';
-import 'package:family_coin/presentation/ui/task/pages/task_detail.dart';
-import 'package:family_coin/presentation/ui/task/pages/task_list.dart';
-import 'package:family_coin/presentation/ui/wishItem/pages/wishitem_detail.dart';
-import 'package:family_coin/presentation/ui/wishItem/pages/wishitem_list.dart';
+import 'package:family_coin/presentation/ui/home/pages/home_page.dart';
+import 'package:family_coin/presentation/ui/task/pages/task_detail_page.dart';
+import 'package:family_coin/presentation/ui/task/pages/task_list_page.dart';
+import 'package:family_coin/presentation/ui/wishItem/pages/wishitem_detail_page.dart';
+import 'package:family_coin/presentation/ui/wishItem/pages/wishitem_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -29,7 +29,7 @@ class HomeRoute extends GoRouteData {
   const HomeRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const Home();
+  Widget build(BuildContext context, GoRouterState state) => const HomePage();
 }
 
 /// タスク一覧画面のルート定義
@@ -42,7 +42,7 @@ class TaskListRoute extends GoRouteData {
   const TaskListRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const TaskList();
+  Widget build(BuildContext context, GoRouterState state) => const TaskListPage();
 }
 
 /// タスク詳細画面のルート定義
@@ -56,7 +56,7 @@ class TaskDetailRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     final taskId = Id(id);
-    return TaskDetail(taskId: taskId);
+    return TaskDetailPage(taskId: taskId);
   }
 }
 
@@ -70,7 +70,7 @@ class WishitemListRoute extends GoRouteData {
   const WishitemListRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const WishitemList();
+  Widget build(BuildContext context, GoRouterState state) => const WishitemListPage();
 }
 
 /// ほしいもの詳細画面のルート定義
@@ -84,6 +84,6 @@ class WishitemDetailRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     final wishitemId = WishitemId(id);
-    return WishitemDetail(wishitemId: wishitemId);
+    return WishitemDetailPage(wishitemId: wishitemId);
   }
 }

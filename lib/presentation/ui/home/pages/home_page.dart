@@ -5,15 +5,15 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Home画面
-class Home extends ConsumerStatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   /// Constructor
-  const Home({super.key});
+  const HomePage({super.key});
 
   @override
-  ConsumerState<Home> createState() => _HomeState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomeState extends ConsumerState<Home> {
+class _HomePageState extends ConsumerState<HomePage> {
   final _textEditingController = TextEditingController();
 
   @override

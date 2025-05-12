@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// ほしいもの一覧
-class WishitemList extends ConsumerWidget {
+class WishitemListPage extends ConsumerWidget {
   /// constructor
-  const WishitemList({super.key});
+  const WishitemListPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

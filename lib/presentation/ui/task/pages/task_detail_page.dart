@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// タスク詳細
-class TaskDetail extends ConsumerWidget {
+class TaskDetailPage extends ConsumerWidget {
   /// constructor
-  const TaskDetail({required this.taskId, super.key});
+  const TaskDetailPage({required this.taskId, super.key});
 
   /// タスクID
   final Id taskId;

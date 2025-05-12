@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 /// タスク一覧
-class TaskList extends ConsumerWidget {
+class TaskListPage extends ConsumerWidget {
   /// constructor
-  const TaskList({super.key});
+  const TaskListPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

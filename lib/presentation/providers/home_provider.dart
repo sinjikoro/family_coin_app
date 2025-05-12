@@ -7,7 +7,7 @@ part 'home_provider.g.dart';
 
 /// ホーム画面の状態を管理するProvider
 @riverpod
-class Home extends _$Home {
+class HomePage extends _$HomePage {
   @override
   Future<HomeState> build() async {
     final getUserInfoUseCase = GetUserInfoUseCase();

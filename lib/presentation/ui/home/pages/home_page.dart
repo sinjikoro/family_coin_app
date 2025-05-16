@@ -1,7 +1,7 @@
-import 'package:family_coin/presentation/providers/home_provider.dart';
+import 'package:family_coin/application/provider/user_state.dart';
+import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/presentation/routing/router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Home画面
@@ -17,6 +17,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   final _textEditingController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async => await ref.read(userStateProvider.notifier).fetchUser());
+  }
+
+  @override
   void dispose() {
     _textEditingController.dispose();
     super.dispose();
@@ -24,7 +30,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final homeAsyncValue = ref.watch(homeProvider);
+    final userProvider = ref.watch(userStateProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
@@ -33,28 +39,18 @@ class _HomePageState extends ConsumerState<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 20,
           children: [
-            homeAsyncValue.when(
+            userProvider.when(
               data:
-                  (state) =>
-                      state.user != null
-                          ? Column(
-                            children: [
-                              TextField(
-                                controller: _textEditingController..text = state.user!.name,
-                                style: const TextStyle(fontSize: 18),
-                                onSubmitted: (value) async {
-                                  await ref.read(homeProvider.notifier).updateUserName(value);
-                                },
-                              ),
-                              const SizedBox(height: 10),
-                              Text(L10n.of(context)!.helloWorld),
-                              Text(
-                                '現在のコイン残高: ${state.user!.familyCoinBalance.value}枚',
-                                style: const TextStyle(fontSize: 18),
-                              ),
-                            ],
-                          )
-                          : const Text('ユーザー情報がありません'),
+                  (user) => Column(
+                    children: [
+                      Text(user.name, style: const TextStyle(fontSize: 18)),
+                      const SizedBox(height: 10),
+                      Text(
+                        context.l10n.homeCoinBalance(user.familyCoinBalance.value),
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
               loading: () => const CircularProgressIndicator(),
               error: (error, stackTrace) => Text('エラー: $error'),
             ),
@@ -68,6 +64,10 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async => await ref.read(userStateProvider.notifier).addFamilyCoin(10),
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -1,6 +1,19 @@
 {
-  "helloWorld": "こんにちは世界!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
-}
+  "homeTitle": "ホーム",
+  "homeCoinBalance": "コイン残高: {balance}",
+  "@home_coin_balance" : {
+    "placeholders": {
+      "balance": {
+      }
+    }
+  },
+  "homeUserNotFound": "ユーザー情報がありません",
+
+  "taskListTitle": "タスク一覧",
+  "taskListEmpty": "タスクがありません",
+  "taskDetailTitle": "タスク詳細",
+
+  "wishItemListTitle": "ほしいもの一覧",
+  "wishItemListEmpty": "ほしいものはありません",
+  "wishItemDetailTitle": "ほしいもの詳細"
+} 

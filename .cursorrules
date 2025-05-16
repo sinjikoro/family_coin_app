@@ -32,7 +32,7 @@
 
 ## コーディング規約
 - インデント: 2スペース
-- 行の長さ: 最大80文字
+- 行の長さ: 最大120文字
 - クラスやメソッドには必ずドキュメントコメントを付ける
 - プライベートメンバーはアンダースコアで始める（例: _userRepository）
 - ProviderはRiverpod v2の形式を使用
@@ -52,9 +52,8 @@
   - アプリケーション層はドメイン層のインターフェースにのみ依存
 
 ## Providerの配置ルール
-- Providerは`presentation/providers/`に配置
 - 関連するProviderは同じファイルにまとめる
-- Provider名は機能を表す名前にする（例: `userProvider`, `routerProvider`）
+- Provider名は機能を表す名前にする（例: `userStateProvider`, `routerProvider`）
 - 複雑なロジックはUseCaseに委譲する
 - 外部リソースへのアクセスはUseCaseで行う
 - プレゼンテーション層はアプリケーション層のUseCaseのみを使用

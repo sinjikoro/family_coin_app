@@ -1,3 +1,19 @@
 {
-  "helloWorld": "Hello World!"
-}
+  "homeTitle": "home",
+  "homeCoinBalance": "balance: {balance}",
+  "@homeCoinBalance" : {
+    "placeholders": {
+      "balance": {
+      }
+    }
+  },
+  "homeUserNotFound": "Not Found.",
+
+  "taskListTitle": "task list",
+  "taskListEmpty": "empty..",
+  "taskDetailTitle": "task detail",
+
+  "wishItemListTitle": "wishitem list",
+  "wishItemListEmpty": "empty..",
+  "wishItemDetailTitle": "wishitem detail"
+} 

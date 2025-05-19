@@ -20,6 +20,7 @@ class SqfliteClient {
       onCreate: (db, version) async {
         // テーブルを作成する
         await db.execute(_Query.createTasksTable);
+        await db.execute(_Query.createWishitemsTable);
       },
     );
     return _db!;
@@ -43,6 +44,19 @@ class _Query {
       registrationStatus TEXT NOT NULL,
       description TEXT,
       difficulty TEXT
+    )
+  ''';
+
+  /// ほしいものテーブルを作成する
+  static String get createWishitemsTable => '''
+    CREATE TABLE wishitems(
+      id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      userId INTEGER NOT NULL,
+      approvalStatus TEXT NOT NULL,
+      price INTEGER NOT NULL,
+      description TEXT,
+      url TEXT
     )
   ''';
 }

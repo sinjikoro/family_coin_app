@@ -9,7 +9,7 @@ abstract class TaskRepository {
   /// タスクを取得する
   Future<Task> getTask({required Id taskId});
 
-  /// タスクを保存する
+  /// タスクを作成する
   Future<void> createTask(Task task);
 
   /// タスクを更新する

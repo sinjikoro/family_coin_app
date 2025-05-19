@@ -36,6 +36,11 @@ RouteBase get $taskListRoute => GoRouteData.$route(
   factory: $TaskListRouteExtension._fromState,
   routes: [
     GoRouteData.$route(
+      path: 'new',
+
+      factory: $TaskCreateRouteExtension._fromState,
+    ),
+    GoRouteData.$route(
       path: ':id',
 
       factory: $TaskDetailRouteExtension._fromState,
@@ -47,6 +52,22 @@ extension $TaskListRouteExtension on TaskListRoute {
   static TaskListRoute _fromState(GoRouterState state) => const TaskListRoute();
 
   String get location => GoRouteData.$location('/tasks');
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $TaskCreateRouteExtension on TaskCreateRoute {
+  static TaskCreateRoute _fromState(GoRouterState state) =>
+      const TaskCreateRoute();
+
+  String get location => GoRouteData.$location('/tasks/new');
 
   void go(BuildContext context) => context.go(location);
 
@@ -76,7 +97,7 @@ extension $TaskDetailRouteExtension on TaskDetailRoute {
 }
 
 RouteBase get $wishitemListRoute => GoRouteData.$route(
-  path: '/wishitems',
+  path: '/wish-items',
 
   factory: $WishitemListRouteExtension._fromState,
   routes: [
@@ -92,7 +113,7 @@ extension $WishitemListRouteExtension on WishitemListRoute {
   static WishitemListRoute _fromState(GoRouterState state) =>
       const WishitemListRoute();
 
-  String get location => GoRouteData.$location('/wishitems');
+  String get location => GoRouteData.$location('/wish-items');
 
   void go(BuildContext context) => context.go(location);
 
@@ -108,8 +129,9 @@ extension $WishitemDetailRouteExtension on WishitemDetailRoute {
   static WishitemDetailRoute _fromState(GoRouterState state) =>
       WishitemDetailRoute(id: int.parse(state.pathParameters['id']!)!);
 
-  String get location =>
-      GoRouteData.$location('/wishitems/${Uri.encodeComponent(id.toString())}');
+  String get location => GoRouteData.$location(
+    '/wish-items/${Uri.encodeComponent(id.toString())}',
+  );
 
   void go(BuildContext context) => context.go(location);
 

@@ -1,6 +1,8 @@
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/domain/value_object/wishitem_id.dart';
+import 'package:family_coin/presentation/routing/route_path.dart';
 import 'package:family_coin/presentation/ui/home/pages/home_page.dart';
+import 'package:family_coin/presentation/ui/task/pages/task_create_page.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_detail_page.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_list_page.dart';
 import 'package:family_coin/presentation/ui/wishItem/pages/wishitem_detail_page.dart';
@@ -15,15 +17,16 @@ part 'router.g.dart';
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
     routes: $appRoutes,
-    initialLocation: '/',
+    initialLocation: RoutePath.home,
     debugLogDiagnostics: true,
     // エラーページのハンドリング
+    // TODO(naga): エラーページのハンドリングを追加する
     errorBuilder: (context, state) => Scaffold(body: Center(child: Text('エラー: ${state.error}'))),
   ),
 );
 
 /// ホーム画面のルート定義
-@TypedGoRoute<HomeRoute>(path: '/')
+@TypedGoRoute<HomeRoute>(path: RoutePath.home)
 class HomeRoute extends GoRouteData {
   /// Constructor
   const HomeRoute();
@@ -34,8 +37,11 @@ class HomeRoute extends GoRouteData {
 
 /// タスク一覧画面のルート定義
 @TypedGoRoute<TaskListRoute>(
-  path: '/tasks',
-  routes: <TypedGoRoute<GoRouteData>>[TypedGoRoute<TaskDetailRoute>(path: ':id')],
+  path: RoutePath.taskList,
+  routes: <TypedGoRoute<GoRouteData>>[
+    TypedGoRoute<TaskCreateRoute>(path: 'new'),
+    TypedGoRoute<TaskDetailRoute>(path: ':id'),
+  ],
 )
 class TaskListRoute extends GoRouteData {
   /// Constructor
@@ -43,6 +49,15 @@ class TaskListRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const TaskListPage();
+}
+
+/// タスク作成画面のルート定義
+class TaskCreateRoute extends GoRouteData {
+  /// Constructor
+  const TaskCreateRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const TaskCreatePage();
 }
 
 /// タスク詳細画面のルート定義
@@ -62,7 +77,7 @@ class TaskDetailRoute extends GoRouteData {
 
 /// ほしいもの一覧画面のルート定義
 @TypedGoRoute<WishitemListRoute>(
-  path: '/wishitems',
+  path: RoutePath.wishItemList,
   routes: <TypedGoRoute<GoRouteData>>[TypedGoRoute<WishitemDetailRoute>(path: ':id')],
 )
 class WishitemListRoute extends GoRouteData {

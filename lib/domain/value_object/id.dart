@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:family_coin/domain/value_object/base/value_object.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -13,6 +15,13 @@ class Id extends ValueObject<int> {
 
   /// 非採番用のコンストラクタ
   const Id.unassigned() : this._(0);
+
+  /// 採番用のコンストラクタ
+  factory Id.generate() {
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final random = Random().nextInt(1000);
+    return Id((timestamp * 1000) + random);
+  }
 
   /// プライベートコンストラクタ
   const Id._(this.value);

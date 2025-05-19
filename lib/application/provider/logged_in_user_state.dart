@@ -4,11 +4,11 @@ import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'user_state.g.dart';
+part 'logged_in_user_state.g.dart';
 
 /// ユーザーのNotifier
 @riverpod
-class UserState extends _$UserState {
+class LoggedInUserState extends _$LoggedInUserState {
   final UserRepository _repository = GetIt.instance<UserRepository>();
 
   @override

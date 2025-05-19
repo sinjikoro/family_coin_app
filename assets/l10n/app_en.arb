@@ -1,7 +1,7 @@
 {
   "homeTitle": "home",
   "homeCoinBalance": "balance: {balance}",
-  "@homeCoinBalance" : {
+  "@homeCoinBalance": {
     "placeholders": {
       "balance": {
       }
@@ -11,9 +11,29 @@
 
   "taskListTitle": "task list",
   "taskListEmpty": "empty..",
+  "taskCreateTitle": "new task",
   "taskDetailTitle": "task detail",
+  "taskNameRequired": "task name required.",
+  "taskEarnCoinRequired": "earn coins required.",
+  "taskEarnCoinMustBeNumber": "earn coins must be number.",
+  "taskDifficultyRequired": "difficulty required.",
+  "taskDifficultyMustBeNumber": "difficulty must be number.",
+
+  "taskName": "task name",
+  "taskEarnCoin": "earn coin",
+  "taskDescription": "description",
+  "taskDifficulty": "difficulty",
 
   "wishItemListTitle": "wishitem list",
   "wishItemListEmpty": "empty..",
-  "wishItemDetailTitle": "wishitem detail"
+  "wishItemCreateTitle": "new withItem",
+  "wishItemDetailTitle": "wishitem detail",
+
+  "error": "error occurred! : {errorMessage}",
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+      }
+    }
+  }
 } 

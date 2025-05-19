@@ -11,9 +11,30 @@
 
   "taskListTitle": "タスク一覧",
   "taskListEmpty": "タスクがありません",
+  "taskCreateTitle": "新しいタスク",
   "taskDetailTitle": "タスク詳細",
+  "taskNameRequired": "タスク名は必須項目です。",
+  "taskEarnCoinRequired": "付与コインは必須項目です。",
+  "taskEarnCoinMustBeNumber": "付与コインは数値で入力してください。",
+  "taskDifficultyRequired": "難易度は必須項目です。",
+  "taskDifficultyMustBeNumber": "難易度は数値で入力してください。",
+
+  "taskName": "タスク名",
+  "taskEarnCoin": "付与コイン",
+  "taskDescription": "説明",
+  "taskDifficulty": "難易度",
 
   "wishItemListTitle": "ほしいもの一覧",
   "wishItemListEmpty": "ほしいものはありません",
-  "wishItemDetailTitle": "ほしいもの詳細"
+  "wishItemCreateTitle": "新しいほしいもの",
+  "wishItemDetailTitle": "ほしいもの詳細",
+
+  "error": "エラーが発生しました! : {errorMessage}",
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+      }
+    }
+  }
+
 } 

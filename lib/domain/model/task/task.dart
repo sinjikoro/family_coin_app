@@ -1,5 +1,5 @@
-import 'package:family_coin/domain/model/task/task_detail.dart';
 import 'package:family_coin/domain/value_object/approval_status.dart';
+import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -7,22 +7,32 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'task.freezed.dart';
 part 'task.g.dart';
 
-/// タスク
+/// タスクのドメインモデル
 @freezed
 abstract class Task with _$Task {
-  /// Constructor
+  /// constructor
   const factory Task({
     @IdJsonConverter() required Id id,
     required String name,
     @IdJsonConverter() required Id userId,
-    @FamilyCoinJsonConverter() required FamilyCoin earnCoins,
     @ApprovalStatusJsonConverter() required ApprovalStatus registrationStatus,
-    required TaskDetail detail,
+    @FamilyCoinJsonConverter() required FamilyCoin earnCoins,
+    @Default('') String description,
+    @DifficultyJsonConverter() @Default(Difficulty.normal) Difficulty difficulty,
   }) = _Task;
 
   /// Constructor
   const Task._();
 
-  /// fromJson
+  /// 初期化
+  factory Task.initial() => Task(
+    id: const Id.unassigned(),
+    name: '',
+    userId: const Id.unassigned(),
+    registrationStatus: ApprovalStatus.unapproved(),
+    earnCoins: const FamilyCoin(0),
+  );
+
+  /// JSONからTaskを作成
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 }

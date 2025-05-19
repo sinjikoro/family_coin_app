@@ -1,34 +1,49 @@
+import 'package:family_coin/application/provider/task_list_state.dart';
+import 'package:family_coin/core/extension/context_extension.dart';
+import 'package:family_coin/presentation/routing/route_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 /// タスク一覧
-class TaskListPage extends ConsumerWidget {
+class TaskListPage extends ConsumerStatefulWidget {
   /// constructor
   const TaskListPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // サンプルタスクデータ
-    const tasks = [
-      {'id': '1', 'title': 'お風呂掃除', 'coins': 50},
-      {'id': '2', 'title': 'ごみ出し', 'coins': 30},
-      {'id': '3', 'title': '食器洗い', 'coins': 20},
-    ];
+  ConsumerState<TaskListPage> createState() => _TaskListPageState();
+}
+
+class _TaskListPageState extends ConsumerState<TaskListPage> {
+  @override
+  Widget build(BuildContext context) {
+    final taskListAsync = ref.watch(taskListStateProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('タスク一覧')),
-      body: ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (context, index) {
-          final task = tasks[index];
-          return ListTile(
-            title: Text(task['title']! as String),
-            subtitle: Text("${task["coins"]}コイン"),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => context.go("/tasks/${task["id"]}"),
-          );
-        },
+      appBar: AppBar(title: Text(context.l10n.taskListTitle)),
+      body: RefreshIndicator(
+        onRefresh: () async => await ref.read(taskListStateProvider.notifier).fetchTaskList(),
+        child: taskListAsync.when(
+          data:
+              (tasks) => ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  final task = tasks[index];
+                  return ListTile(
+                    title: Text(task.name),
+                    subtitle: Text(task.earnCoins.toString()),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () async => await context.push(RoutePath.taskDetail(task.id)),
+                  );
+                },
+              ),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stackTrace) => Center(child: Text(context.l10n.error(error.toString()))),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async => await context.push(RoutePath.taskCreate),
+        child: const Icon(Icons.add),
       ),
     );
   }

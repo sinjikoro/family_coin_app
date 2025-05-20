@@ -16,7 +16,7 @@ class WishitemDetailPage extends ConsumerStatefulWidget {
   const WishitemDetailPage({required this.wishitemId, super.key});
 
   /// ほしいものID
-  final Id wishitemId;
+  final WishitemId wishitemId;
 
   @override
   ConsumerState<WishitemDetailPage> createState() => _WishitemDetailPageState();

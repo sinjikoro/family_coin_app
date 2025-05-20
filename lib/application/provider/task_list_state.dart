@@ -39,7 +39,7 @@ class TaskListState extends _$TaskListState {
   Future<void> createTask({
     required String name,
     required String description,
-    required Id userId,
+    required UserId userId,
     required FamilyCoin earnCoins,
     required Difficulty difficulty,
   }) async {
@@ -47,7 +47,7 @@ class TaskListState extends _$TaskListState {
       throw NotLoggedInException();
     }
     final task = Task(
-      id: Id.generate(),
+      id: TaskId.generate(),
       name: name,
       userId: userId,
       earnCoins: earnCoins,
@@ -62,7 +62,13 @@ class TaskListState extends _$TaskListState {
   }
 
   /// タスクを更新する
-  Future<void> updateTask(Id id, String name, String description, FamilyCoin earnCoins, Difficulty difficulty) async {
+  Future<void> updateTask(
+    TaskId id,
+    String name,
+    String description,
+    FamilyCoin earnCoins,
+    Difficulty difficulty,
+  ) async {
     if (ref.read(loggedInUserStateProvider).value == null) {
       throw NotLoggedInException();
     }
@@ -86,7 +92,7 @@ class TaskListState extends _$TaskListState {
   }
 
   /// タスクを削除する
-  Future<void> deleteTask(Id id) async {
+  Future<void> deleteTask(TaskId id) async {
     if (ref.read(loggedInUserStateProvider).value == null) {
       throw NotLoggedInException();
     }

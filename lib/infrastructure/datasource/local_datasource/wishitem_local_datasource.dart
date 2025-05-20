@@ -17,7 +17,7 @@ class WishitemLocalDataSource implements WishitemDataSource {
 
   /// ほしいものを取得する
   @override
-  Future<Wishitem> getWishitem({required Id wishitemId}) async {
+  Future<Wishitem> getWishitem({required WishitemId wishitemId}) async {
     final db = await _client.db;
     final result = await db.query(_wishitemsTable, where: '$_idColumn = ?', whereArgs: [wishitemId.value]);
     if (result.isEmpty) {
@@ -28,7 +28,7 @@ class WishitemLocalDataSource implements WishitemDataSource {
 
   /// ほしいもの一覧を取得する
   @override
-  Future<List<Wishitem>> getWishitemList({required Id userId}) async {
+  Future<List<Wishitem>> getWishitemList({required UserId userId}) async {
     final db = await _client.db;
     final result = await db.query(_wishitemsTable, where: '$_userIdColumn = ?', whereArgs: [userId.value]);
     return result.map(Wishitem.fromJson).toList();
@@ -45,7 +45,7 @@ class WishitemLocalDataSource implements WishitemDataSource {
 
   /// ほしいものを更新する
   @override
-  Future<void> updateWishitem({required Id wishitemId, required Wishitem wishitem}) async {
+  Future<void> updateWishitem({required WishitemId wishitemId, required Wishitem wishitem}) async {
     final db = await _client.db;
     await db.transaction((txn) async {
       final updatedCount = await txn.update(
@@ -62,7 +62,7 @@ class WishitemLocalDataSource implements WishitemDataSource {
 
   /// ほしいものを削除する
   @override
-  Future<void> deleteWishitem({required Id wishitemId}) async {
+  Future<void> deleteWishitem({required WishitemId wishitemId}) async {
     final db = await _client.db;
     await db.transaction((txn) async {
       final deletedCount = await txn.delete(_wishitemsTable, where: '$_idColumn = ?', whereArgs: [wishitemId.value]);

@@ -35,7 +35,7 @@ class WishitemListState extends _$WishitemListState {
   }
 
   /// ほしいものを取得する
-  Future<Wishitem> getWishitem(Id wishitemId) async {
+  Future<Wishitem> getWishitem(WishitemId wishitemId) async {
     if (ref.read(loggedInUserStateProvider).value == null) {
       throw NotLoggedInException();
     }
@@ -46,7 +46,7 @@ class WishitemListState extends _$WishitemListState {
   Future<void> createWishitem({
     required String name,
     required String description,
-    required Id userId,
+    required UserId userId,
     required FamilyCoin price,
     Uri? url,
   }) async {
@@ -54,7 +54,7 @@ class WishitemListState extends _$WishitemListState {
       throw NotLoggedInException();
     }
     final wishitem = Wishitem(
-      id: Id.generate(),
+      id: WishitemId.generate(),
       name: name,
       userId: userId,
       approvalStatus: ApprovalStatus.unapproved(),
@@ -67,7 +67,7 @@ class WishitemListState extends _$WishitemListState {
   }
 
   /// ほしいものを更新する
-  Future<void> updateWishitem({required Id wishitemId, required Wishitem wishitem}) async {
+  Future<void> updateWishitem({required WishitemId wishitemId, required Wishitem wishitem}) async {
     if (ref.read(loggedInUserStateProvider).value == null) {
       throw NotLoggedInException();
     }
@@ -87,7 +87,7 @@ class WishitemListState extends _$WishitemListState {
   }
 
   /// ほしいものを削除する
-  Future<void> deleteWishitem({required Id wishitemId}) async {
+  Future<void> deleteWishitem({required WishitemId wishitemId}) async {
     if (ref.read(loggedInUserStateProvider).value == null) {
       throw NotLoggedInException();
     }

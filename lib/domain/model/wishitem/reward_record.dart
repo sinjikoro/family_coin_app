@@ -11,9 +11,9 @@ part 'reward_record.g.dart';
 abstract class RewardRecord with _$RewardRecord {
   /// Constructor
   const factory RewardRecord({
-    @IdJsonConverter() required Id id,
-    @IdJsonConverter() required Id wishitemId,
-    @IdJsonConverter() required Id userId,
+    @RecordIdJsonConverter() required RecordId id,
+    @WishitemIdJsonConverter() required WishitemId wishitemId,
+    @UserIdJsonConverter() required UserId userId,
     @FamilyCoinJsonConverter() required FamilyCoin exchangedCoins,
     @ApprovalStatusJsonConverter() required ApprovalStatus approvalStatus,
     required DateTime createdAt,

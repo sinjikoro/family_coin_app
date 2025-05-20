@@ -10,7 +10,7 @@ class RoutePath {
   static const String taskList = '/tasks';
 
   /// タスク詳細
-  static String taskDetail(Id id) => '/tasks/${id.value}';
+  static String taskDetail(TaskId id) => '/tasks/${id.value}';
 
   /// タスク作成
   static const String taskCreate = '/tasks/new';
@@ -19,7 +19,7 @@ class RoutePath {
   static const String wishItemList = '/wish-items';
 
   /// 欲しいもの詳細
-  static String wishItemDetail(Id id) => '/wish-items/${id.value}';
+  static String wishItemDetail(WishitemId id) => '/wish-items/${id.value}';
 
   /// 欲しいもの作成
   static const String wishItemCreate = '/wish-items/new';

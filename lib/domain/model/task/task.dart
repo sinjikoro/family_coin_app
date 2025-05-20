@@ -12,9 +12,9 @@ part 'task.g.dart';
 abstract class Task with _$Task {
   /// constructor
   const factory Task({
-    @IdJsonConverter() required Id id,
+    @TaskIdJsonConverter() required TaskId id,
     required String name,
-    @IdJsonConverter() required Id userId,
+    @UserIdJsonConverter() required UserId userId,
     @ApprovalStatusJsonConverter() required ApprovalStatus registrationStatus,
     @FamilyCoinJsonConverter() required FamilyCoin earnCoins,
     @Default('') String description,
@@ -25,8 +25,8 @@ abstract class Task with _$Task {
   const Task._();
 
   /// 初期化
-  factory Task.initial(Id userId) => Task(
-    id: const Id.unassigned(),
+  factory Task.initial(UserId userId) => Task(
+    id: const TaskId.unassigned(),
     name: '',
     userId: userId,
     registrationStatus: ApprovalStatus.unapproved(),

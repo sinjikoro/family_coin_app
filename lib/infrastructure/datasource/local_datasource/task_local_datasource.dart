@@ -17,7 +17,7 @@ class TaskLocalDataSource implements TaskDataSource {
 
   /// タスクを取得する
   @override
-  Future<Task> getTask({required Id taskId}) async {
+  Future<Task> getTask({required TaskId taskId}) async {
     final db = await _client.db;
     final result = await db.query(_tasksTable, where: '$_idColumn = ?', whereArgs: [taskId.value]);
     if (result.isEmpty) {
@@ -28,7 +28,7 @@ class TaskLocalDataSource implements TaskDataSource {
 
   /// タスク一覧を取得する
   @override
-  Future<List<Task>> getTaskList({required Id userId}) async {
+  Future<List<Task>> getTaskList({required UserId userId}) async {
     final db = await _client.db;
     final result = await db.query(_tasksTable, where: '$_userIdColumn = ?', whereArgs: [userId.value]);
     return result.map(Task.fromJson).toList();
@@ -45,7 +45,7 @@ class TaskLocalDataSource implements TaskDataSource {
 
   /// タスクを更新する
   @override
-  Future<void> updateTask({required Id taskId, required Task task}) async {
+  Future<void> updateTask({required TaskId taskId, required Task task}) async {
     final db = await _client.db;
     await db.transaction((txn) async {
       final updatedCount = await txn.update(
@@ -62,7 +62,7 @@ class TaskLocalDataSource implements TaskDataSource {
 
   /// タスクを削除する
   @override
-  Future<void> deleteTask({required Id taskId}) async {
+  Future<void> deleteTask({required TaskId taskId}) async {
     final db = await _client.db;
     await db.transaction((txn) async {
       final deletedCount = await txn.delete(_tasksTable, where: '$_idColumn = ?', whereArgs: [taskId.value]);

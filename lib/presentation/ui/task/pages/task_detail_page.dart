@@ -17,7 +17,7 @@ class TaskDetailPage extends ConsumerStatefulWidget {
   const TaskDetailPage({required this.taskId, super.key});
 
   /// タスクID
-  final Id taskId;
+  final TaskId taskId;
 
   @override
   ConsumerState<TaskDetailPage> createState() => _TaskDetailPageState();

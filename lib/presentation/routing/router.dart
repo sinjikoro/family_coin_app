@@ -70,7 +70,7 @@ class TaskDetailRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    final taskId = Id(id);
+    final taskId = TaskId(id);
     return TaskDetailPage(taskId: taskId);
   }
 }
@@ -110,7 +110,7 @@ class WishitemDetailRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    final wishitemId = Id(id);
+    final wishitemId = WishitemId(id);
     return WishitemDetailPage(wishitemId: wishitemId);
   }
 }

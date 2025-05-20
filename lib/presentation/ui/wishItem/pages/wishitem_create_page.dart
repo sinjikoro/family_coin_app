@@ -16,7 +16,7 @@ class WishitemCreatePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.read(loggedInUserStateProvider).value?.id ?? Id.generate();
+    final userId = ref.read(loggedInUserStateProvider).value?.id ?? UserId.generate();
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.wishitemCreateTitle)),
       body: WishitemFormWidget(

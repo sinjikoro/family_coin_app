@@ -18,7 +18,7 @@ class UserLocalDataSource implements UserDataSource {
 
   @override
   Future<User> getUser() async {
-    final id = _prefs.getInt(_idKey) != null ? Id(_prefs.getInt(_idKey)!) : const Id.unassigned();
+    final id = _prefs.getInt(_idKey) != null ? UserId(_prefs.getInt(_idKey)!) : const UserId.unassigned();
 
     final name = _prefs.getString(_nameKey) ?? '';
 

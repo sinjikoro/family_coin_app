@@ -11,9 +11,9 @@ part 'task_log.g.dart';
 abstract class TaskLog with _$TaskLog {
   /// Constructor
   const factory TaskLog({
-    @IdJsonConverter() required Id id,
-    @IdJsonConverter() required Id taskId,
-    @IdJsonConverter() required Id userId,
+    @RecordIdJsonConverter() required RecordId id,
+    @TaskIdJsonConverter() required TaskId taskId,
+    @UserIdJsonConverter() required UserId userId,
     @ApprovalStatusJsonConverter() required ApprovalStatus approvalStatus,
     @FamilyCoinJsonConverter() required FamilyCoin earnedCoins,
     required DateTime earnedAt,

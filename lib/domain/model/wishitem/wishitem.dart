@@ -11,9 +11,9 @@ part 'wishitem.g.dart';
 abstract class Wishitem with _$Wishitem {
   /// Constructor
   const factory Wishitem({
-    @IdJsonConverter() required Id id,
+    @WishitemIdJsonConverter() required WishitemId id,
     required String name,
-    @IdJsonConverter() required Id userId,
+    @UserIdJsonConverter() required UserId userId,
     @ApprovalStatusJsonConverter() required ApprovalStatus approvalStatus,
     @FamilyCoinJsonConverter() required FamilyCoin price,
     required String description,
@@ -24,8 +24,8 @@ abstract class Wishitem with _$Wishitem {
   const Wishitem._();
 
   /// 初期化
-  factory Wishitem.initial(Id userId) => Wishitem(
-    id: const Id.unassigned(),
+  factory Wishitem.initial(UserId userId) => Wishitem(
+    id: const WishitemId.unassigned(),
     name: '',
     userId: userId,
     approvalStatus: ApprovalStatus.unapproved(),

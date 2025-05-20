@@ -10,7 +10,7 @@ part 'user.g.dart';
 abstract class User with _$User {
   /// Constructor
   const factory User({
-    @IdJsonConverter() required Id id,
+    @UserIdJsonConverter() required UserId id,
     required String name,
     @FamilyCoinJsonConverter() required FamilyCoin familyCoinBalance,
   }) = _User;
@@ -19,7 +19,7 @@ abstract class User with _$User {
   const User._();
 
   /// 初期化
-  factory User.initial() => const User(id: Id.unassigned(), name: '', familyCoinBalance: FamilyCoin(0));
+  factory User.initial() => const User(id: UserId.unassigned(), name: '', familyCoinBalance: FamilyCoin(0));
 
   /// fromJson
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

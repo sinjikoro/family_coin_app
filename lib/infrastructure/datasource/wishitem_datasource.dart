@@ -4,17 +4,17 @@ import 'package:family_coin/domain/value_object/id.dart';
 /// ほしいものデータソース
 abstract class WishitemDataSource {
   /// ほしいものを取得する
-  Future<Wishitem> getWishitem({required Id wishitemId});
+  Future<Wishitem> getWishitem({required WishitemId wishitemId});
 
   /// ほしいもの一覧を取得する
-  Future<List<Wishitem>> getWishitemList({required Id userId});
+  Future<List<Wishitem>> getWishitemList({required UserId userId});
 
   /// ほしいものを作成する
   Future<void> createWishitem(Wishitem wishitem);
 
   /// ほしいものを更新する
-  Future<void> updateWishitem({required Id wishitemId, required Wishitem wishitem});
+  Future<void> updateWishitem({required WishitemId wishitemId, required Wishitem wishitem});
 
   /// ほしいものを削除する
-  Future<void> deleteWishitem({required Id wishitemId});
+  Future<void> deleteWishitem({required WishitemId wishitemId});
 }

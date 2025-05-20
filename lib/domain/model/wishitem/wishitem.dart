@@ -23,6 +23,16 @@ abstract class Wishitem with _$Wishitem {
   /// Constructor
   const Wishitem._();
 
+  /// 初期化
+  factory Wishitem.initial(Id userId) => Wishitem(
+    id: const Id.unassigned(),
+    name: '',
+    userId: userId,
+    approvalStatus: ApprovalStatus.unapproved(),
+    price: const FamilyCoin(0),
+    description: '',
+  );
+
   /// fromJson
   factory Wishitem.fromJson(Map<String, dynamic> json) => _$WishitemFromJson(json);
 }

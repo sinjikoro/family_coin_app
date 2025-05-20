@@ -39,14 +39,13 @@ class TaskListState extends _$TaskListState {
   Future<void> createTask({
     required String name,
     required String description,
+    required Id userId,
     required FamilyCoin earnCoins,
     required Difficulty difficulty,
   }) async {
     if (ref.read(loggedInUserStateProvider).value == null) {
       throw NotLoggedInException();
     }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
-
     final task = Task(
       id: Id.generate(),
       name: name,

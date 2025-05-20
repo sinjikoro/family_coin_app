@@ -24,10 +24,10 @@
   "taskDescription": "説明",
   "taskDifficulty": "難易度",
 
-  "wishItemListTitle": "ほしいもの一覧",
-  "wishItemListEmpty": "ほしいものはありません",
-  "wishItemCreateTitle": "新しいほしいもの",
-  "wishItemDetailTitle": "ほしいもの詳細",
+  "wishitemListTitle": "ほしいもの一覧",
+  "wishitemListEmpty": "ほしいものはありません",
+  "wishitemCreateTitle": "新しいほしいもの",
+  "wishitemDetailTitle": "ほしいもの詳細",
 
   "error": "エラーが発生しました! : {errorMessage}",
   "@errorMessage": {

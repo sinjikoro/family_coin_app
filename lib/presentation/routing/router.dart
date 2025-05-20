@@ -1,10 +1,10 @@
 import 'package:family_coin/domain/value_object/id.dart';
-import 'package:family_coin/domain/value_object/wishitem_id.dart';
 import 'package:family_coin/presentation/routing/route_path.dart';
 import 'package:family_coin/presentation/ui/home/pages/home_page.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_create_page.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_detail_page.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_list_page.dart';
+import 'package:family_coin/presentation/ui/wishItem/pages/wishitem_create_page.dart';
 import 'package:family_coin/presentation/ui/wishItem/pages/wishitem_detail_page.dart';
 import 'package:family_coin/presentation/ui/wishItem/pages/wishitem_list_page.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +78,10 @@ class TaskDetailRoute extends GoRouteData {
 /// ほしいもの一覧画面のルート定義
 @TypedGoRoute<WishitemListRoute>(
   path: RoutePath.wishItemList,
-  routes: <TypedGoRoute<GoRouteData>>[TypedGoRoute<WishitemDetailRoute>(path: ':id')],
+  routes: <TypedGoRoute<GoRouteData>>[
+    TypedGoRoute<WishitemCreateRoute>(path: 'new'),
+    TypedGoRoute<WishitemDetailRoute>(path: ':id'),
+  ],
 )
 class WishitemListRoute extends GoRouteData {
   /// constructor
@@ -86,6 +89,15 @@ class WishitemListRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const WishitemListPage();
+}
+
+/// ほしいもの詳細画面のルート定義
+class WishitemCreateRoute extends GoRouteData {
+  /// constructor
+  const WishitemCreateRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const WishitemCreatePage();
 }
 
 /// ほしいもの詳細画面のルート定義
@@ -98,7 +110,7 @@ class WishitemDetailRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    final wishitemId = WishitemId(id);
+    final wishitemId = Id(id);
     return WishitemDetailPage(wishitemId: wishitemId);
   }
 }

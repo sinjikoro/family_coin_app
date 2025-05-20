@@ -102,6 +102,11 @@ RouteBase get $wishitemListRoute => GoRouteData.$route(
   factory: $WishitemListRouteExtension._fromState,
   routes: [
     GoRouteData.$route(
+      path: 'new',
+
+      factory: $WishitemCreateRouteExtension._fromState,
+    ),
+    GoRouteData.$route(
       path: ':id',
 
       factory: $WishitemDetailRouteExtension._fromState,
@@ -114,6 +119,22 @@ extension $WishitemListRouteExtension on WishitemListRoute {
       const WishitemListRoute();
 
   String get location => GoRouteData.$location('/wish-items');
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $WishitemCreateRouteExtension on WishitemCreateRoute {
+  static WishitemCreateRoute _fromState(GoRouterState state) =>
+      const WishitemCreateRoute();
+
+  String get location => GoRouteData.$location('/wish-items/new');
 
   void go(BuildContext context) => context.go(location);
 

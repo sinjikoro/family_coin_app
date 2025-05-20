@@ -19,7 +19,7 @@ class RoutePath {
   static const String wishItemList = '/wish-items';
 
   /// 欲しいもの詳細
-  static String wishItemDetail(Id id) => '/wish-items/$id';
+  static String wishItemDetail(Id id) => '/wish-items/${id.value}';
 
   /// 欲しいもの作成
   static const String wishItemCreate = '/wish-items/new';

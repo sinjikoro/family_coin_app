@@ -24,10 +24,10 @@
   "taskDescription": "description",
   "taskDifficulty": "difficulty",
 
-  "wishItemListTitle": "wishitem list",
-  "wishItemListEmpty": "empty..",
-  "wishItemCreateTitle": "new withItem",
-  "wishItemDetailTitle": "wishitem detail",
+  "wishitemListTitle": "wishitem list",
+  "wishitemListEmpty": "empty..",
+  "wishitemCreateTitle": "new withItem",
+  "wishitemDetailTitle": "wishitem detail",
 
   "error": "error occurred! : {errorMessage}",
   "@errorMessage": {

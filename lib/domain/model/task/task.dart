@@ -25,10 +25,10 @@ abstract class Task with _$Task {
   const Task._();
 
   /// 初期化
-  factory Task.initial() => Task(
+  factory Task.initial(Id userId) => Task(
     id: const Id.unassigned(),
     name: '',
-    userId: const Id.unassigned(),
+    userId: userId,
     registrationStatus: ApprovalStatus.unapproved(),
     earnCoins: const FamilyCoin(0),
   );

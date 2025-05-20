@@ -34,17 +34,25 @@ class WishitemListState extends _$WishitemListState {
     state = AsyncData(wishitemList);
   }
 
+  /// ほしいものを取得する
+  Future<Wishitem> getWishitem(Id wishitemId) async {
+    if (ref.read(loggedInUserStateProvider).value == null) {
+      throw NotLoggedInException();
+    }
+    return await _repository.getWishitem(wishitemId: wishitemId);
+  }
+
   /// ほしいものを作成する
   Future<void> createWishitem({
     required String name,
     required String description,
+    required Id userId,
     required FamilyCoin price,
     Uri? url,
   }) async {
     if (ref.read(loggedInUserStateProvider).value == null) {
       throw NotLoggedInException();
     }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
     final wishitem = Wishitem(
       id: Id.generate(),
       name: name,

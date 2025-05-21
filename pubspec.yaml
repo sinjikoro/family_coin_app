@@ -30,6 +30,7 @@ dev_dependencies:
     sdk: flutter
   go_router_builder: ^2.8.2
   json_serializable: ^6.9.5
+  mocktail: ^1.0.4
   riverpod_generator: ^2.6.5
 
 flutter:

@@ -101,6 +101,9 @@ class RecordId extends Id<RecordId> {
 
   /// 採番用のコンストラクタ
   factory RecordId.generate() => RecordId._(Id.generate().value);
+
+  /// 非採番用のコンストラクタ
+  const RecordId.unassigned() : super.unassigned();
 }
 
 /// ユーザーIDのJSONコンバーター

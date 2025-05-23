@@ -42,7 +42,9 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
       supportedLocales: L10n.supportedLocales,
       theme: ThemeData(primarySwatch: Colors.indigo),
       routerConfig: router,
-      builder: (context, child) => Localizations.override(context: context, child: child),
+      builder:
+          (context, child) =>
+              Localizations.override(context: context, child: child),
     );
   }
 }

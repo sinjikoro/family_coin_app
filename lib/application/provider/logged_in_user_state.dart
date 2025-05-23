@@ -12,7 +12,7 @@ class LoggedInUserState extends _$LoggedInUserState {
   final UserRepository _repository = GetIt.instance<UserRepository>();
 
   @override
-  FutureOr<User> build() => User.initial();
+  FutureOr<User> build() => User.guest();
 
   /// ユーザーを取得する
   Future<void> fetchUser() async {
@@ -31,7 +31,9 @@ class LoggedInUserState extends _$LoggedInUserState {
   /// FamilyCoinを追加する
   Future<void> addFamilyCoin(int coin) async {
     final user = await _repository.getUser();
-    final updatedUser = user.copyWith(familyCoinBalance: FamilyCoin(user.familyCoinBalance.value + coin));
+    final updatedUser = user.copyWith(
+      familyCoinBalance: FamilyCoin(user.familyCoinBalance.value + coin),
+    );
     await _repository.saveUser(updatedUser);
     state = AsyncData(updatedUser);
   }

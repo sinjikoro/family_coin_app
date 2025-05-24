@@ -1,6 +1,7 @@
 import 'package:family_coin/application/provider/logged_in_user_state.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/presentation/routing/route_path.dart';
+import 'package:family_coin/presentation/ui/home/widgets/account_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +21,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async => await ref.read(loggedInUserStateProvider.notifier).fetchUser());
+    Future.microtask(
+      () async =>
+          await ref.read(loggedInUserStateProvider.notifier).fetchUser(),
+    );
   }
 
   @override
@@ -42,20 +46,17 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             userProvider.when(
               data:
-                  (user) => Column(
-                    children: [
-                      Text(user.name, style: const TextStyle(fontSize: 18)),
-                      const SizedBox(height: 10),
-                      Text(
-                        context.l10n.homeCoinBalance(user.familyCoinBalance.value),
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ],
+                  (user) => AccountCard(
+                    name: user.name,
+                    balance: user.familyCoinBalance.value,
                   ),
               loading: () => const CircularProgressIndicator(),
               error: (error, stackTrace) => Text('エラー: $error'),
             ),
-            ElevatedButton(onPressed: () async => await context.push(RoutePath.taskList), child: const Text('タスク一覧')),
+            ElevatedButton(
+              onPressed: () async => await context.push(RoutePath.taskList),
+              child: const Text('タスク一覧'),
+            ),
             ElevatedButton(
               onPressed: () async => await context.push(RoutePath.wishItemList),
               child: const Text('ほしいもの一覧'),
@@ -64,7 +65,10 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async => await ref.read(loggedInUserStateProvider.notifier).addFamilyCoin(10),
+        onPressed:
+            () async => await ref
+                .read(loggedInUserStateProvider.notifier)
+                .addFamilyCoin(10),
         child: const Icon(Icons.add),
       ),
     );

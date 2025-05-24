@@ -1,6 +1,7 @@
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/presentation/routing/route_path.dart';
 import 'package:family_coin/presentation/ui/home/pages/home_page.dart';
+import 'package:family_coin/presentation/ui/scaffold/app_scaffold.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_create_page.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_detail_page.dart';
 import 'package:family_coin/presentation/ui/task/pages/task_list_page.dart';
@@ -13,15 +14,45 @@ import 'package:go_router/go_router.dart';
 
 part 'router.g.dart';
 
+/// アプリケーションのルーター
+final router = GoRouter(
+  initialLocation: RoutePath.home,
+  routes: [
+    ShellRoute(
+      builder: (context, state, child) => AppScaffold(child: child),
+      routes: [
+        GoRoute(
+          path: RoutePath.home,
+          builder: (context, state) => const HomePage(),
+        ),
+        GoRoute(
+          path: RoutePath.taskList,
+          builder: (context, state) => const TaskListPage(),
+        ),
+        GoRoute(
+          path: RoutePath.wishItemList,
+          builder: (context, state) => const WishitemListPage(),
+        ),
+      ],
+    ),
+  ],
+);
+
 /// アプリケーションのルート状態を管理するプロバイダー
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
-    routes: $appRoutes,
+    routes: [
+      ShellRoute(
+        builder: (context, state, child) => AppScaffold(child: child),
+        routes: $appRoutes,
+      ),
+    ],
     initialLocation: RoutePath.home,
     debugLogDiagnostics: true,
     // エラーページのハンドリング
-    // TODO(naga): エラーページのハンドリングを追加する
-    errorBuilder: (context, state) => Scaffold(body: Center(child: Text('エラー: ${state.error}'))),
+    errorBuilder:
+        (context, state) =>
+            Scaffold(body: Center(child: Text('エラー: ${state.error}'))),
   ),
 );
 
@@ -48,7 +79,8 @@ class TaskListRoute extends GoRouteData {
   const TaskListRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const TaskListPage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const TaskListPage();
 }
 
 /// タスク作成画面のルート定義
@@ -57,7 +89,8 @@ class TaskCreateRoute extends GoRouteData {
   const TaskCreateRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const TaskCreatePage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const TaskCreatePage();
 }
 
 /// タスク詳細画面のルート定義
@@ -88,7 +121,8 @@ class WishitemListRoute extends GoRouteData {
   const WishitemListRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const WishitemListPage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const WishitemListPage();
 }
 
 /// ほしいもの詳細画面のルート定義
@@ -97,7 +131,8 @@ class WishitemCreateRoute extends GoRouteData {
   const WishitemCreateRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const WishitemCreatePage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const WishitemCreatePage();
 }
 
 /// ほしいもの詳細画面のルート定義

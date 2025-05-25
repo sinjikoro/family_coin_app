@@ -1,16 +1,25 @@
+import 'package:family_coin/presentation/ui/common/widgets/tappable_editable_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// アカウントカード
 class AccountCard extends StatelessWidget {
   /// constructor
-  const AccountCard({required this.name, required this.balance, super.key});
+  const AccountCard({
+    required this.name,
+    required this.balance,
+    required this.nameOnChanged,
+    super.key,
+  });
 
   /// 名前
   final String name;
 
   /// 残高
   final int balance;
+
+  /// 名前変更時のコールバック
+  final ValueChanged<String> nameOnChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +53,9 @@ class AccountCard extends StatelessWidget {
                   size: 24,
                 ),
                 const SizedBox(width: 8),
-                Text(
-                  name,
+                TappableEditableText(
+                  text: name,
+                  onChanged: nameOnChanged,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.onPrimaryContainer,
                     fontWeight: FontWeight.bold,
@@ -83,6 +93,12 @@ class AccountCard extends StatelessWidget {
     super.debugFillProperties(properties);
     properties
       ..add(IntProperty('balance', balance))
-      ..add(StringProperty('name', name));
+      ..add(StringProperty('name', name))
+      ..add(
+        ObjectFlagProperty<ValueChanged<String>>.has(
+          'nameOnChanged',
+          nameOnChanged,
+        ),
+      );
   }
 }

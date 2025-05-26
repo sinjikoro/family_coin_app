@@ -1,5 +1,4 @@
 import 'package:family_coin/application/provider/logged_in_user_state.dart';
-import 'package:family_coin/core/exception/exception.dart';
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/domain/repository/task_repository.dart';
 import 'package:family_coin/domain/value_object/approval_status.dart';
@@ -17,22 +16,18 @@ class TaskListState extends _$TaskListState {
   final TaskRepository _repository = GetIt.instance<TaskRepository>();
 
   @override
-  FutureOr<List<Task>> build() async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      return [];
-    }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
-    return await _repository.getTaskList(userId: userId);
+  FutureOr<List<Task>> build() async => await _fetchTaskList();
+
+  /// タスク一覧を取得する
+  Future<List<Task>> _fetchTaskList() async {
+    final loggedInUser = await ref.read(loggedInUserStateProvider.future);
+    return await _repository.getTaskList(userId: loggedInUser.id);
   }
 
   /// タスク一覧を取得する
   Future<void> fetchTaskList() async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
-    final taskList = await _repository.getTaskList(userId: userId);
-    state = AsyncData(taskList);
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async => await _fetchTaskList());
   }
 
   /// タスクを作成する
@@ -43,22 +38,24 @@ class TaskListState extends _$TaskListState {
     required FamilyCoin earnCoins,
     required Difficulty difficulty,
   }) async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    final task = Task(
-      id: TaskId.generate(),
-      name: name,
-      userId: userId,
-      earnCoins: earnCoins,
-      registrationStatus: ApprovalStatus.unapproved(),
-      description: description,
-      difficulty: difficulty,
-    );
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final loggedInUser = await ref.read(loggedInUserStateProvider.future);
 
-    await _repository.createTask(task);
-    // 一覧を更新
-    await fetchTaskList();
+      final task = Task(
+        id: TaskId.generate(),
+        name: name,
+        userId: loggedInUser.id,
+        earnCoins: earnCoins,
+        registrationStatus: ApprovalStatus.unapproved(),
+        description: description,
+        difficulty: difficulty,
+      );
+
+      await _repository.createTask(task);
+      // 一覧を更新
+      return await _fetchTaskList();
+    });
   }
 
   /// タスクを更新する
@@ -69,42 +66,44 @@ class TaskListState extends _$TaskListState {
     FamilyCoin earnCoins,
     Difficulty difficulty,
   ) async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final loggedInUser = await ref.read(loggedInUserStateProvider.future);
+      final userId = loggedInUser.id;
 
-    final currentTask = await _repository.getTask(taskId: id);
-    if (currentTask.userId != userId) {
-      throw ArgumentError('更新対象が自分のタスクではありません');
-    }
+      final currentTask = await _repository.getTask(taskId: id);
+      if (currentTask.userId != userId) {
+        throw ArgumentError('更新対象が自分のタスクではありません');
+      }
 
-    final updatedTask = currentTask.copyWith(
-      name: name,
-      earnCoins: earnCoins,
-      description: description,
-      difficulty: difficulty,
-    );
+      final updatedTask = currentTask.copyWith(
+        name: name,
+        earnCoins: earnCoins,
+        description: description,
+        difficulty: difficulty,
+      );
 
-    await _repository.updateTask(taskId: id, task: updatedTask);
-    // 一覧を更新
-    await fetchTaskList();
+      await _repository.updateTask(taskId: id, task: updatedTask);
+      // 一覧を更新
+      return await _fetchTaskList();
+    });
   }
 
   /// タスクを削除する
   Future<void> deleteTask(TaskId id) async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final loggedInUser = await ref.read(loggedInUserStateProvider.future);
+      final userId = loggedInUser.id;
 
-    final task = await _repository.getTask(taskId: id);
-    if (task.userId != userId) {
-      throw ArgumentError('削除対象が自分のタスクではありません');
-    }
+      final task = await _repository.getTask(taskId: id);
+      if (task.userId != userId) {
+        throw ArgumentError('削除対象が自分のタスクではありません');
+      }
 
-    await _repository.deleteTask(taskId: id);
-    // 一覧を更新
-    await fetchTaskList();
+      await _repository.deleteTask(taskId: id);
+      // 一覧を更新
+      return await _fetchTaskList();
+    });
   }
 }

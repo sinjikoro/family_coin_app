@@ -11,10 +11,4 @@ class MockUserRepository extends Mock implements UserRepository {
     name: 'ダミー　太郎',
     familyCoinBalance: FamilyCoin(100),
   );
-
-  @override
-  Future<User> getUser() async => dummyUser;
-
-  @override
-  Future<void> saveUser(User user);
 }

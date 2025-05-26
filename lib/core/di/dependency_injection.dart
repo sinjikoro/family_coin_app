@@ -1,10 +1,13 @@
+import 'package:family_coin/domain/repository/task_log_repository.dart';
 import 'package:family_coin/domain/repository/task_repository.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
 import 'package:family_coin/domain/repository/wishitem_repository.dart';
 import 'package:family_coin/infrastructure/client/sqflite_client.dart';
 import 'package:family_coin/infrastructure/datasource/local_datasource/task_local_datasource.dart';
+import 'package:family_coin/infrastructure/datasource/local_datasource/task_log_local_datasource.dart';
 import 'package:family_coin/infrastructure/datasource/local_datasource/user_local_datasource.dart';
 import 'package:family_coin/infrastructure/datasource/local_datasource/wishitem_local_datasource.dart';
+import 'package:family_coin/infrastructure/repository/task_log_repository_impl.dart';
 import 'package:family_coin/infrastructure/repository/task_repository_impl.dart';
 import 'package:family_coin/infrastructure/repository/user_repository_impl.dart';
 import 'package:family_coin/infrastructure/repository/wishitem_repository_impl.dart';
@@ -26,10 +29,19 @@ class DependencyInjection {
     // getItへ登録
     _getIt
       ..registerSingleton<SharedPreferences>(prefs)
-      // UserRepositoryの初期化
-      ..registerSingleton<UserRepository>(UserRepositoryImpl(UserLocalDataSource(prefs)))
-      ..registerSingleton<TaskRepository>(TaskRepositoryImpl(TaskLocalDataSource(sqfliteClient)))
-      ..registerSingleton<WishitemRepository>(WishitemRepositoryImpl(WishitemLocalDataSource(sqfliteClient)));
+      // 各種リポジトリの登録
+      ..registerSingleton<UserRepository>(
+        UserRepositoryImpl(UserLocalDataSource(sqfliteClient)),
+      )
+      ..registerSingleton<TaskRepository>(
+        TaskRepositoryImpl(TaskLocalDataSource(sqfliteClient)),
+      )
+      ..registerSingleton<TaskLogRepository>(
+        TaskLogRepositoryImpl(TaskLogLocalDataSource(sqfliteClient)),
+      )
+      ..registerSingleton<WishitemRepository>(
+        WishitemRepositoryImpl(WishitemLocalDataSource(sqfliteClient)),
+      );
   }
 
   /// テスト用に依存性をリセット

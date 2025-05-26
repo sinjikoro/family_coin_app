@@ -13,7 +13,7 @@ class SqfliteClient {
   static final SqfliteClient _instance = SqfliteClient._internal();
 
   /// 現在のデータベースバージョン
-  static const int _currentVersion = 1;
+  static const int _currentVersion = 2;
 
   Database? _db;
   bool _isInitialized = false;
@@ -48,17 +48,30 @@ class SqfliteClient {
   /// 初期テーブルを作成する
   Future<void> _createInitialTables(Database db) async {
     await db.transaction((txn) async {
+      await txn.execute(_QueryV1.createUsersTable);
       await txn.execute(_QueryV1.createTasksTable);
       await txn.execute(_QueryV1.createWishitemsTable);
+      await txn.execute(_QueryV1.createTaskLogsTable);
+      await txn.execute(_QueryV1.rewardRecordTable);
     });
   }
 
   /// データベースのマイグレーションを実行する
-  Future<void> _migrateDatabase(Database db, int oldVersion, int newVersion) async {
+  Future<void> _migrateDatabase(
+    Database db,
+    int oldVersion,
+    int newVersion,
+  ) async {
     // バージョン1から2へのマイグレーション
-    // if (oldVersion < 2) {
-    //   await db.transaction((txn) async {});
-    // }
+    if (oldVersion < 2) {
+      await db.transaction((txn) async {
+        await txn.execute(_QueryV1.createUsersTable);
+        await txn.execute(_QueryV1.createTasksTable);
+        await txn.execute(_QueryV1.createWishitemsTable);
+        await txn.execute(_QueryV1.createTaskLogsTable);
+        await txn.execute(_QueryV1.rewardRecordTable);
+      });
+    }
   }
 
   /// 新しいテーブルを動的に作成する
@@ -98,6 +111,15 @@ class SqfliteClient {
 }
 
 class _QueryV1 {
+  /// ユーザーテーブルを作成する
+  static String get createUsersTable => '''
+    CREATE TABLE IF NOT EXISTS users(
+      id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      familyCoinBalance INTEGER NOT NULL
+    )
+  ''';
+
   /// タスクテーブルを作成する
   static String get createTasksTable => '''
     CREATE TABLE IF NOT EXISTS tasks(
@@ -121,6 +143,34 @@ class _QueryV1 {
       price INTEGER NOT NULL,
       description TEXT,
       url TEXT
+    )
+  ''';
+
+  /// タスクログテーブルを作成する
+  static String get createTaskLogsTable => '''
+    CREATE TABLE IF NOT EXISTS task_logs(
+      id INTEGER PRIMARY KEY,
+      taskId INTEGER NOT NULL,
+      userId INTEGER NOT NULL,
+      approvalStatus TEXT NOT NULL,
+      earnedCoins INTEGER NOT NULL,
+      earnedAt TEXT NOT NULL,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL
+    )
+  ''';
+
+  /// ほしいもの交換履歴テーブルを作成する
+  static String get rewardRecordTable => '''
+    CREATE TABLE IF NOT EXISTS reward_records(
+      id INTEGER PRIMARY KEY,
+      userId INTEGER NOT NULL,
+      wishItemId INTEGER NOT NULL,
+      exchangedCoins INTEGER NOT NULL,
+      approvalStatus TEXT NOT NULL,
+      exchangeAt TEXT NOT NULL,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL
     )
   ''';
 }

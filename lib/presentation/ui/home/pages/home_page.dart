@@ -1,5 +1,7 @@
 import 'package:family_coin/application/provider/logged_in_user_state.dart';
 import 'package:family_coin/application/provider/task_list_state.dart';
+import 'package:family_coin/application/provider/task_log_list_state.dart';
+import 'package:family_coin/application/provider/user_list_state.dart';
 import 'package:family_coin/application/usecase/complete_task_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/presentation/ui/common/theme/spacing.dart';
@@ -9,12 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// タスク完了のユースケースプロバイダー
-final completeTaskUseCaseProvider = Provider<CompleteTaskUseCase>((ref) {
-  return CompleteTaskUseCase(
-    userRepository: ref.watch(userRepositoryProvider),
-    taskLogRepository: ref.watch(taskLogRepositoryProvider),
-  );
-});
+final completeTaskUseCaseProvider = Provider<CompleteTaskUseCase>(
+  (ref) => CompleteTaskUseCase(
+    userState: ref.watch(userListStateProvider.notifier),
+    taskLogListState: ref.watch(taskLogListStateProvider.notifier),
+  ),
+);
 
 /// Home画面
 class HomePage extends ConsumerStatefulWidget {
@@ -30,7 +32,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     Future.microtask(() async {
-      await ref.read(loggedInUserStateProvider.notifier).fetchUser();
+      // await ref.read(loggedInUserStateProvider.notifier).fetchUser();
       await ref.read(taskListStateProvider.notifier).fetchTaskList();
     });
   }
@@ -56,8 +58,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                       balance: user.familyCoinBalance.value,
                       nameOnChanged:
                           (name) async => await ref
-                              .read(loggedInUserStateProvider.notifier)
-                              .updateUserName(name),
+                              .read(userListStateProvider.notifier)
+                              .updateUserName(userId: user.id, name: name),
                     ),
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error:
@@ -75,21 +77,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                           : EnableTaskList(
                             tasks: tasks,
                             onTaskCompleted: (task) async {
-                              final user =
-                                  ref.read(loggedInUserStateProvider).value;
-                              if (user == null) return;
-
                               await ref
                                   .read(completeTaskUseCaseProvider)
-                                  .execute(task: task, user: user);
-
-                              // ユーザー情報とタスク一覧を更新
-                              await ref
-                                  .read(loggedInUserStateProvider.notifier)
-                                  .fetchUser();
-                              await ref
-                                  .read(taskListStateProvider.notifier)
-                                  .fetchTaskList();
+                                  .execute(
+                                    user: userProvider.value!,
+                                    task: task,
+                                  );
                             },
                           ),
               loading: () => const Center(child: CircularProgressIndicator()),

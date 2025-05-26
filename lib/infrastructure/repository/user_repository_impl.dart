@@ -1,5 +1,6 @@
 import 'package:family_coin/domain/model/user/user.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
+import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/infrastructure/datasource/user_datasource.dart';
 
 /// UserRepositoryの実装
@@ -9,11 +10,22 @@ class UserRepositoryImpl implements UserRepository {
 
   final UserDataSource _dataSource;
 
-  /// ユーザーを取得する
   @override
-  Future<User> getUser() async => await _dataSource.getUser();
+  Future<User> getUser({required UserId userId}) async =>
+      await _dataSource.getUser(userId: userId);
 
-  /// ユーザーを保存する
   @override
-  Future<void> saveUser(User user) async => await _dataSource.saveUser(user);
+  Future<List<User>> getUserList() async => await _dataSource.getUserList();
+
+  @override
+  Future<void> createUser(User user) async =>
+      await _dataSource.createUser(user);
+
+  @override
+  Future<void> updateUser({required UserId userId, required User user}) async =>
+      await _dataSource.updateUser(userId: userId, user: user);
+
+  @override
+  Future<void> deleteUser({required UserId userId}) async =>
+      await _dataSource.deleteUser(userId: userId);
 }

@@ -1,7 +1,10 @@
 import 'package:family_coin/application/provider/task_list_state.dart';
+import 'package:family_coin/application/usecase/get_task_usecase.dart';
+import 'package:family_coin/application/usecase/update_task_usecase.dart';
 import 'package:family_coin/core/exception/exception.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/task/task.dart';
+import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
@@ -34,22 +37,21 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   bool isEditing = false;
 
   @override
-  Widget build(BuildContext context) {
-    final taskAsync = ref.watch(
-      taskListStateProvider.select(
-        (tasks) =>
-            tasks.value?.firstWhere((task) => task.id == widget.taskId, orElse: () => throw Exception('タスクが見つかりません')),
-      ),
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(taskAsync?.name ?? ''),
-        actions: [if (!isEditing) IconButton(icon: const Icon(Icons.edit), onPressed: toggleEditing)],
-      ),
-      body: _buildBody(taskAsync),
-    );
-  }
+  Widget build(BuildContext context) => FutureBuilder<Task>(
+    future: const GetTaskUseCase().execute(taskId: widget.taskId),
+    builder:
+        (context, snapshot) => switch (snapshot.connectionState) {
+          ConnectionState.waiting => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          ConnectionState.done => switch (snapshot) {
+            AsyncData(:final value) => _buildBody(value),
+            AsyncError(:final error) => _buildErrorWidget(error.toString()),
+            _ => _buildErrorWidget(context.l10n.unexpectedError),
+          },
+          _ => _buildErrorWidget(context.l10n.notFoundError),
+        },
+  );
 
   /// 編集モードを切り替える
   void toggleEditing() => setState(() => isEditing = !isEditing);
@@ -62,27 +64,39 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     required Difficulty difficulty,
   }) async {
     try {
-      await ref
-          .read(taskListStateProvider.notifier)
-          .updateTask(widget.taskId, name, description, earnCoins, difficulty);
+      await UpdateTaskUseCase(
+        taskListState: ref.read(taskListStateProvider.notifier),
+      ).execute(
+        task: Task(
+          id: widget.taskId,
+          name: name,
+          description: description,
+          earnCoins: earnCoins,
+          difficulty: difficulty,
+          userId: const UserId.unassigned(),
+          registrationStatus: ApprovalStatus.unapproved(),
+        ),
+      );
       if (mounted) {
         toggleEditing();
       }
     } on NotLoggedInException catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.error(e.toString()))));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.error(e.toString()))),
+        );
       }
     }
   }
 
   /// ボディWidget
-  Widget _buildBody(Task? task) {
-    if (task == null) {
-      return const Center(child: Text('タスクが見つかりません'));
-    }
-
+  Widget _buildBody(Task task) {
     if (isEditing) {
-      return TaskFormWidget(task: task, onSave: _updateTask, onCancel: toggleEditing);
+      return TaskFormWidget(
+        task: task,
+        onSave: _updateTask,
+        onCancel: toggleEditing,
+      );
     }
 
     return TaskReadOnlyWidget(
@@ -93,6 +107,10 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
       taskRegistrationStatus: task.registrationStatus,
     );
   }
+
+  /// エラーWidget
+  Widget _buildErrorWidget(String errorMessage) =>
+      Center(child: Text(context.l10n.error(errorMessage)));
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

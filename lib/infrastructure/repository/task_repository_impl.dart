@@ -11,18 +11,21 @@ class TaskRepositoryImpl implements TaskRepository {
   final TaskDataSource _dataSource;
 
   @override
-  Future<List<Task>> getTaskList({required UserId userId}) => _dataSource.getTaskList(userId: userId);
+  Future<List<Task>> getTaskList({required UserId userId}) =>
+      _dataSource.getTaskList(userId: userId);
 
   @override
-  Future<Task> getTask({required TaskId taskId}) => _dataSource.getTask(taskId: taskId);
+  Future<Task> getTask({required TaskId taskId}) =>
+      _dataSource.getTask(taskId: taskId);
 
   @override
   Future<void> createTask(Task task) => _dataSource.createTask(task);
 
   @override
-  Future<void> deleteTask({required TaskId taskId}) => _dataSource.deleteTask(taskId: taskId);
+  Future<void> deleteTask({required TaskId taskId}) =>
+      _dataSource.deleteTask(taskId: taskId);
 
   @override
-  Future<void> updateTask({required TaskId taskId, required Task task}) =>
-      _dataSource.updateTask(taskId: taskId, task: task);
+  Future<void> updateTask({required Task task}) =>
+      _dataSource.updateTask(task: task);
 }

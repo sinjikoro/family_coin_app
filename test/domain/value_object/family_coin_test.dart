@@ -43,10 +43,9 @@ void main() {
       expect(result.value, 1);
     });
 
-    test('符号反転できる', () {
+    test('符号反転は許可されていない', () {
       const coin = FamilyCoin(100);
-      final result = -coin;
-      expect(result.value, -100);
+      expect(() => -coin, throwsA(isA<UnsupportedError>()));
     });
 
     test('FamilyCoin同士を比較できる', () {

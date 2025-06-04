@@ -222,6 +222,18 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'エラーが発生しました! : {errorMessage}'**
   String error(Object errorMessage);
+
+  /// No description provided for @notFoundError.
+  ///
+  /// In ja, this message translates to:
+  /// **'データが見つかりませんでした。'**
+  String get notFoundError;
+
+  /// No description provided for @unexpectedError.
+  ///
+  /// In ja, this message translates to:
+  /// **'予期せぬエラーが発生しました。'**
+  String get unexpectedError;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

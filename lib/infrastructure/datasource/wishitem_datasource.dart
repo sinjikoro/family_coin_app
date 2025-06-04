@@ -13,7 +13,7 @@ abstract class WishitemDataSource {
   Future<void> createWishitem(Wishitem wishitem);
 
   /// ほしいものを更新する
-  Future<void> updateWishitem({required WishitemId wishitemId, required Wishitem wishitem});
+  Future<void> updateWishitem({required Wishitem wishitem});
 
   /// ほしいものを削除する
   Future<void> deleteWishitem({required WishitemId wishitemId});

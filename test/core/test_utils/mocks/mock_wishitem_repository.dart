@@ -20,12 +20,9 @@ class MockWishitemRepository extends Mock implements WishitemRepository {
       dummyWishitemList.add(wishitem);
 
   @override
-  Future<void> updateWishitem({
-    required WishitemId wishitemId,
-    required Wishitem wishitem,
-  }) async {
+  Future<void> updateWishitem({required Wishitem wishitem}) async {
     final index = dummyWishitemList.indexWhere(
-      (element) => element.id == wishitemId,
+      (element) => element.id == wishitem.id,
     );
     dummyWishitemList[index] = wishitem;
   }

@@ -74,4 +74,10 @@ class L10nEn extends L10n {
   String error(Object errorMessage) {
     return 'error occurred! : $errorMessage';
   }
+
+  @override
+  String get notFoundError => 'Not Found';
+
+  @override
+  String get unexpectedError => 'Unexpected Error';
 }

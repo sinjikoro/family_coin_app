@@ -3,14 +3,14 @@ import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'reward_record.freezed.dart';
-part 'reward_record.g.dart';
+part 'exchanged_record.freezed.dart';
+part 'exchanged_record.g.dart';
 
 /// ほしいもの交換履歴
 @freezed
-abstract class RewardRecord with _$RewardRecord {
+abstract class ExchangedRecord with _$ExchangedRecord {
   /// Constructor
-  const factory RewardRecord({
+  const factory ExchangedRecord({
     @RecordIdJsonConverter() required RecordId id,
     @WishitemIdJsonConverter() required WishitemId wishitemId,
     @UserIdJsonConverter() required UserId userId,
@@ -19,11 +19,12 @@ abstract class RewardRecord with _$RewardRecord {
     required DateTime createdAt,
     required DateTime updatedAt,
     DateTime? exchangedAt,
-  }) = _RewardRecord;
+  }) = _ExchangedRecord;
 
   /// Constructor
-  const RewardRecord._();
+  const ExchangedRecord._();
 
   /// fromJson
-  factory RewardRecord.fromJson(Map<String, dynamic> json) => _$RewardRecordFromJson(json);
+  factory ExchangedRecord.fromJson(Map<String, dynamic> json) =>
+      _$ExchangedRecordFromJson(json);
 }

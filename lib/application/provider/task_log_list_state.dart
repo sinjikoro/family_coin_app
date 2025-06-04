@@ -24,13 +24,4 @@ class TaskLogListState extends _$TaskLogListState {
     state = const AsyncLoading();
     state = await AsyncValue.guard(_fetchTaskLogList);
   }
-
-  /// タスクログを追加する
-  Future<void> addTaskLog({required TaskLog taskLog}) async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      await _repository.addLog(taskLog: taskLog);
-      return await _fetchTaskLogList();
-    });
-  }
 }

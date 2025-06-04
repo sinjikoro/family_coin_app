@@ -74,4 +74,10 @@ class L10nJa extends L10n {
   String error(Object errorMessage) {
     return 'エラーが発生しました! : $errorMessage';
   }
+
+  @override
+  String get notFoundError => 'データが見つかりませんでした。';
+
+  @override
+  String get unexpectedError => '予期せぬエラーが発生しました。';
 }

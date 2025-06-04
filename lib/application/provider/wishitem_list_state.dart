@@ -1,9 +1,6 @@
 import 'package:family_coin/application/provider/logged_in_user_state.dart';
-import 'package:family_coin/core/exception/exception.dart';
 import 'package:family_coin/domain/model/wishitem/wishitem.dart';
 import 'package:family_coin/domain/repository/wishitem_repository.dart';
-import 'package:family_coin/domain/value_object/approval_status.dart';
-import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,87 +13,20 @@ class WishitemListState extends _$WishitemListState {
   final WishitemRepository _repository = GetIt.instance<WishitemRepository>();
 
   @override
-  FutureOr<List<Wishitem>> build() async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      return [];
-    }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
-    return await _repository.getWishitemList(userId: userId);
+  FutureOr<List<Wishitem>> build() async => await _fetchWishitemList();
+
+  Future<List<Wishitem>> _fetchWishitemList() async {
+    final loggedInUser = await ref.read(loggedInUserStateProvider.future);
+    return await _repository.getWishitemList(userId: loggedInUser.id);
   }
 
   /// ほしいもの一覧を取得する
   Future<void> fetchWishitemList() async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
-    final wishitemList = await _repository.getWishitemList(userId: userId);
-    state = AsyncData(wishitemList);
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async => await _fetchWishitemList());
   }
 
   /// ほしいものを取得する
-  Future<Wishitem> getWishitem(WishitemId wishitemId) async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    return await _repository.getWishitem(wishitemId: wishitemId);
-  }
-
-  /// ほしいものを作成する
-  Future<void> createWishitem({
-    required String name,
-    required String description,
-    required UserId userId,
-    required FamilyCoin price,
-    Uri? url,
-  }) async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    final wishitem = Wishitem(
-      id: WishitemId.generate(),
-      name: name,
-      userId: userId,
-      approvalStatus: ApprovalStatus.unapproved(),
-      price: price,
-      description: description,
-      url: url,
-    );
-    await _repository.createWishitem(wishitem);
-    await fetchWishitemList();
-  }
-
-  /// ほしいものを更新する
-  Future<void> updateWishitem({required WishitemId wishitemId, required Wishitem wishitem}) async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
-    final currentWishitem = await _repository.getWishitem(wishitemId: wishitemId);
-    if (currentWishitem.userId != userId) {
-      throw ArgumentError('更新対象が自分のほしいものではありません');
-    }
-    final updatedWishitem = currentWishitem.copyWith(
-      name: wishitem.name,
-      description: wishitem.description,
-      price: wishitem.price,
-      url: wishitem.url,
-    );
-    await _repository.updateWishitem(wishitemId: wishitemId, wishitem: updatedWishitem);
-    await fetchWishitemList();
-  }
-
-  /// ほしいものを削除する
-  Future<void> deleteWishitem({required WishitemId wishitemId}) async {
-    if (ref.read(loggedInUserStateProvider).value == null) {
-      throw NotLoggedInException();
-    }
-    final userId = ref.read(loggedInUserStateProvider).value!.id;
-    final currentWishitem = await _repository.getWishitem(wishitemId: wishitemId);
-    if (currentWishitem.userId != userId) {
-      throw ArgumentError('削除対象が自分のほしいものではありません');
-    }
-    await _repository.deleteWishitem(wishitemId: wishitemId);
-    await fetchWishitemList();
-  }
+  Future<Wishitem> getWishitem(WishitemId wishitemId) async =>
+      await _repository.getWishitem(wishitemId: wishitemId);
 }

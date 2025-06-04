@@ -13,7 +13,7 @@ abstract class TaskRepository {
   Future<void> createTask(Task task);
 
   /// タスクを更新する
-  Future<void> updateTask({required TaskId taskId, required Task task});
+  Future<void> updateTask({required Task task});
 
   /// タスクを削除する
   Future<void> deleteTask({required TaskId taskId});

@@ -35,5 +35,7 @@
       "error": {
       }
     }
-  }
+  },
+  "notFoundError": "Not Found",
+  "unexpectedError": "Unexpected Error"
 } 

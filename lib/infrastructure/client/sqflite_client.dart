@@ -52,7 +52,7 @@ class SqfliteClient {
       await txn.execute(_QueryV1.createTasksTable);
       await txn.execute(_QueryV1.createWishitemsTable);
       await txn.execute(_QueryV1.createTaskLogsTable);
-      await txn.execute(_QueryV1.rewardRecordTable);
+      await txn.execute(_QueryV1.exchangedRecordsTable);
     });
   }
 
@@ -69,7 +69,7 @@ class SqfliteClient {
         await txn.execute(_QueryV1.createTasksTable);
         await txn.execute(_QueryV1.createWishitemsTable);
         await txn.execute(_QueryV1.createTaskLogsTable);
-        await txn.execute(_QueryV1.rewardRecordTable);
+        await txn.execute(_QueryV1.exchangedRecordsTable);
       });
     }
   }
@@ -161,8 +161,8 @@ class _QueryV1 {
   ''';
 
   /// ほしいもの交換履歴テーブルを作成する
-  static String get rewardRecordTable => '''
-    CREATE TABLE IF NOT EXISTS reward_records(
+  static String get exchangedRecordsTable => '''
+    CREATE TABLE IF NOT EXISTS exchanged_records(
       id INTEGER PRIMARY KEY,
       userId INTEGER NOT NULL,
       wishItemId INTEGER NOT NULL,

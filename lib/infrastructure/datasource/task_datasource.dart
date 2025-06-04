@@ -14,7 +14,7 @@ abstract class TaskDataSource {
 
   /// タスクを更新する
   /// 更新対象のuserIdが合致しない場合はエラーを返す
-  Future<void> updateTask({required TaskId taskId, required Task task});
+  Future<void> updateTask({required Task task});
 
   /// タスクを削除する
   /// 削除対象のuserIdが合致しない場合はエラーを返す

@@ -1,8 +1,8 @@
 import 'package:family_coin/application/provider/logged_in_user_state.dart';
 import 'package:family_coin/application/provider/task_list_state.dart';
 import 'package:family_coin/application/provider/task_log_list_state.dart';
-import 'package:family_coin/application/provider/user_list_state.dart';
 import 'package:family_coin/application/usecase/complete_task_usecase.dart';
+import 'package:family_coin/application/usecase/update_user_name_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/presentation/ui/common/theme/spacing.dart';
 import 'package:family_coin/presentation/ui/home/widgets/account_card.dart';
@@ -13,7 +13,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// タスク完了のユースケースプロバイダー
 final completeTaskUseCaseProvider = Provider<CompleteTaskUseCase>(
   (ref) => CompleteTaskUseCase(
-    userState: ref.watch(userListStateProvider.notifier),
     taskLogListState: ref.watch(taskLogListStateProvider.notifier),
   ),
 );
@@ -57,9 +56,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                       name: user.name,
                       balance: user.familyCoinBalance.value,
                       nameOnChanged:
-                          (name) async => await ref
-                              .read(userListStateProvider.notifier)
-                              .updateUserName(userId: user.id, name: name),
+                          (name) => const UpdateUserNameUseCase().execute(
+                            userId: user.id,
+                            name: name,
+                          ),
                     ),
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error:

@@ -19,7 +19,11 @@ class TaskLocalDataSource implements TaskDataSource {
   @override
   Future<Task> getTask({required TaskId taskId}) async {
     final db = await _client.db;
-    final result = await db.query(_tasksTable, where: '$_idColumn = ?', whereArgs: [taskId.value]);
+    final result = await db.query(
+      _tasksTable,
+      where: '$_idColumn = ?',
+      whereArgs: [taskId.value],
+    );
     if (result.isEmpty) {
       throw Exception('Task not found');
     }
@@ -30,7 +34,11 @@ class TaskLocalDataSource implements TaskDataSource {
   @override
   Future<List<Task>> getTaskList({required UserId userId}) async {
     final db = await _client.db;
-    final result = await db.query(_tasksTable, where: '$_userIdColumn = ?', whereArgs: [userId.value]);
+    final result = await db.query(
+      _tasksTable,
+      where: '$_userIdColumn = ?',
+      whereArgs: [userId.value],
+    );
     return result.map(Task.fromJson).toList();
   }
 
@@ -45,14 +53,14 @@ class TaskLocalDataSource implements TaskDataSource {
 
   /// タスクを更新する
   @override
-  Future<void> updateTask({required TaskId taskId, required Task task}) async {
+  Future<void> updateTask({required Task task}) async {
     final db = await _client.db;
     await db.transaction((txn) async {
       final updatedCount = await txn.update(
         _tasksTable,
         task.toJson(),
         where: '$_idColumn = ?',
-        whereArgs: [taskId.value],
+        whereArgs: [task.id.value],
       );
       if (updatedCount == 0) {
         throw Exception('Task not found');
@@ -65,7 +73,11 @@ class TaskLocalDataSource implements TaskDataSource {
   Future<void> deleteTask({required TaskId taskId}) async {
     final db = await _client.db;
     await db.transaction((txn) async {
-      final deletedCount = await txn.delete(_tasksTable, where: '$_idColumn = ?', whereArgs: [taskId.value]);
+      final deletedCount = await txn.delete(
+        _tasksTable,
+        where: '$_idColumn = ?',
+        whereArgs: [taskId.value],
+      );
       if (deletedCount == 0) {
         throw Exception('Task not found');
       }

@@ -35,6 +35,7 @@
       "error": {
       }
     }
-  }
-
+  },
+  "notFoundError": "データが見つかりませんでした。",
+  "unexpectedError": "予期せぬエラーが発生しました。"
 } 

@@ -19,8 +19,8 @@ class MockTaskRepository extends Mock implements TaskRepository {
   Future<void> createTask(Task task) async => dummyTaskList.add(task);
 
   @override
-  Future<void> updateTask({required TaskId taskId, required Task task}) async {
-    final index = dummyTaskList.indexWhere((element) => element.id == taskId);
+  Future<void> updateTask({required Task task}) async {
+    final index = dummyTaskList.indexWhere((element) => element.id == task.id);
     dummyTaskList[index] = task;
   }
 

@@ -34,9 +34,9 @@ dev_dependencies:
   mocktail: ^1.0.4
   riverpod_generator: ^2.6.5
   # TODO(naga): https://github.com/dart-lang/sdk/issues/60784
-  analyzer: ^7.4.5
-  analyzer_plugin: ^0.13.0
-
+  analyzer: 7.3.0
+  analyzer_plugin: 0.13.0
+  
 flutter:
   generate: true
   uses-material-design: true

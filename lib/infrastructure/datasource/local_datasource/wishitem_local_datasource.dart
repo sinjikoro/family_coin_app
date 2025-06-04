@@ -19,7 +19,11 @@ class WishitemLocalDataSource implements WishitemDataSource {
   @override
   Future<Wishitem> getWishitem({required WishitemId wishitemId}) async {
     final db = await _client.db;
-    final result = await db.query(_wishitemsTable, where: '$_idColumn = ?', whereArgs: [wishitemId.value]);
+    final result = await db.query(
+      _wishitemsTable,
+      where: '$_idColumn = ?',
+      whereArgs: [wishitemId.value],
+    );
     if (result.isEmpty) {
       throw Exception('Wishitem not found');
     }
@@ -30,7 +34,11 @@ class WishitemLocalDataSource implements WishitemDataSource {
   @override
   Future<List<Wishitem>> getWishitemList({required UserId userId}) async {
     final db = await _client.db;
-    final result = await db.query(_wishitemsTable, where: '$_userIdColumn = ?', whereArgs: [userId.value]);
+    final result = await db.query(
+      _wishitemsTable,
+      where: '$_userIdColumn = ?',
+      whereArgs: [userId.value],
+    );
     return result.map(Wishitem.fromJson).toList();
   }
 
@@ -45,14 +53,14 @@ class WishitemLocalDataSource implements WishitemDataSource {
 
   /// ほしいものを更新する
   @override
-  Future<void> updateWishitem({required WishitemId wishitemId, required Wishitem wishitem}) async {
+  Future<void> updateWishitem({required Wishitem wishitem}) async {
     final db = await _client.db;
     await db.transaction((txn) async {
       final updatedCount = await txn.update(
         _wishitemsTable,
         wishitem.toJson(),
         where: '$_idColumn = ?',
-        whereArgs: [wishitemId.value],
+        whereArgs: [wishitem.id.value],
       );
       if (updatedCount == 0) {
         throw Exception('Wishitem not found');
@@ -65,7 +73,11 @@ class WishitemLocalDataSource implements WishitemDataSource {
   Future<void> deleteWishitem({required WishitemId wishitemId}) async {
     final db = await _client.db;
     await db.transaction((txn) async {
-      final deletedCount = await txn.delete(_wishitemsTable, where: '$_idColumn = ?', whereArgs: [wishitemId.value]);
+      final deletedCount = await txn.delete(
+        _wishitemsTable,
+        where: '$_idColumn = ?',
+        whereArgs: [wishitemId.value],
+      );
       if (deletedCount == 0) {
         throw Exception('Wishitem not found');
       }

@@ -1,4 +1,5 @@
 import 'package:family_coin/application/provider/wishitem_list_state.dart';
+import 'package:family_coin/application/usecase/update_wishitem_usecase.dart';
 import 'package:family_coin/core/exception/exception.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/wishitem/wishitem.dart';
@@ -46,7 +47,10 @@ class _WishitemDetailPageState extends ConsumerState<WishitemDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(wishitemAsync?.name ?? ''),
-        actions: [if (!isEditing) IconButton(icon: const Icon(Icons.edit), onPressed: toggleEditing)],
+        actions: [
+          if (!isEditing)
+            IconButton(icon: const Icon(Icons.edit), onPressed: toggleEditing),
+        ],
       ),
       body: _buildBody(wishitemAsync),
     );
@@ -63,17 +67,26 @@ class _WishitemDetailPageState extends ConsumerState<WishitemDetailPage> {
     Uri? url,
   }) async {
     try {
-      final currentWishitem = await ref.read(wishitemListStateProvider.notifier).getWishitem(widget.wishitemId);
-      final updatedWishitem = currentWishitem.copyWith(name: name, description: description, price: price, url: url);
-      await ref
+      final currentWishitem = await ref
           .read(wishitemListStateProvider.notifier)
-          .updateWishitem(wishitemId: widget.wishitemId, wishitem: updatedWishitem);
+          .getWishitem(widget.wishitemId);
+      final updatedWishitem = currentWishitem.copyWith(
+        name: name,
+        description: description,
+        price: price,
+        url: url,
+      );
+      await UpdateWishitemUseCase(
+        wishitemListState: ref.read(wishitemListStateProvider.notifier),
+      ).execute(wishitem: updatedWishitem);
       if (mounted) {
         toggleEditing();
       }
     } on NotLoggedInException catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.error(e.toString()))));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.error(e.toString()))),
+        );
       }
     }
   }
@@ -85,7 +98,11 @@ class _WishitemDetailPageState extends ConsumerState<WishitemDetailPage> {
     }
 
     if (isEditing) {
-      return WishitemFormWidget(wishitem: wishitem, onSave: _updateWishitem, onCancel: toggleEditing);
+      return WishitemFormWidget(
+        wishitem: wishitem,
+        onSave: _updateWishitem,
+        onCancel: toggleEditing,
+      );
     }
 
     return WishitemReadOnlyWidget(

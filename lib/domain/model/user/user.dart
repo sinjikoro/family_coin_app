@@ -28,4 +28,12 @@ abstract class User with _$User {
 
   /// fromJson
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  /// コインを利用する
+  User useFamilyCoin({required FamilyCoin amount}) =>
+      copyWith(familyCoinBalance: familyCoinBalance - amount);
+
+  /// コインを獲得する
+  User earnFamilyCoin({required FamilyCoin amount}) =>
+      copyWith(familyCoinBalance: familyCoinBalance + amount);
 }

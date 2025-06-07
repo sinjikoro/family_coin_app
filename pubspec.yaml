@@ -25,6 +25,8 @@ dependencies:
   sqflite: ^2.4.2
 
 dev_dependencies:
+  analyzer: 7.3.0
+  analyzer_plugin: 0.13.0
   build_runner: ^2.4.15
   flutter_lints: ^5.0.0
   flutter_test:
@@ -34,8 +36,6 @@ dev_dependencies:
   mocktail: ^1.0.4
   riverpod_generator: ^2.6.5
   # TODO(naga): https://github.com/dart-lang/sdk/issues/60784
-  analyzer: 7.3.0
-  analyzer_plugin: 0.13.0
   
 flutter:
   generate: true

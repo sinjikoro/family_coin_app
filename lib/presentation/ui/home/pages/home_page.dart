@@ -28,15 +28,6 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(() async {
-      // await ref.read(loggedInUserStateProvider.notifier).fetchUser();
-      await ref.read(taskListStateProvider.notifier).fetchTaskList();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final userProvider = ref.watch(loggedInUserStateProvider);
     final taskListProvider = ref.watch(taskListStateProvider);

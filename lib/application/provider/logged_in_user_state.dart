@@ -37,5 +37,5 @@ class LoggedInUserState extends _$LoggedInUserState {
     return user;
   }
 
-  // TODO: そのうちログイン、ログアウトを実装する
+  // TODO(naga): そのうちログイン、ログアウトを実装する
 }

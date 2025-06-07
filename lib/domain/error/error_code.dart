@@ -15,9 +15,9 @@ enum ErrorCode {
   /// 0または負の数での剰余
   familyCoinInvalidModulo('FAMILY_COIN_INVALID_MODULO');
 
-  /// エラーコード
-  final String code;
-
   /// コンストラクタ
   const ErrorCode(this.code);
+
+  /// エラーコード
+  final String code;
 }

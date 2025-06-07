@@ -4,9 +4,9 @@ import 'package:family_coin/domain/value_object/id.dart';
 import 'package:get_it/get_it.dart';
 
 /// ユーザーのFamilyCoinを追加するユースケース
-class UseUserFamilyCoinUseCase {
+class UseFamilyCoinUseCase {
   /// コンストラクタ
-  const UseUserFamilyCoinUseCase();
+  const UseFamilyCoinUseCase();
 
   /// ユーザーのFamilyCoinを追加する
   Future<void> execute({

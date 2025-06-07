@@ -8,7 +8,7 @@ class AccountCard extends StatelessWidget {
   const AccountCard({
     required this.name,
     required this.balance,
-    required this.nameOnChanged,
+    required this.onNameChanged,
     super.key,
   });
 
@@ -19,7 +19,7 @@ class AccountCard extends StatelessWidget {
   final int balance;
 
   /// 名前変更時のコールバック
-  final ValueChanged<String> nameOnChanged;
+  final ValueChanged<String> onNameChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class AccountCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 TappableEditableText(
                   text: name,
-                  onChanged: nameOnChanged,
+                  onChanged: onNameChanged,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.onPrimaryContainer,
                     fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class AccountCard extends StatelessWidget {
       ..add(
         ObjectFlagProperty<ValueChanged<String>>.has(
           'nameOnChanged',
-          nameOnChanged,
+          onNameChanged,
         ),
       );
   }

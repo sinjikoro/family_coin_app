@@ -1,7 +1,7 @@
 import 'package:family_coin/application/provider/task_list_state.dart';
-import 'package:family_coin/application/usecase/create_task_usecase.dart';
-import 'package:family_coin/application/usecase/delete_task_usecase.dart';
-import 'package:family_coin/application/usecase/update_task_usecase.dart';
+import 'package:family_coin/application/usecase/task/create_task_usecase.dart';
+import 'package:family_coin/application/usecase/task/delete_task_usecase.dart';
+import 'package:family_coin/application/usecase/task/update_task_usecase.dart';
 import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';

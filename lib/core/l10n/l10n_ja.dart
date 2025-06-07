@@ -47,6 +47,9 @@ class L10nJa extends L10n {
   String get taskDifficultyMustBeNumber => '難易度は数値で入力してください。';
 
   @override
+  String get wishitemPriceMustBeNumber => '価格は数値で入力してください。';
+
+  @override
   String get taskName => 'タスク名';
 
   @override
@@ -69,6 +72,18 @@ class L10nJa extends L10n {
 
   @override
   String get wishitemDetailTitle => 'ほしいもの詳細';
+
+  @override
+  String get wishItemName => 'ほしいもの名';
+
+  @override
+  String get wishItemDescription => '説明';
+
+  @override
+  String get wishItemPrice => '価格（コイン）';
+
+  @override
+  String get wishItemURL => 'URL（任意）';
 
   @override
   String error(Object errorMessage) {

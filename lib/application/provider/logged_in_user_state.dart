@@ -1,6 +1,6 @@
+import 'package:family_coin/application/usecase/user/create_user_usecase.dart';
 import 'package:family_coin/domain/model/user/user.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
-import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,25 +17,34 @@ class LoggedInUserState extends _$LoggedInUserState {
   static const String _userIdKey = 'userId';
 
   @override
-  FutureOr<User> build() async {
+  FutureOr<User> build() async => await _fetchUser();
+
+  /// ユーザー情報を取得する
+  Future<User> _fetchUser() async {
     final userId = _prefs.getInt(_userIdKey);
-    return userId == null
-        ? await _createNewUser()
-        : await _repository.getUser(userId: UserId(userId));
+    if (userId == null) {
+      return await login();
+    }
+    return await _repository.getUser(userId: UserId(userId));
   }
 
-  /// 新規ユーザーを作成する
-  Future<User> _createNewUser() async {
-    final newUserId = UserId.generate();
-    final user = User(
-      id: newUserId,
-      name: 'New User',
-      familyCoinBalance: const FamilyCoin(0),
-    );
-    await _repository.createUser(user);
-    await _prefs.setInt(_userIdKey, newUserId.value);
+  /// ユーザー情報の最新を取得する
+  Future<void> refresh() async {
+    state = AsyncValue.data(await _fetchUser());
+  }
+
+  // TODO(naga): ログイン機能を実装する
+  /// ログインする
+  Future<User> login() async {
+    final user = await const CreateUserUseCase().execute(name: 'New User');
+    await _prefs.setInt(_userIdKey, user.id.value);
     return user;
   }
 
-  // TODO(naga): そのうちログイン、ログアウトを実装する
+  // TODO(naga): ログアウト機能を実装する
+  /// ログアウトする
+  Future<void> logout() async {
+    await _prefs.remove(_userIdKey);
+    state = AsyncValue.data(User.guest());
+  }
 }

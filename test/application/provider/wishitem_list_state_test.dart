@@ -1,7 +1,7 @@
 import 'package:family_coin/application/provider/wishitem_list_state.dart';
-import 'package:family_coin/application/usecase/create_wishitem_usecase.dart';
-import 'package:family_coin/application/usecase/delete_wishitem_usecase.dart';
-import 'package:family_coin/application/usecase/update_wishitem_usecase.dart';
+import 'package:family_coin/application/usecase/wishitem/create_wishitem_usecase.dart';
+import 'package:family_coin/application/usecase/wishitem/delete_wishitem_usecase.dart';
+import 'package:family_coin/application/usecase/wishitem/update_wishitem_usecase.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:flutter_test/flutter_test.dart';

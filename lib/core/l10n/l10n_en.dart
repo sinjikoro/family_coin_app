@@ -47,6 +47,9 @@ class L10nEn extends L10n {
   String get taskDifficultyMustBeNumber => 'difficulty must be number.';
 
   @override
+  String get wishitemPriceMustBeNumber => 'price must be number.';
+
+  @override
   String get taskName => 'task name';
 
   @override
@@ -69,6 +72,18 @@ class L10nEn extends L10n {
 
   @override
   String get wishitemDetailTitle => 'wishitem detail';
+
+  @override
+  String get wishItemName => 'wishitem name';
+
+  @override
+  String get wishItemDescription => 'description';
+
+  @override
+  String get wishItemPrice => 'price(coin)';
+
+  @override
+  String get wishItemURL => 'URL(optional)';
 
   @override
   String error(Object errorMessage) {

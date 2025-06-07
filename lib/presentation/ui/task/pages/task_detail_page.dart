@@ -1,21 +1,20 @@
 import 'package:family_coin/application/provider/task_list_state.dart';
-import 'package:family_coin/application/usecase/get_task_usecase.dart';
-import 'package:family_coin/application/usecase/update_task_usecase.dart';
-import 'package:family_coin/core/exception/exception.dart';
+import 'package:family_coin/application/usecase/task/get_task_usecase.dart';
+import 'package:family_coin/application/usecase/task/update_task_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/task/task.dart';
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
+import 'package:family_coin/presentation/ui/common/pages/error_page.dart';
 import 'package:family_coin/presentation/ui/task/widgets/task_form_widget.dart';
 import 'package:family_coin/presentation/ui/task/widgets/task_read_only_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// タスク詳細
-class TaskDetailPage extends ConsumerStatefulWidget {
+/// タスク詳細ページ
+class TaskDetailPage extends StatelessWidget {
   /// constructor
   const TaskDetailPage({required this.taskId, super.key});
 
@@ -23,34 +22,80 @@ class TaskDetailPage extends ConsumerStatefulWidget {
   final TaskId taskId;
 
   @override
-  ConsumerState<TaskDetailPage> createState() => _TaskDetailPageState();
+  Widget build(BuildContext context) => FutureBuilder<Task>(
+    future: const GetTaskUseCase().execute(taskId: taskId),
+    builder: (context, task) {
+      switch (task.connectionState) {
+        case ConnectionState.done:
+          return task.hasData
+              ? _TaskDetailPage(task: task.data!)
+              : ErrorPage(errorMessage: context.l10n.unexpectedError);
+        case ConnectionState.waiting:
+        case ConnectionState.none:
+        case ConnectionState.active:
+          return const Center(child: CircularProgressIndicator());
+      }
+    },
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Id>('taskId', taskId));
+    properties.add(DiagnosticsProperty<TaskId>('taskId', taskId));
   }
 }
 
-class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
-  /// 編集モード
-  bool isEditing = false;
+class _TaskDetailPage extends ConsumerStatefulWidget {
+  /// constructor
+  const _TaskDetailPage({required this.task});
+
+  /// タスク
+  final Task task;
 
   @override
-  Widget build(BuildContext context) => FutureBuilder<Task>(
-    future: const GetTaskUseCase().execute(taskId: widget.taskId),
-    builder:
-        (context, snapshot) => switch (snapshot.connectionState) {
-          ConnectionState.waiting => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          ConnectionState.done => switch (snapshot) {
-            AsyncData(:final value) => _buildBody(value),
-            AsyncError(:final error) => _buildErrorWidget(error.toString()),
-            _ => _buildErrorWidget(context.l10n.unexpectedError),
-          },
-          _ => _buildErrorWidget(context.l10n.notFoundError),
-        },
+  ConsumerState<_TaskDetailPage> createState() => _TaskDetailPageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<Task>('task', task));
+  }
+}
+
+class _TaskDetailPageState extends ConsumerState<_TaskDetailPage> {
+  /// 編集モード
+  bool isEditing = false;
+  Task _currentTask = Task.initial(const UserId.unassigned());
+
+  @override
+  void initState() {
+    super.initState();
+    _currentTask = widget.task;
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(
+      title: Text(_currentTask.name),
+      actions: [
+        if (!isEditing)
+          IconButton(icon: const Icon(Icons.edit), onPressed: toggleEditing),
+      ],
+    ),
+    body:
+        isEditing
+            ? TaskFormWidget(
+              task: _currentTask,
+              onSave: _updateTask,
+              onCancel: toggleEditing,
+            )
+            : TaskReadOnlyWidget(
+              taskName: _currentTask.name,
+              taskDescription: _currentTask.description,
+              taskEarnCoins: _currentTask.earnCoins,
+              taskDifficulty: _currentTask.difficulty,
+              taskRegistrationStatus: _currentTask.registrationStatus,
+            ),
   );
 
   /// 編集モードを切り替える
@@ -63,54 +108,20 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     required FamilyCoin earnCoins,
     required Difficulty difficulty,
   }) async {
-    try {
-      await UpdateTaskUseCase(
-        taskListState: ref.read(taskListStateProvider.notifier),
-      ).execute(
-        task: Task(
-          id: widget.taskId,
-          name: name,
-          description: description,
-          earnCoins: earnCoins,
-          difficulty: difficulty,
-          userId: const UserId.unassigned(),
-          registrationStatus: ApprovalStatus.unapproved(),
-        ),
-      );
-      if (mounted) {
-        toggleEditing();
-      }
-    } on NotLoggedInException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.error(e.toString()))),
-        );
-      }
-    }
-  }
-
-  /// ボディWidget
-  Widget _buildBody(Task task) {
-    if (isEditing) {
-      return TaskFormWidget(
-        task: task,
-        onSave: _updateTask,
-        onCancel: toggleEditing,
-      );
-    }
-
-    return TaskReadOnlyWidget(
-      taskName: task.name,
-      taskDescription: task.description,
-      taskEarnCoins: task.earnCoins,
-      taskDifficulty: task.difficulty,
-      taskRegistrationStatus: task.registrationStatus,
+    final updatedTask = widget.task.copyWith(
+      name: name,
+      description: description,
+      earnCoins: earnCoins,
+      difficulty: difficulty,
     );
+    await UpdateTaskUseCase(
+      taskListState: ref.read(taskListStateProvider.notifier),
+    ).execute(task: updatedTask);
+    if (mounted) {
+      toggleEditing();
+      _currentTask = updatedTask;
+    }
   }
-
-  /// エラーWidget
-  Widget _buildErrorWidget(String errorMessage) =>
-      Center(child: Text(context.l10n.error(errorMessage)));
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

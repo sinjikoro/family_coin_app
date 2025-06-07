@@ -18,6 +18,7 @@
   "taskEarnCoinMustBeNumber": "earn coins must be number.",
   "taskDifficultyRequired": "difficulty required.",
   "taskDifficultyMustBeNumber": "difficulty must be number.",
+  "wishitemPriceMustBeNumber": "price must be number.",
 
   "taskName": "task name",
   "taskEarnCoin": "earn coin",
@@ -28,6 +29,11 @@
   "wishitemListEmpty": "empty..",
   "wishitemCreateTitle": "new withItem",
   "wishitemDetailTitle": "wishitem detail",
+
+  "wishItemName": "wishitem name",
+  "wishItemDescription": "description",
+  "wishItemPrice": "price(coin)",
+  "wishItemURL": "URL(optional)",
 
   "error": "error occurred! : {errorMessage}",
   "@errorMessage": {

@@ -1,9 +1,10 @@
 import 'package:family_coin/application/provider/logged_in_user_state.dart';
 import 'package:family_coin/application/provider/task_list_state.dart';
 import 'package:family_coin/application/provider/task_log_list_state.dart';
-import 'package:family_coin/application/usecase/complete_task_usecase.dart';
-import 'package:family_coin/application/usecase/update_user_name_usecase.dart';
+import 'package:family_coin/application/usecase/task/complete_task_usecase.dart';
+import 'package:family_coin/application/usecase/user/update_user_name_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
+import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/presentation/ui/common/theme/spacing.dart';
 import 'package:family_coin/presentation/ui/home/widgets/account_card.dart';
 import 'package:family_coin/presentation/ui/home/widgets/enable_task_list.dart';
@@ -46,11 +47,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     (user) => AccountCard(
                       name: user.name,
                       balance: user.familyCoinBalance.value,
-                      nameOnChanged:
-                          (name) => const UpdateUserNameUseCase().execute(
-                            userId: user.id,
-                            name: name,
-                          ),
+                      onNameChanged: _onNameChanged,
                     ),
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error:
@@ -67,14 +64,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ? const Center(child: Text('タスクがありません'))
                           : EnableTaskList(
                             tasks: tasks,
-                            onTaskCompleted: (task) async {
-                              await ref
-                                  .read(completeTaskUseCaseProvider)
-                                  .execute(
-                                    user: userProvider.value!,
-                                    task: task,
-                                  );
-                            },
+                            onTaskCompleted: _onTaskCompleted,
                           ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stackTrace) => Center(child: Text('エラー: $error')),
@@ -83,5 +73,34 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
     );
+  }
+
+  /// 名前変更時のコールバック
+  Future<void> _onNameChanged(String name) async {
+    // ログイン中のユーザー取得
+    final loggedInUser = ref.read(loggedInUserStateProvider);
+    // 名前変更
+    await const UpdateUserNameUseCase().execute(
+      userId: loggedInUser.value!.id,
+      name: name,
+    );
+    if (mounted) {
+      // ユーザー情報を更新
+      await ref.read(loggedInUserStateProvider.notifier).refresh();
+    }
+  }
+
+  /// タスク完了時のコールバック
+  Future<void> _onTaskCompleted(Task task) async {
+    // ログイン中のユーザー取得
+    final loggedInUser = ref.read(loggedInUserStateProvider);
+    // タスク完了
+    await CompleteTaskUseCase(
+      taskLogListState: ref.read(taskLogListStateProvider.notifier),
+    ).execute(user: loggedInUser.value!, task: task);
+    if (mounted) {
+      // ユーザー情報を更新
+      await ref.read(loggedInUserStateProvider.notifier).refresh();
+    }
   }
 }

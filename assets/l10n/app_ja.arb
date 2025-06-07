@@ -18,6 +18,7 @@
   "taskEarnCoinMustBeNumber": "付与コインは数値で入力してください。",
   "taskDifficultyRequired": "難易度は必須項目です。",
   "taskDifficultyMustBeNumber": "難易度は数値で入力してください。",
+  "wishitemPriceMustBeNumber": "価格は数値で入力してください。",
 
   "taskName": "タスク名",
   "taskEarnCoin": "付与コイン",
@@ -28,6 +29,11 @@
   "wishitemListEmpty": "ほしいものはありません",
   "wishitemCreateTitle": "新しいほしいもの",
   "wishitemDetailTitle": "ほしいもの詳細",
+
+  "wishItemName": "ほしいもの名",
+  "wishItemDescription": "説明",
+  "wishItemPrice": "価格（コイン）",
+  "wishItemURL": "URL（任意）",
 
   "error": "エラーが発生しました! : {errorMessage}",
   "@errorMessage": {

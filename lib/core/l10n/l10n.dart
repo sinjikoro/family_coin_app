@@ -169,6 +169,12 @@ abstract class L10n {
   /// **'難易度は数値で入力してください。'**
   String get taskDifficultyMustBeNumber;
 
+  /// No description provided for @wishitemPriceMustBeNumber.
+  ///
+  /// In ja, this message translates to:
+  /// **'価格は数値で入力してください。'**
+  String get wishitemPriceMustBeNumber;
+
   /// No description provided for @taskName.
   ///
   /// In ja, this message translates to:
@@ -216,6 +222,30 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'ほしいもの詳細'**
   String get wishitemDetailTitle;
+
+  /// No description provided for @wishItemName.
+  ///
+  /// In ja, this message translates to:
+  /// **'ほしいもの名'**
+  String get wishItemName;
+
+  /// No description provided for @wishItemDescription.
+  ///
+  /// In ja, this message translates to:
+  /// **'説明'**
+  String get wishItemDescription;
+
+  /// No description provided for @wishItemPrice.
+  ///
+  /// In ja, this message translates to:
+  /// **'価格（コイン）'**
+  String get wishItemPrice;
+
+  /// No description provided for @wishItemURL.
+  ///
+  /// In ja, this message translates to:
+  /// **'URL（任意）'**
+  String get wishItemURL;
 
   /// No description provided for @error.
   ///

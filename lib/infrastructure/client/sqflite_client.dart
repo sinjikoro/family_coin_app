@@ -127,7 +127,6 @@ class _QueryV1 {
       name TEXT NOT NULL,
       userId INTEGER NOT NULL,
       earnCoins INTEGER NOT NULL,
-      registrationStatus TEXT NOT NULL,
       description TEXT,
       difficulty TEXT
     )
@@ -139,7 +138,6 @@ class _QueryV1 {
       id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
       userId INTEGER NOT NULL,
-      approvalStatus TEXT NOT NULL,
       price INTEGER NOT NULL,
       description TEXT,
       url TEXT
@@ -152,9 +150,7 @@ class _QueryV1 {
       id INTEGER PRIMARY KEY,
       taskId INTEGER NOT NULL,
       userId INTEGER NOT NULL,
-      approvalStatus TEXT NOT NULL,
       earnedCoins INTEGER NOT NULL,
-      earnedAt TEXT NOT NULL,
       createdAt TEXT NOT NULL,
       updatedAt TEXT NOT NULL
     )
@@ -167,8 +163,6 @@ class _QueryV1 {
       userId INTEGER NOT NULL,
       wishItemId INTEGER NOT NULL,
       exchangedCoins INTEGER NOT NULL,
-      approvalStatus TEXT NOT NULL,
-      exchangeAt TEXT NOT NULL,
       createdAt TEXT NOT NULL,
       updatedAt TEXT NOT NULL
     )

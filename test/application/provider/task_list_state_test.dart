@@ -2,7 +2,6 @@ import 'package:family_coin/application/provider/task_list_state.dart';
 import 'package:family_coin/application/usecase/task/create_task_usecase.dart';
 import 'package:family_coin/application/usecase/task/delete_task_usecase.dart';
 import 'package:family_coin/application/usecase/task/update_task_usecase.dart';
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
@@ -46,7 +45,6 @@ void main() {
       expect(state.first.description, 'テストタスクの説明');
       expect(state.first.userId, userId);
       expect(state.first.difficulty, Difficulty.easy);
-      expect(state.first.registrationStatus, ApprovalStatus.unapproved());
     });
 
     test('タスクを更新できる', () async {

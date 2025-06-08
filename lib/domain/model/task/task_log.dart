@@ -1,4 +1,3 @@
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,9 +13,7 @@ abstract class TaskLog with _$TaskLog {
     @RecordIdJsonConverter() required RecordId id,
     @TaskIdJsonConverter() required TaskId taskId,
     @UserIdJsonConverter() required UserId userId,
-    @ApprovalStatusJsonConverter() required ApprovalStatus approvalStatus,
     @FamilyCoinJsonConverter() required FamilyCoin earnedCoins,
-    required DateTime earnedAt,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _TaskLog;
@@ -25,5 +22,6 @@ abstract class TaskLog with _$TaskLog {
   const TaskLog._();
 
   /// fromJson
-  factory TaskLog.fromJson(Map<String, dynamic> json) => _$TaskLogFromJson(json);
+  factory TaskLog.fromJson(Map<String, dynamic> json) =>
+      _$TaskLogFromJson(json);
 }

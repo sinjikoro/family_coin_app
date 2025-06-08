@@ -1,5 +1,4 @@
 import 'package:family_coin/domain/model/wishitem/wishitem.dart';
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +12,6 @@ void main() {
         name: 'テストほしいもの',
         description: 'テストほしいものの説明',
         price: const FamilyCoin(100),
-        approvalStatus: ApprovalStatus.unapproved(),
       );
 
       expect(wishitem.id, isA<WishitemId>());
@@ -21,7 +19,6 @@ void main() {
       expect(wishitem.name, 'テストほしいもの');
       expect(wishitem.description, 'テストほしいものの説明');
       expect(wishitem.price, const FamilyCoin(100));
-      expect(wishitem.approvalStatus, ApprovalStatus.unapproved());
     });
 
     test('WishitemをJSONに変換できる', () {
@@ -31,7 +28,6 @@ void main() {
         name: 'テストほしいもの',
         description: 'テストほしいものの説明',
         price: const FamilyCoin(100),
-        approvalStatus: ApprovalStatus.unapproved(),
       );
 
       final json = wishitem.toJson();
@@ -40,7 +36,6 @@ void main() {
       expect(json['name'], 'テストほしいもの');
       expect(json['description'], 'テストほしいものの説明');
       expect(json['price'], 100);
-      expect(json['approvalStatus'], ApprovalStatus.unapproved().value);
     });
 
     test('JSONからWishitemを生成できる', () {
@@ -50,7 +45,6 @@ void main() {
         'name': 'テストほしいもの',
         'description': 'テストほしいものの説明',
         'price': 100,
-        'approvalStatus': ApprovalStatus.unapproved().value,
       };
 
       final wishitem = Wishitem.fromJson(json);
@@ -59,7 +53,6 @@ void main() {
       expect(wishitem.name, 'テストほしいもの');
       expect(wishitem.description, 'テストほしいものの説明');
       expect(wishitem.price, const FamilyCoin(100));
-      expect(wishitem.approvalStatus, ApprovalStatus.unapproved());
     });
 
     test('Wishitemをコピーできる', () {
@@ -69,17 +62,18 @@ void main() {
         name: 'テストほしいもの',
         description: 'テストほしいものの説明',
         price: const FamilyCoin(100),
-        approvalStatus: ApprovalStatus.unapproved(),
       );
 
-      final copiedWishitem = wishitem.copyWith(name: 'コピーされたほしいもの', price: const FamilyCoin(200));
+      final copiedWishitem = wishitem.copyWith(
+        name: 'コピーされたほしいもの',
+        price: const FamilyCoin(200),
+      );
 
       expect(copiedWishitem.id, wishitem.id);
       expect(copiedWishitem.userId, wishitem.userId);
       expect(copiedWishitem.name, 'コピーされたほしいもの');
       expect(copiedWishitem.description, wishitem.description);
       expect(copiedWishitem.price, const FamilyCoin(200));
-      expect(copiedWishitem.approvalStatus, wishitem.approvalStatus);
     });
   });
 }

@@ -29,7 +29,7 @@ class TaskDetailPage extends StatelessWidget {
         case ConnectionState.done:
           return task.hasData
               ? _TaskDetailPage(task: task.data!)
-              : ErrorPage(errorMessage: context.l10n.unexpectedError);
+              : ErrorPage(errorMessage: context.l10n.errorUnexpected);
         case ConnectionState.waiting:
         case ConnectionState.none:
         case ConnectionState.active:
@@ -94,7 +94,6 @@ class _TaskDetailPageState extends ConsumerState<_TaskDetailPage> {
               taskDescription: _currentTask.description,
               taskEarnCoins: _currentTask.earnCoins,
               taskDifficulty: _currentTask.difficulty,
-              taskRegistrationStatus: _currentTask.registrationStatus,
             ),
   );
 

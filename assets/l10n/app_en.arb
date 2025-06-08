@@ -24,6 +24,7 @@
   "taskEarnCoin": "earn coin",
   "taskDescription": "description",
   "taskDifficulty": "difficulty",
+  "taskDone": "done",
 
   "wishitemListTitle": "wishitem list",
   "wishitemListEmpty": "empty..",
@@ -34,6 +35,7 @@
   "wishItemDescription": "description",
   "wishItemPrice": "price(coin)",
   "wishItemURL": "URL(optional)",
+  "wishItemExchange": "exchange",
 
   "error": "error occurred! : {errorMessage}",
   "@errorMessage": {
@@ -43,5 +45,6 @@
     }
   },
   "notFoundError": "Not Found",
+  "errorNotEnoughCoins": "Not Enough coins",
   "unexpectedError": "Unexpected Error"
 } 

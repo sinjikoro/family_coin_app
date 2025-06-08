@@ -62,6 +62,9 @@ class L10nJa extends L10n {
   String get taskDifficulty => '難易度';
 
   @override
+  String get taskDone => '完了';
+
+  @override
   String get wishitemListTitle => 'ほしいもの一覧';
 
   @override
@@ -86,13 +89,19 @@ class L10nJa extends L10n {
   String get wishItemURL => 'URL（任意）';
 
   @override
+  String get wishItemExchange => '購入';
+
+  @override
   String error(Object errorMessage) {
     return 'エラーが発生しました! : $errorMessage';
   }
 
   @override
-  String get notFoundError => 'データが見つかりませんでした。';
+  String get errorNotFoundData => 'データが見つかりませんでした。';
 
   @override
-  String get unexpectedError => '予期せぬエラーが発生しました。';
+  String get errorNotEnoughCoins => 'コインが足りません。';
+
+  @override
+  String get errorUnexpected => '予期せぬエラーが発生しました。';
 }

@@ -199,6 +199,12 @@ abstract class L10n {
   /// **'難易度'**
   String get taskDifficulty;
 
+  /// No description provided for @taskDone.
+  ///
+  /// In ja, this message translates to:
+  /// **'完了'**
+  String get taskDone;
+
   /// No description provided for @wishitemListTitle.
   ///
   /// In ja, this message translates to:
@@ -247,23 +253,35 @@ abstract class L10n {
   /// **'URL（任意）'**
   String get wishItemURL;
 
+  /// No description provided for @wishItemExchange.
+  ///
+  /// In ja, this message translates to:
+  /// **'購入'**
+  String get wishItemExchange;
+
   /// No description provided for @error.
   ///
   /// In ja, this message translates to:
   /// **'エラーが発生しました! : {errorMessage}'**
   String error(Object errorMessage);
 
-  /// No description provided for @notFoundError.
+  /// No description provided for @errorNotFoundData.
   ///
   /// In ja, this message translates to:
   /// **'データが見つかりませんでした。'**
-  String get notFoundError;
+  String get errorNotFoundData;
 
-  /// No description provided for @unexpectedError.
+  /// No description provided for @errorNotEnoughCoins.
+  ///
+  /// In ja, this message translates to:
+  /// **'コインが足りません。'**
+  String get errorNotEnoughCoins;
+
+  /// No description provided for @errorUnexpected.
   ///
   /// In ja, this message translates to:
   /// **'予期せぬエラーが発生しました。'**
-  String get unexpectedError;
+  String get errorUnexpected;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

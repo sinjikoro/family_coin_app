@@ -62,6 +62,9 @@ class L10nEn extends L10n {
   String get taskDifficulty => 'difficulty';
 
   @override
+  String get taskDone => 'done';
+
+  @override
   String get wishitemListTitle => 'wishitem list';
 
   @override
@@ -86,13 +89,19 @@ class L10nEn extends L10n {
   String get wishItemURL => 'URL(optional)';
 
   @override
+  String get wishItemExchange => 'exchange';
+
+  @override
   String error(Object errorMessage) {
     return 'error occurred! : $errorMessage';
   }
 
   @override
-  String get notFoundError => 'Not Found';
+  String get errorNotFoundData => 'データが見つかりませんでした。';
 
   @override
-  String get unexpectedError => 'Unexpected Error';
+  String get errorNotEnoughCoins => 'Not Enough coins';
+
+  @override
+  String get errorUnexpected => '予期せぬエラーが発生しました。';
 }

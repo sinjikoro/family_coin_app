@@ -1,71 +1,85 @@
+import 'package:family_coin/application/provider/logged_in_user_state.dart';
+import 'package:family_coin/application/provider/task_list_state.dart';
+import 'package:family_coin/application/provider/task_log_list_state.dart';
+import 'package:family_coin/application/usecase/task/complete_task_usecase.dart';
+import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/presentation/ui/common/theme/spacing.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 /// 有効なタスク一覧
-class EnableTaskList extends StatelessWidget {
+class EnableTaskList extends ConsumerWidget {
   /// constructor
-  const EnableTaskList({
-    required this.tasks,
-    required this.onTaskCompleted,
-    super.key,
-  });
-
-  /// タスク一覧
-  final List<Task> tasks;
-
-  /// タスク完了時のコールバック
-  final Future<void> Function(Task) onTaskCompleted;
+  const EnableTaskList({super.key});
 
   @override
-  Widget build(BuildContext context) => ListView.builder(
-    padding: Spacing.screenPadding,
-    itemCount: tasks.length,
-    itemBuilder: (context, index) {
-      final task = tasks[index];
-      return Padding(
-        padding: const EdgeInsets.only(bottom: Spacing.sm),
-        child: Slidable(
-          endActionPane: ActionPane(
-            motion: const ScrollMotion(),
-            extentRatio: 0.25,
-            children: [
-              SlidableAction(
-                onPressed: (context) async => await onTaskCompleted(task),
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                icon: Icons.check,
-                label: '完了',
-              ),
-            ],
-          ),
-          child: Card(
-            child: Padding(
-              padding: Spacing.listItemPadding,
-              child: ListTile(
-                title: Text(task.name),
-                subtitle: Text(task.description),
-                trailing: Text(task.earnCoins.value.toString()),
-              ),
-            ),
-          ),
-        ),
-      );
+  Widget build(BuildContext context, WidgetRef ref) => FutureBuilder(
+    future: ref.watch(taskListStateProvider.future),
+    builder: (context, asyncTasks) {
+      switch (asyncTasks.connectionState) {
+        case ConnectionState.done:
+          if (asyncTasks.hasData) {
+            final tasks = asyncTasks.data!;
+            return ListView.builder(
+              padding: Spacing.screenPadding,
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                final task = tasks[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: Spacing.sm),
+                  child: Slidable(
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      extentRatio: 0.25,
+                      children: [
+                        SlidableAction(
+                          onPressed:
+                              (context) async =>
+                                  await _onTaskCompleted(ref, task),
+                          backgroundColor: Colors.green,
+                          foregroundColor: Colors.white,
+                          icon: Icons.check,
+                          label: context.l10n.taskDone,
+                        ),
+                      ],
+                    ),
+                    child: Card(
+                      child: Padding(
+                        padding: Spacing.listItemPadding,
+                        child: ListTile(
+                          title: Text(task.name),
+                          subtitle: Text(task.description),
+                          trailing: Text(task.earnCoins.value.toString()),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          } else {
+            return Center(child: Text(context.l10n.errorNotFoundData));
+          }
+
+        case ConnectionState.waiting:
+        case ConnectionState.none:
+        case ConnectionState.active:
+          return const Center(child: CircularProgressIndicator());
+      }
     },
   );
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(IterableProperty<Task>('tasks', tasks))
-      ..add(
-        ObjectFlagProperty<void Function(Task p1)>.has(
-          'onTaskCompleted',
-          onTaskCompleted,
-        ),
-      );
+  /// タスク完了時のコールバック
+  Future<void> _onTaskCompleted(WidgetRef ref, Task task) async {
+    // ログイン中のユーザー取得
+    final loggedInUser = ref.read(loggedInUserStateProvider);
+    // タスク完了
+    await CompleteTaskUseCase(
+      taskLogListState: ref.read(taskLogListStateProvider.notifier),
+    ).execute(user: loggedInUser.value!, task: task);
+    // ユーザー情報を更新
+    await ref.read(loggedInUserStateProvider.notifier).refresh();
   }
 }

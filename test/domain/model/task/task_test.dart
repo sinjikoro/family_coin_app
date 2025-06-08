@@ -1,5 +1,4 @@
 import 'package:family_coin/domain/model/task/task.dart';
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
@@ -14,7 +13,6 @@ void main() {
         name: 'テストタスク',
         description: 'テストタスクの説明',
         earnCoins: const FamilyCoin(10),
-        registrationStatus: ApprovalStatus.unapproved(),
         difficulty: Difficulty.easy,
       );
 
@@ -23,7 +21,6 @@ void main() {
       expect(task.name, 'テストタスク');
       expect(task.description, 'テストタスクの説明');
       expect(task.earnCoins, const FamilyCoin(10));
-      expect(task.registrationStatus, ApprovalStatus.unapproved());
       expect(task.difficulty, Difficulty.easy);
     });
 
@@ -34,7 +31,6 @@ void main() {
         name: 'テストタスク',
         description: 'テストタスクの説明',
         earnCoins: const FamilyCoin(10),
-        registrationStatus: ApprovalStatus.unapproved(),
         difficulty: Difficulty.easy,
       );
 
@@ -44,7 +40,6 @@ void main() {
       expect(json['name'], 'テストタスク');
       expect(json['description'], 'テストタスクの説明');
       expect(json['earnCoins'], 10);
-      expect(json['registrationStatus'], ApprovalStatus.unapproved().value);
       expect(json['difficulty'], Difficulty.easy.value);
     });
 
@@ -55,7 +50,6 @@ void main() {
         'name': 'テストタスク',
         'description': 'テストタスクの説明',
         'earnCoins': 10,
-        'registrationStatus': ApprovalStatus.unapproved().value,
         'difficulty': Difficulty.easy.value,
       };
 
@@ -65,7 +59,6 @@ void main() {
       expect(task.name, 'テストタスク');
       expect(task.description, 'テストタスクの説明');
       expect(task.earnCoins, const FamilyCoin(10));
-      expect(task.registrationStatus, ApprovalStatus.unapproved());
       expect(task.difficulty, Difficulty.easy);
     });
 
@@ -76,18 +69,19 @@ void main() {
         name: 'テストタスク',
         description: 'テストタスクの説明',
         earnCoins: const FamilyCoin(10),
-        registrationStatus: ApprovalStatus.unapproved(),
         difficulty: Difficulty.easy,
       );
 
-      final copiedTask = task.copyWith(name: 'コピーされたタスク', earnCoins: const FamilyCoin(20));
+      final copiedTask = task.copyWith(
+        name: 'コピーされたタスク',
+        earnCoins: const FamilyCoin(20),
+      );
 
       expect(copiedTask.id, task.id);
       expect(copiedTask.userId, task.userId);
       expect(copiedTask.name, 'コピーされたタスク');
       expect(copiedTask.description, task.description);
       expect(copiedTask.earnCoins, const FamilyCoin(20));
-      expect(copiedTask.registrationStatus, task.registrationStatus);
       expect(copiedTask.difficulty, task.difficulty);
     });
   });

@@ -28,7 +28,7 @@ class WishitemDetailPage extends StatelessWidget {
         case ConnectionState.done:
           return wishitem.hasData
               ? _WishitemDetailPage(wishitem: wishitem.data!)
-              : ErrorPage(errorMessage: context.l10n.unexpectedError);
+              : ErrorPage(errorMessage: context.l10n.errorUnexpected);
         case ConnectionState.waiting:
         case ConnectionState.none:
         case ConnectionState.active:
@@ -95,7 +95,6 @@ class _WishitemDetailPageState extends ConsumerState<_WishitemDetailPage> {
               wishitemDescription: _currentWishitem.description,
               wishitemPrice: _currentWishitem.price,
               wishitemUrl: _currentWishitem.url,
-              wishitemApprovalStatus: widget.wishitem.approvalStatus,
             ),
   );
 

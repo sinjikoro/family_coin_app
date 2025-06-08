@@ -12,7 +12,7 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(context.l10n.unexpectedError)),
+    appBar: AppBar(title: Text(context.l10n.errorUnexpected)),
     body: Center(child: Text(errorMessage)),
   );
 

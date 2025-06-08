@@ -23,7 +23,7 @@ class TaskCreatePage extends ConsumerWidget {
         case ConnectionState.done:
           return user.hasData
               ? _TaskCreatePage(userId: user.data!.id)
-              : ErrorPage(errorMessage: context.l10n.unexpectedError);
+              : ErrorPage(errorMessage: context.l10n.errorUnexpected);
         case ConnectionState.waiting:
         case ConnectionState.none:
         case ConnectionState.active:

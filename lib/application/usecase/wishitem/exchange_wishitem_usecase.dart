@@ -4,7 +4,6 @@ import 'package:family_coin/domain/model/wishitem/exchanged_record.dart';
 import 'package:family_coin/domain/model/wishitem/wishitem.dart';
 import 'package:family_coin/domain/repository/exchanged_record_repository.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:get_it/get_it.dart';
 
@@ -36,7 +35,6 @@ class ExchangeWishitemUseCase {
       userId: user.id,
       wishitemId: wishitem.id,
       exchangedCoins: wishitem.price,
-      approvalStatus: ApprovalStatus.approved(),
       createdAt: now,
       updatedAt: now,
     );

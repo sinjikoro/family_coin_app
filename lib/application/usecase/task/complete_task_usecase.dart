@@ -4,7 +4,6 @@ import 'package:family_coin/domain/model/task/task_log.dart';
 import 'package:family_coin/domain/model/user/user.dart';
 import 'package:family_coin/domain/repository/task_log_repository.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:get_it/get_it.dart';
 
@@ -34,9 +33,7 @@ class CompleteTaskUseCase {
       id: RecordId.generate(),
       taskId: task.id,
       userId: user.id,
-      approvalStatus: ApprovalStatus.approved(),
       earnedCoins: task.earnCoins,
-      earnedAt: now,
       createdAt: now,
       updatedAt: now,
     );

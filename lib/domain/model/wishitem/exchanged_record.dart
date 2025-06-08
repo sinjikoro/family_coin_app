@@ -1,4 +1,3 @@
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -15,10 +14,8 @@ abstract class ExchangedRecord with _$ExchangedRecord {
     @WishitemIdJsonConverter() required WishitemId wishitemId,
     @UserIdJsonConverter() required UserId userId,
     @FamilyCoinJsonConverter() required FamilyCoin exchangedCoins,
-    @ApprovalStatusJsonConverter() required ApprovalStatus approvalStatus,
     required DateTime createdAt,
     required DateTime updatedAt,
-    DateTime? exchangedAt,
   }) = _ExchangedRecord;
 
   /// Constructor

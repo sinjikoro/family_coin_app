@@ -1,4 +1,3 @@
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:flutter/foundation.dart';
@@ -12,7 +11,6 @@ class TaskReadOnlyWidget extends StatelessWidget {
     required this.taskDescription,
     required this.taskEarnCoins,
     required this.taskDifficulty,
-    required this.taskRegistrationStatus,
     super.key,
   });
 
@@ -28,16 +26,16 @@ class TaskReadOnlyWidget extends StatelessWidget {
   /// 難易度
   final Difficulty taskDifficulty;
 
-  /// 登録状況
-  final ApprovalStatus taskRegistrationStatus;
-
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.all(16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('タスク: $taskName', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(
+          'タスク: $taskName',
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 10),
         Text('説明: $taskDescription'),
         const SizedBox(height: 10),
@@ -45,7 +43,6 @@ class TaskReadOnlyWidget extends StatelessWidget {
         const SizedBox(height: 10),
         Text('難易度: $taskDifficulty'),
         const SizedBox(height: 10),
-        Text('登録状況: $taskRegistrationStatus'),
       ],
     ),
   );
@@ -57,7 +54,6 @@ class TaskReadOnlyWidget extends StatelessWidget {
       ..add(StringProperty('taskName', taskName))
       ..add(DiagnosticsProperty<FamilyCoin>('taskEarnCoins', taskEarnCoins))
       ..add(StringProperty('taskDescription', taskDescription))
-      ..add(DiagnosticsProperty<Difficulty>('taskDifficulty', taskDifficulty))
-      ..add(DiagnosticsProperty<ApprovalStatus>('taskRegistrationStatus', taskRegistrationStatus));
+      ..add(DiagnosticsProperty<Difficulty>('taskDifficulty', taskDifficulty));
   }
 }

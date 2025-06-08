@@ -24,6 +24,7 @@
   "taskEarnCoin": "付与コイン",
   "taskDescription": "説明",
   "taskDifficulty": "難易度",
+  "taskDone": "完了",
 
   "wishitemListTitle": "ほしいもの一覧",
   "wishitemListEmpty": "ほしいものはありません",
@@ -34,6 +35,7 @@
   "wishItemDescription": "説明",
   "wishItemPrice": "価格（コイン）",
   "wishItemURL": "URL（任意）",
+  "wishItemExchange": "購入",
 
   "error": "エラーが発生しました! : {errorMessage}",
   "@errorMessage": {
@@ -42,6 +44,7 @@
       }
     }
   },
-  "notFoundError": "データが見つかりませんでした。",
-  "unexpectedError": "予期せぬエラーが発生しました。"
+  "errorNotFoundData": "データが見つかりませんでした。",
+  "errorNotEnoughCoins": "コインが足りません。",
+  "errorUnexpected": "予期せぬエラーが発生しました。"
 } 

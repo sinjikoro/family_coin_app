@@ -1,4 +1,3 @@
-import 'package:family_coin/domain/value_object/approval_status.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
@@ -15,10 +14,11 @@ abstract class Task with _$Task {
     @TaskIdJsonConverter() required TaskId id,
     required String name,
     @UserIdJsonConverter() required UserId userId,
-    @ApprovalStatusJsonConverter() required ApprovalStatus registrationStatus,
     @FamilyCoinJsonConverter() required FamilyCoin earnCoins,
     @Default('') String description,
-    @DifficultyJsonConverter() @Default(Difficulty.normal) Difficulty difficulty,
+    @DifficultyJsonConverter()
+    @Default(Difficulty.normal)
+    Difficulty difficulty,
   }) = _Task;
 
   /// Constructor
@@ -29,7 +29,6 @@ abstract class Task with _$Task {
     id: const TaskId.unassigned(),
     name: '',
     userId: userId,
-    registrationStatus: ApprovalStatus.unapproved(),
     earnCoins: const FamilyCoin(0),
   );
 

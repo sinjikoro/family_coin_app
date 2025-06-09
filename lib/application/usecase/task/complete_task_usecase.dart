@@ -35,13 +35,13 @@ class CompleteTaskUseCase {
       userId: user.id,
       type: TransactionType.earn,
       amount: task.earnCoins,
-      description: '${task.id.value}:${task.name}',
+      description: task.name,
       createdAt: now,
       updatedAt: now,
     );
 
     // タスクログを保存
     await transactionLogRepository.addLog(transactionLog: log);
-    await transactionLogListState.fetchTransactionLogList();
+    await transactionLogListState.fetch();
   }
 }

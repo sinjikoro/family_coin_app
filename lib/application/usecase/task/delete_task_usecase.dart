@@ -15,6 +15,6 @@ class DeleteTaskUseCase {
   Future<void> execute({required TaskId taskId}) async {
     final repository = GetIt.instance<TaskRepository>();
     await repository.deleteTask(taskId: taskId);
-    await taskListState.fetchTaskList();
+    await taskListState.fetch();
   }
 }

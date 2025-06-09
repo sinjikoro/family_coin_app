@@ -32,6 +32,6 @@ class CreateWishitemUseCase {
     );
     await repository.createWishitem(wishitem);
     // 一覧更新
-    await wishitemListState.fetchWishitemList();
+    await wishitemListState.fetch();
   }
 }

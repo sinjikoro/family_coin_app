@@ -15,6 +15,6 @@ class UpdateWishitemUseCase {
   Future<void> execute({required Wishitem wishitem}) async {
     final repository = GetIt.instance<WishitemRepository>();
     await repository.updateWishitem(wishitem: wishitem);
-    await wishitemListState.fetchWishitemList();
+    await wishitemListState.fetch();
   }
 }

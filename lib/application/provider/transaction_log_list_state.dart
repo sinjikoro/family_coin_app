@@ -22,7 +22,7 @@ class TransactionLogListState extends _$TransactionLogListState {
   }
 
   /// タスクログ一覧を取得する
-  Future<void> fetchTransactionLogList() async {
+  Future<void> fetch() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(_fetchTransactionLogList);
   }

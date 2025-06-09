@@ -20,7 +20,7 @@ class WishitemListState extends _$WishitemListState {
   }
 
   /// ほしいもの一覧を取得する
-  Future<void> fetchWishitemList() async {
+  Future<void> fetch() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async => await _fetchWishitemList());
   }

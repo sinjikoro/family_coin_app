@@ -35,13 +35,13 @@ class ExchangeWishitemUseCase {
       userId: user.id,
       type: TransactionType.exchange,
       amount: wishitem.price,
-      description: '${wishitem.id.value}:${wishitem.name}',
+      description: wishitem.name,
       createdAt: now,
       updatedAt: now,
     );
     await transactionLogRepository.addLog(transactionLog: log);
 
     // 交換履歴一覧を更新
-    await transactionLogListState.fetchTransactionLogList();
+    await transactionLogListState.fetch();
   }
 }

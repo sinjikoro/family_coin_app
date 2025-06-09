@@ -15,6 +15,6 @@ class DeleteWishitemUseCase {
   Future<void> execute({required WishitemId wishitemId}) async {
     final repository = GetIt.instance<WishitemRepository>();
     await repository.deleteWishitem(wishitemId: wishitemId);
-    await wishitemListState.fetchWishitemList();
+    await wishitemListState.fetch();
   }
 }

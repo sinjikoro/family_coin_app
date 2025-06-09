@@ -15,6 +15,6 @@ class UpdateTaskUseCase {
   Future<void> execute({required Task task}) async {
     final repository = GetIt.instance<TaskRepository>();
     await repository.updateTask(task: task);
-    await taskListState.fetchTaskList();
+    await taskListState.fetch();
   }
 }

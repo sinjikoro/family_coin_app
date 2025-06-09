@@ -22,7 +22,7 @@ class TaskListState extends _$TaskListState {
   }
 
   /// タスク一覧を取得する
-  Future<void> fetchTaskList() async {
+  Future<void> fetch() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async => await _fetchTaskList());
   }

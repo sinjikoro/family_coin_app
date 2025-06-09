@@ -31,9 +31,7 @@ class _WishitemListPageState extends ConsumerState<WishitemListPage> {
       body: RefreshIndicator(
         onRefresh:
             () async =>
-                await ref
-                    .read(wishitemListStateProvider.notifier)
-                    .fetchWishitemList(),
+                await ref.read(wishitemListStateProvider.notifier).fetch(),
         child: wishitemListAsync.when(
           data:
               (wishitems) => ListView.builder(

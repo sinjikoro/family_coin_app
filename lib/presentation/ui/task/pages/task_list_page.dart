@@ -22,7 +22,8 @@ class _TaskListPageState extends ConsumerState<TaskListPage> {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.taskListTitle)),
       body: RefreshIndicator(
-        onRefresh: () async => await ref.read(taskListStateProvider.notifier).fetchTaskList(),
+        onRefresh:
+            () async => await ref.read(taskListStateProvider.notifier).fetch(),
         child: taskListAsync.when(
           data:
               (tasks) => ListView.builder(
@@ -33,12 +34,16 @@ class _TaskListPageState extends ConsumerState<TaskListPage> {
                     title: Text(task.name),
                     subtitle: Text(task.earnCoins.toString()),
                     trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () async => await context.push(RoutePath.taskDetail(task.id)),
+                    onTap:
+                        () async =>
+                            await context.push(RoutePath.taskDetail(task.id)),
                   );
                 },
               ),
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stackTrace) => Center(child: Text(context.l10n.error(error.toString()))),
+          error:
+              (error, stackTrace) =>
+                  Center(child: Text(context.l10n.error(error.toString()))),
         ),
       ),
       floatingActionButton: FloatingActionButton(

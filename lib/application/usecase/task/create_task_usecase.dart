@@ -34,6 +34,6 @@ class CreateTaskUseCase {
       difficulty: difficulty,
     );
     await repository.createTask(task);
-    await taskListState.fetchTaskList();
+    await taskListState.fetch();
   }
 }

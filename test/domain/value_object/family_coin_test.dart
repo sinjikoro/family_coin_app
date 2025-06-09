@@ -1,3 +1,4 @@
+import 'package:family_coin/domain/error/domain_error.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -45,7 +46,7 @@ void main() {
 
     test('符号反転は許可されていない', () {
       const coin = FamilyCoin(100);
-      expect(() => -coin, throwsA(isA<UnsupportedError>()));
+      expect(() => -coin, throwsA(isA<DomainError>()));
     });
 
     test('FamilyCoin同士を比較できる', () {

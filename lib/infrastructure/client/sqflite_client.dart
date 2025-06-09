@@ -51,8 +51,7 @@ class SqfliteClient {
       await txn.execute(_QueryV1.createUsersTable);
       await txn.execute(_QueryV1.createTasksTable);
       await txn.execute(_QueryV1.createWishitemsTable);
-      await txn.execute(_QueryV1.createTaskLogsTable);
-      await txn.execute(_QueryV1.exchangedRecordsTable);
+      await txn.execute(_QueryV1.createTransactionLogsTable);
     });
   }
 
@@ -68,8 +67,7 @@ class SqfliteClient {
         await txn.execute(_QueryV1.createUsersTable);
         await txn.execute(_QueryV1.createTasksTable);
         await txn.execute(_QueryV1.createWishitemsTable);
-        await txn.execute(_QueryV1.createTaskLogsTable);
-        await txn.execute(_QueryV1.exchangedRecordsTable);
+        await txn.execute(_QueryV1.createTransactionLogsTable);
       });
     }
   }
@@ -145,24 +143,13 @@ class _QueryV1 {
   ''';
 
   /// タスクログテーブルを作成する
-  static String get createTaskLogsTable => '''
-    CREATE TABLE IF NOT EXISTS task_logs(
-      id INTEGER PRIMARY KEY,
-      taskId INTEGER NOT NULL,
-      userId INTEGER NOT NULL,
-      earnedCoins INTEGER NOT NULL,
-      createdAt TEXT NOT NULL,
-      updatedAt TEXT NOT NULL
-    )
-  ''';
-
-  /// ほしいもの交換履歴テーブルを作成する
-  static String get exchangedRecordsTable => '''
-    CREATE TABLE IF NOT EXISTS exchanged_records(
+  static String get createTransactionLogsTable => '''
+    CREATE TABLE IF NOT EXISTS transaction_logs(
       id INTEGER PRIMARY KEY,
       userId INTEGER NOT NULL,
-      wishItemId INTEGER NOT NULL,
-      exchangedCoins INTEGER NOT NULL,
+      type TEXT NOT NULL,
+      amount INTEGER NOT NULL,
+      description TEXT,
       createdAt TEXT NOT NULL,
       updatedAt TEXT NOT NULL
     )

@@ -69,12 +69,12 @@ void main() {
 
   group('RecordId', () {
     test('正常な値でRecordIdを生成できる', () {
-      final id = RecordId(1);
+      final id = LogId(1);
       expect(id.value, 1);
     });
 
     test('RecordIdを生成できる', () {
-      final id = RecordId.generate();
+      final id = LogId.generate();
       expect(id.value, isPositive);
     });
   });
@@ -125,17 +125,17 @@ void main() {
       });
     });
 
-    group('RecordIdJsonConverter', () {
-      const converter = RecordIdJsonConverter();
+    group('LogIdJsonConverter', () {
+      const converter = LogIdJsonConverter();
 
-      test('fromJsonでRecordIdを生成できる', () {
+      test('fromJsonでLogIdを生成できる', () {
         final id = converter.fromJson(1);
-        expect(id, isA<RecordId>());
+        expect(id, isA<LogId>());
         expect(id.value, 1);
       });
 
       test('toJsonでintに変換できる', () {
-        final id = RecordId(1);
+        final id = LogId(1);
         expect(converter.toJson(id), 1);
       });
     });

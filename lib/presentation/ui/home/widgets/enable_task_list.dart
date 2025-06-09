@@ -1,6 +1,6 @@
 import 'package:family_coin/application/provider/logged_in_user_state.dart';
 import 'package:family_coin/application/provider/task_list_state.dart';
-import 'package:family_coin/application/provider/task_log_list_state.dart';
+import 'package:family_coin/application/provider/transaction_log_list_state.dart';
 import 'package:family_coin/application/usecase/task/complete_task_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/task/task.dart';
@@ -77,7 +77,9 @@ class EnableTaskList extends ConsumerWidget {
     final loggedInUser = ref.read(loggedInUserStateProvider);
     // タスク完了
     await CompleteTaskUseCase(
-      taskLogListState: ref.read(taskLogListStateProvider.notifier),
+      transactionLogListState: ref.read(
+        transactionLogListStateProvider.notifier,
+      ),
     ).execute(user: loggedInUser.value!, task: task);
     // ユーザー情報を更新
     await ref.read(loggedInUserStateProvider.notifier).refresh();

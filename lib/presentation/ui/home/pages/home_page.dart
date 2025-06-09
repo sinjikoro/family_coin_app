@@ -1,4 +1,4 @@
-import 'package:family_coin/application/provider/task_log_list_state.dart';
+import 'package:family_coin/application/provider/transaction_log_list_state.dart';
 import 'package:family_coin/application/usecase/task/complete_task_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/presentation/ui/common/theme/spacing.dart';
@@ -10,7 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// タスク完了のユースケースプロバイダー
 final completeTaskUseCaseProvider = Provider<CompleteTaskUseCase>(
   (ref) => CompleteTaskUseCase(
-    taskLogListState: ref.watch(taskLogListStateProvider.notifier),
+    transactionLogListState: ref.watch(
+      transactionLogListStateProvider.notifier,
+    ),
   ),
 );
 

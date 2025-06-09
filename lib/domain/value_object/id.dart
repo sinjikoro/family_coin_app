@@ -91,19 +91,19 @@ class WishitemId extends Id<WishitemId> {
   factory WishitemId.generate() => WishitemId._(Id.generate().value);
 }
 
-/// 記録IDを表す型
-class RecordId extends Id<RecordId> {
+/// ログIDを表す型
+class LogId extends Id<LogId> {
   /// constructor
-  factory RecordId(int value) => RecordId._(Id(value).value);
+  factory LogId(int value) => LogId._(Id(value).value);
 
   /// constructor
-  const RecordId._(super.value) : super._();
+  const LogId._(super.value) : super._();
 
   /// 採番用のコンストラクタ
-  factory RecordId.generate() => RecordId._(Id.generate().value);
+  factory LogId.generate() => LogId._(Id.generate().value);
 
   /// 非採番用のコンストラクタ
-  const RecordId.unassigned() : super.unassigned();
+  const LogId.unassigned() : super.unassigned();
 }
 
 /// ユーザーIDのJSONコンバーター
@@ -142,14 +142,14 @@ class WishitemIdJsonConverter implements JsonConverter<WishitemId, int> {
   int toJson(WishitemId object) => object.value;
 }
 
-/// 記録IDのJSONコンバーター
-class RecordIdJsonConverter implements JsonConverter<RecordId, int> {
+/// ログIDのJSONコンバーター
+class LogIdJsonConverter implements JsonConverter<LogId, int> {
   /// コンストラクタ
-  const RecordIdJsonConverter();
+  const LogIdJsonConverter();
 
   @override
-  RecordId fromJson(int json) => RecordId(json);
+  LogId fromJson(int json) => LogId(json);
 
   @override
-  int toJson(RecordId object) => object.value;
+  int toJson(LogId object) => object.value;
 }

@@ -1,5 +1,5 @@
-import 'package:family_coin/application/provider/exchanged_record_list_state.dart';
 import 'package:family_coin/application/provider/logged_in_user_state.dart';
+import 'package:family_coin/application/provider/transaction_log_list_state.dart';
 import 'package:family_coin/application/provider/wishitem_list_state.dart';
 import 'package:family_coin/application/usecase/wishitem/exchange_wishitem_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
@@ -88,11 +88,11 @@ class _WishitemListPageState extends ConsumerState<WishitemListPage> {
   ) async {
     try {
       final loggedInUser = await ref.read(loggedInUserStateProvider.future);
-      final exchangedRecordListState = ref.read(
-        exchangedRecordListStateProvider.notifier,
+      final transactionLogListState = ref.read(
+        transactionLogListStateProvider.notifier,
       );
       await ExchangeWishitemUseCase(
-        exchangedRecordListState: exchangedRecordListState,
+        transactionLogListState: transactionLogListState,
       ).execute(user: loggedInUser, wishitem: wishitem);
     } on DomainError catch (e) {
       if (context.mounted) {

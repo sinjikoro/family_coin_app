@@ -17,5 +17,8 @@ class TransactionLogRepositoryImpl implements TransactionLogRepository {
   @override
   Future<List<TransactionLog>> getTransactionLogList({
     required UserId userId,
-  }) => _dataSource.getTransactionLogList(userId: userId);
+  }) async {
+    final logs = await _dataSource.getTransactionLogList(userId: userId);
+    return logs.reversed.toList();
+  }
 }

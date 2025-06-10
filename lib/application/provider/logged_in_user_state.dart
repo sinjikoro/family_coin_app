@@ -1,3 +1,4 @@
+import 'package:family_coin/application/provider/user_list_state.dart';
 import 'package:family_coin/application/usecase/user/create_user_usecase.dart';
 import 'package:family_coin/domain/model/user/user.dart';
 import 'package:family_coin/domain/repository/user_repository.dart';
@@ -36,15 +37,16 @@ class LoggedInUserState extends _$LoggedInUserState {
   // TODO(naga): ログイン機能を実装する
   /// ログインする
   Future<User> login() async {
-    final user = await const CreateUserUseCase().execute(name: 'New User');
+    final user = await CreateUserUseCase(
+      userListState: ref.read(userListStateProvider.notifier),
+    ).execute(name: 'New User');
     await _prefs.setInt(_userIdKey, user.id.value);
     return user;
   }
 
   // TODO(naga): ログアウト機能を実装する
   /// ログアウトする
-  Future<void> logout() async {
-    await _prefs.remove(_userIdKey);
-    state = AsyncValue.data(User.guest());
+  Future<void> logout() {
+    throw UnimplementedError();
   }
 }

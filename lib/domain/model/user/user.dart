@@ -18,14 +18,6 @@ abstract class User with _$User {
   /// Constructor
   const User._();
 
-  /// 初期化
-  /// ゲストユーザーを表す
-  factory User.guest() => const User(
-    id: UserId.unassigned(),
-    name: 'Guest User',
-    familyCoinBalance: FamilyCoin(0),
-  );
-
   /// fromJson
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

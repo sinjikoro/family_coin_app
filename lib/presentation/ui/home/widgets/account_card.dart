@@ -1,7 +1,10 @@
-import 'package:family_coin/application/provider/logged_in_user_state.dart';
+import 'package:family_coin/application/provider/active_user_state.dart';
+import 'package:family_coin/application/provider/user_list_state.dart';
+import 'package:family_coin/application/usecase/user/create_user_usecase.dart';
 import 'package:family_coin/application/usecase/user/update_user_name_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/user/user.dart';
+import 'package:family_coin/presentation/ui/common/pages/error_page.dart';
 import 'package:family_coin/presentation/ui/common/widgets/tappable_editable_text.dart';
 import 'package:family_coin/presentation/ui/home/widgets/account_history_sheet.dart';
 import 'package:flutter/foundation.dart';
@@ -20,22 +23,48 @@ class AccountCard extends ConsumerStatefulWidget {
 class _AccountCardState extends ConsumerState<AccountCard> {
   @override
   Widget build(BuildContext context) => FutureBuilder(
-    future: ref.watch(loggedInUserStateProvider.future),
-    builder: (context, asyncUser) {
-      switch (asyncUser.connectionState) {
+    future: Future.wait([
+      ref.watch(userListStateProvider.future),
+      ref.read(activeUserStateProvider.future),
+    ]),
+    builder: (context, snapshot) {
+      switch (snapshot.connectionState) {
         case ConnectionState.done:
-          if (asyncUser.hasData) {
-            final user = asyncUser.data!;
-            return _Card(
-              user: user,
-              onNameChanged: _onNameChanged,
-              onTap: _showAccountHistorySheet,
+          if (snapshot.hasError ||
+              !snapshot.hasData ||
+              snapshot.data!.length < 2) {
+            return Center(
+              child: ErrorPage(errorMessage: context.l10n.errorUnexpected),
             );
-          } else {
-            return Center(child: Text(context.l10n.errorNotFoundData));
           }
-        case ConnectionState.waiting:
+          final userList =
+              snapshot.data![0]! as List<User>; // userListStateProvider
+          final activeUser =
+              snapshot.data![1] as User?; // activeUserStateProvider
+
+          return PageView.builder(
+            itemCount: userList.length + 1,
+            controller: PageController(
+              initialPage:
+                  activeUser != null
+                      ? userList.indexWhere((user) => user.id == activeUser.id)
+                      : 0,
+            ),
+            onPageChanged: (index) => _onPageViewSwiped(index, userList),
+            itemBuilder: (context, index) {
+              if (index < userList.length) {
+                final user = userList[index];
+                return _UserCard(
+                  user: user,
+                  onNameChanged: _onNameChanged,
+                  onTap: _showAccountHistorySheet,
+                );
+              }
+              return _EmptyCard(onTap: _onAddUser);
+            },
+          );
         case ConnectionState.none:
+        case ConnectionState.waiting:
         case ConnectionState.active:
           return const Center(child: CircularProgressIndicator());
       }
@@ -45,14 +74,15 @@ class _AccountCardState extends ConsumerState<AccountCard> {
   /// 名前変更時のコールバック
   Future<void> _onNameChanged(String name) async {
     // ログイン中のユーザー取得
-    final loggedInUser = ref.read(loggedInUserStateProvider);
+    final activeUser = await ref.read(activeUserStateProvider.future);
+    if (activeUser == null) return;
     // 名前変更
     await const UpdateUserNameUseCase().execute(
-      userId: loggedInUser.value!.id,
+      userId: activeUser.id,
       name: name,
     );
     // ユーザー情報を更新
-    await ref.read(loggedInUserStateProvider.notifier).refresh();
+    await ref.read(activeUserStateProvider.notifier).refresh();
   }
 
   /// アカウント履歴シートを表示
@@ -62,11 +92,30 @@ class _AccountCardState extends ConsumerState<AccountCard> {
       builder: (context) => const AccountHistorySheet(),
     );
   }
+
+  /// ユーザー追加時のコールバック
+  Future<void> _onAddUser() async {
+    final user = await CreateUserUseCase(
+      userListState: ref.read(userListStateProvider.notifier),
+    ).execute(name: 'New User');
+    await ref.read(activeUserStateProvider.notifier).setActiveUser(user);
+  }
+
+  /// ページビューをスワイプした時のコールバック
+  Future<void> _onPageViewSwiped(int index, List<User> userList) async {
+    // 最後のカード（空のカード）以外の場合
+    if (index < userList.length) {
+      final user = userList[index];
+      await ref.read(activeUserStateProvider.notifier).setActiveUser(user);
+    } else {
+      await ref.read(activeUserStateProvider.notifier).reset();
+    }
+  }
 }
 
 /// アカウントカード
-class _Card extends StatelessWidget {
-  const _Card({
+class _UserCard extends StatelessWidget {
+  const _UserCard({
     required this.user,
     required this.onNameChanged,
     required this.onTap,
@@ -160,5 +209,40 @@ class _Card extends StatelessWidget {
         ),
       )
       ..add(ObjectFlagProperty<Function()>.has('onTap', onTap));
+  }
+}
+
+/// 空のカード
+class _EmptyCard extends StatelessWidget {
+  const _EmptyCard({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    margin: const EdgeInsets.all(16),
+    child: InkWell(
+      onTap: onTap,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add_circle_outline,
+              size: 48,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(height: 16),
+            Text('ユーザーを追加', style: Theme.of(context).textTheme.titleMedium),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty<VoidCallback>.has('onTap', onTap));
   }
 }

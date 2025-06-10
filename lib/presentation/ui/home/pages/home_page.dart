@@ -29,9 +29,9 @@ class HomePage extends StatelessWidget {
           // 上部1/4: AccountCard
           SizedBox(
             height: context.screenHeight * 0.25,
-            child: const Padding(
+            child: Padding(
               padding: Spacing.screenPadding,
-              child: AccountCard(),
+              child: PageView(children: const [AccountCard(), AccountCard()]),
             ),
           ),
           // 下部3/4: タスク一覧

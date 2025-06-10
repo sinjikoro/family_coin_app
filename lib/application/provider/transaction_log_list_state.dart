@@ -1,4 +1,4 @@
-import 'package:family_coin/application/provider/logged_in_user_state.dart';
+import 'package:family_coin/application/provider/active_user_state.dart';
 import 'package:family_coin/domain/model/user/transaction_log.dart';
 import 'package:family_coin/domain/repository/transaction_log_repository.dart';
 import 'package:get_it/get_it.dart';
@@ -17,8 +17,9 @@ class TransactionLogListState extends _$TransactionLogListState {
       await _fetchTransactionLogList();
 
   Future<List<TransactionLog>> _fetchTransactionLogList() async {
-    final loggedInUser = await ref.read(loggedInUserStateProvider.future);
-    return await _repository.getTransactionLogList(userId: loggedInUser.id);
+    final activeUser = await ref.read(activeUserStateProvider.future);
+    if (activeUser == null) return [];
+    return await _repository.getTransactionLogList(userId: activeUser.id);
   }
 
   /// タスクログ一覧を取得する

@@ -1,4 +1,4 @@
-import 'package:family_coin/application/provider/logged_in_user_state.dart';
+import 'package:family_coin/application/provider/active_user_state.dart';
 import 'package:family_coin/application/provider/transaction_log_list_state.dart';
 import 'package:family_coin/application/provider/wishitem_list_state.dart';
 import 'package:family_coin/application/usecase/wishitem/exchange_wishitem_usecase.dart';
@@ -85,13 +85,14 @@ class _WishitemListPageState extends ConsumerState<WishitemListPage> {
     Wishitem wishitem,
   ) async {
     try {
-      final loggedInUser = await ref.read(loggedInUserStateProvider.future);
+      final activeUser = await ref.read(activeUserStateProvider.future);
+      if (activeUser == null) return;
       final transactionLogListState = ref.read(
         transactionLogListStateProvider.notifier,
       );
       await ExchangeWishitemUseCase(
         transactionLogListState: transactionLogListState,
-      ).execute(user: loggedInUser, wishitem: wishitem);
+      ).execute(user: activeUser, wishitem: wishitem);
     } on DomainError catch (e) {
       if (context.mounted) {
         if (e.code == ErrorCode.familyCoinNegative) {

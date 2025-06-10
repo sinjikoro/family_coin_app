@@ -1,7 +1,6 @@
-import 'package:family_coin/application/provider/logged_in_user_state.dart';
+import 'package:family_coin/application/provider/active_user_state.dart';
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/domain/repository/task_repository.dart';
-import 'package:family_coin/domain/value_object/id.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,8 +16,9 @@ class TaskListState extends _$TaskListState {
 
   /// タスク一覧を取得する
   Future<List<Task>> _fetchTaskList() async {
-    final loggedInUser = await ref.read(loggedInUserStateProvider.future);
-    return await _repository.getTaskList(userId: loggedInUser.id);
+    final activeUser = await ref.read(activeUserStateProvider.future);
+    if (activeUser == null) return [];
+    return await _repository.getTaskList(userId: activeUser.id);
   }
 
   /// タスク一覧を取得する
@@ -26,8 +26,4 @@ class TaskListState extends _$TaskListState {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async => await _fetchTaskList());
   }
-
-  /// タスクを取得する
-  Future<Task> getTask(TaskId taskId) async =>
-      await _repository.getTask(taskId: taskId);
 }

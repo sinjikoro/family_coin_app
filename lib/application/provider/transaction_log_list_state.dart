@@ -19,7 +19,7 @@ class TransactionLogListState extends _$TransactionLogListState {
   Future<List<TransactionLog>> _fetchTransactionLogList() async {
     final activeUser = await ref.read(activeUserStateProvider.future);
     if (activeUser == null) return [];
-    return await _repository.getTransactionLogList(userId: activeUser.id);
+    return await _repository.getTransactionLogList(userId: activeUser.userId);
   }
 
   /// タスクログ一覧を取得する

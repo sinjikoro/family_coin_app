@@ -25,7 +25,7 @@ class ActiveUserState extends _$ActiveUserState {
   /// アクティブなユーザーを設定する
   Future<void> setActiveUser(User user) async {
     // 同じユーザーの場合は更新しない
-    if (state.value != null && state.value!.id == user.id) return;
+    if (state.value != null && state.value!.userId == user.userId) return;
 
     state = AsyncValue.data(user);
     await Future.wait([
@@ -48,7 +48,7 @@ class ActiveUserState extends _$ActiveUserState {
   /// アクティブなユーザーを更新する
   Future<void> refresh() async {
     if (!state.hasValue) return;
-    final userId = state.value!.id;
+    final userId = state.value!.userId;
     final activeUser = await _repository.getUser(userId: userId);
     state = AsyncValue.data(activeUser);
     await Future.wait([

@@ -12,20 +12,24 @@ class MockUserRepository extends Mock implements UserRepository {
 
   @override
   Future<User> getUser({required UserId userId}) async =>
-      dummyUserList.firstWhere((element) => element.id == userId);
+      dummyUserList.firstWhere((element) => element.userId == userId);
 
   @override
   Future<void> createUser(User user) async => dummyUserList.add(user);
 
   @override
   Future<void> updateUser({required UserId userId, required User user}) async {
-    final index = dummyUserList.indexWhere((element) => element.id == userId);
+    final index = dummyUserList.indexWhere(
+      (element) => element.userId == userId,
+    );
     dummyUserList[index] = user;
   }
 
   @override
-  Future<void> deleteUser({required UserId userId}) async {
-    final index = dummyUserList.indexWhere((element) => element.id == userId);
+  Future<void> deleteUserWithRelatedData({required UserId userId}) async {
+    final index = dummyUserList.indexWhere(
+      (element) => element.userId == userId,
+    );
     dummyUserList.removeAt(index);
   }
 }

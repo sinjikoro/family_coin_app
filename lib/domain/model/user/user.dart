@@ -10,7 +10,7 @@ part 'user.g.dart';
 abstract class User with _$User {
   /// Constructor
   const factory User({
-    @UserIdJsonConverter() required UserId id,
+    @UserIdJsonConverter() required UserId userId,
     required String name,
     @FamilyCoinJsonConverter() required FamilyCoin familyCoinBalance,
   }) = _User;

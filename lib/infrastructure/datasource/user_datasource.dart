@@ -18,5 +18,5 @@ abstract class UserDataSource {
 
   /// ユーザー情報を削除する
   /// 削除対象のuserIdが合致しない場合はエラーを返す
-  Future<void> deleteUser({required UserId userId});
+  Future<void> deleteUserWithRelatedData({required UserId userId});
 }

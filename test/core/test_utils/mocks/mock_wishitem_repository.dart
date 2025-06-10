@@ -13,7 +13,9 @@ class MockWishitemRepository extends Mock implements WishitemRepository {
 
   @override
   Future<Wishitem> getWishitem({required WishitemId wishitemId}) async =>
-      dummyWishitemList.firstWhere((element) => element.id == wishitemId);
+      dummyWishitemList.firstWhere(
+        (element) => element.wishItemId == wishitemId,
+      );
 
   @override
   Future<void> createWishitem(Wishitem wishitem) async =>
@@ -22,7 +24,7 @@ class MockWishitemRepository extends Mock implements WishitemRepository {
   @override
   Future<void> updateWishitem({required Wishitem wishitem}) async {
     final index = dummyWishitemList.indexWhere(
-      (element) => element.id == wishitem.id,
+      (element) => element.wishItemId == wishitem.wishItemId,
     );
     dummyWishitemList[index] = wishitem;
   }
@@ -30,7 +32,7 @@ class MockWishitemRepository extends Mock implements WishitemRepository {
   @override
   Future<void> deleteWishitem({required WishitemId wishitemId}) async {
     final index = dummyWishitemList.indexWhere(
-      (element) => element.id == wishitemId,
+      (element) => element.wishItemId == wishitemId,
     );
     dummyWishitemList.removeAt(index);
   }

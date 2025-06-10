@@ -8,7 +8,7 @@ void main() {
   group('Task', () {
     test('正常な値でTaskを生成できる', () {
       final task = Task(
-        id: TaskId.generate(),
+        taskId: TaskId.generate(),
         userId: UserId.generate(),
         name: 'テストタスク',
         description: 'テストタスクの説明',
@@ -16,7 +16,7 @@ void main() {
         difficulty: Difficulty.easy,
       );
 
-      expect(task.id, isA<TaskId>());
+      expect(task.taskId, isA<TaskId>());
       expect(task.userId, isA<UserId>());
       expect(task.name, 'テストタスク');
       expect(task.description, 'テストタスクの説明');
@@ -26,7 +26,7 @@ void main() {
 
     test('TaskをJSONに変換できる', () {
       final task = Task(
-        id: TaskId(1),
+        taskId: TaskId(1),
         userId: UserId(2),
         name: 'テストタスク',
         description: 'テストタスクの説明',
@@ -35,7 +35,7 @@ void main() {
       );
 
       final json = task.toJson();
-      expect(json['id'], 1);
+      expect(json['taskId'], 1);
       expect(json['userId'], 2);
       expect(json['name'], 'テストタスク');
       expect(json['description'], 'テストタスクの説明');
@@ -54,7 +54,7 @@ void main() {
       };
 
       final task = Task.fromJson(json);
-      expect(task.id.value, 1);
+      expect(task.taskId.value, 1);
       expect(task.userId.value, 2);
       expect(task.name, 'テストタスク');
       expect(task.description, 'テストタスクの説明');
@@ -64,7 +64,7 @@ void main() {
 
     test('Taskをコピーできる', () {
       final task = Task(
-        id: TaskId.generate(),
+        taskId: TaskId.generate(),
         userId: UserId.generate(),
         name: 'テストタスク',
         description: 'テストタスクの説明',
@@ -77,7 +77,7 @@ void main() {
         earnCoins: const FamilyCoin(20),
       );
 
-      expect(copiedTask.id, task.id);
+      expect(copiedTask.taskId, task.taskId);
       expect(copiedTask.userId, task.userId);
       expect(copiedTask.name, 'コピーされたタスク');
       expect(copiedTask.description, task.description);

@@ -1,19 +1,19 @@
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/infrastructure/client/sqflite_client.dart';
+import 'package:family_coin/infrastructure/datasource/local_datasource/db_schema/db_schema.dart';
 import 'package:family_coin/infrastructure/datasource/task_datasource.dart';
 
 /// ローカルデータソース
 class TaskLocalDataSource implements TaskDataSource {
   /// コンストラクタ
-  const TaskLocalDataSource(this._client);
+  TaskLocalDataSource(this._client);
 
   final SqfliteClient _client;
 
-  static const _tasksTable = 'tasks';
-
-  static const _idColumn = 'id';
-  static const _userIdColumn = 'userId';
+  final String _tasksTable = DbSchema.task().tableName;
+  final String _idColumn = DbSchema.task().idColumn;
+  final String _userIdColumn = DbSchema.user().idColumn;
 
   /// タスクを取得する
   @override
@@ -60,7 +60,7 @@ class TaskLocalDataSource implements TaskDataSource {
         _tasksTable,
         task.toJson(),
         where: '$_idColumn = ?',
-        whereArgs: [task.id.value],
+        whereArgs: [task.taskId.value],
       );
       if (updatedCount == 0) {
         throw Exception('Task not found');

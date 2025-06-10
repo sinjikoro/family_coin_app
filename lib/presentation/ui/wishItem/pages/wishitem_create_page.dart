@@ -24,7 +24,7 @@ class WishitemCreatePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.wishitemCreateTitle)),
       body: WishitemFormWidget(
-        wishitem: Wishitem.initial(activeUser.id),
+        wishitem: Wishitem.initial(activeUser.userId),
         onSave: ({
           required name,
           required description,
@@ -37,7 +37,7 @@ class WishitemCreatePage extends ConsumerWidget {
             ).execute(
               name: name,
               description: description,
-              userId: activeUser.id,
+              userId: activeUser.userId,
               price: price,
               url: url,
             );

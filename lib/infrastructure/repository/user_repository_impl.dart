@@ -26,6 +26,6 @@ class UserRepositoryImpl implements UserRepository {
       await _dataSource.updateUser(userId: userId, user: user);
 
   @override
-  Future<void> deleteUser({required UserId userId}) async =>
-      await _dataSource.deleteUser(userId: userId);
+  Future<void> deleteUserWithRelatedData({required UserId userId}) async =>
+      await _dataSource.deleteUserWithRelatedData(userId: userId);
 }

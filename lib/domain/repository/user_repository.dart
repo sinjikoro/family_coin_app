@@ -16,5 +16,5 @@ abstract class UserRepository {
   Future<void> updateUser({required UserId userId, required User user});
 
   /// ユーザーを削除する
-  Future<void> deleteUser({required UserId userId});
+  Future<void> deleteUserWithRelatedData({required UserId userId});
 }

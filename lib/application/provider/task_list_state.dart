@@ -18,7 +18,7 @@ class TaskListState extends _$TaskListState {
   Future<List<Task>> _fetchTaskList() async {
     final activeUser = await ref.read(activeUserStateProvider.future);
     if (activeUser == null) return [];
-    return await _repository.getTaskList(userId: activeUser.id);
+    return await _repository.getTaskList(userId: activeUser.userId);
   }
 
   /// タスク一覧を取得する

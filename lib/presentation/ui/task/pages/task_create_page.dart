@@ -22,7 +22,7 @@ class TaskCreatePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.taskCreateTitle)),
       body: TaskFormWidget(
-        task: Task.initial(activeUser.id),
+        task: Task.initial(activeUser.userId),
         onSave: ({
           required name,
           required description,
@@ -35,7 +35,7 @@ class TaskCreatePage extends ConsumerWidget {
           await usecase.execute(
             name: name,
             description: description,
-            userId: activeUser.id,
+            userId: activeUser.userId,
             earnCoins: earnCoins,
             difficulty: difficulty,
           );

@@ -17,7 +17,7 @@ class WishitemListState extends _$WishitemListState {
   Future<List<Wishitem>> _fetchWishitemList() async {
     final activeUser = await ref.read(activeUserStateProvider.future);
     if (activeUser == null) return [];
-    return await _repository.getWishitemList(userId: activeUser.id);
+    return await _repository.getWishitemList(userId: activeUser.userId);
   }
 
   /// ほしいもの一覧を取得する

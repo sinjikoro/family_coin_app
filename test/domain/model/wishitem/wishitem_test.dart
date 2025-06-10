@@ -7,14 +7,14 @@ void main() {
   group('Wishitem', () {
     test('正常な値でWishitemを生成できる', () {
       final wishitem = Wishitem(
-        id: WishitemId.generate(),
+        wishItemId: WishitemId.generate(),
         userId: UserId.generate(),
         name: 'テストほしいもの',
         description: 'テストほしいものの説明',
         price: const FamilyCoin(100),
       );
 
-      expect(wishitem.id, isA<WishitemId>());
+      expect(wishitem.wishItemId, isA<WishitemId>());
       expect(wishitem.userId, isA<UserId>());
       expect(wishitem.name, 'テストほしいもの');
       expect(wishitem.description, 'テストほしいものの説明');
@@ -23,7 +23,7 @@ void main() {
 
     test('WishitemをJSONに変換できる', () {
       final wishitem = Wishitem(
-        id: WishitemId(1),
+        wishItemId: WishitemId(1),
         userId: UserId(2),
         name: 'テストほしいもの',
         description: 'テストほしいものの説明',
@@ -31,7 +31,7 @@ void main() {
       );
 
       final json = wishitem.toJson();
-      expect(json['id'], 1);
+      expect(json['wishItemId'], 1);
       expect(json['userId'], 2);
       expect(json['name'], 'テストほしいもの');
       expect(json['description'], 'テストほしいものの説明');
@@ -48,7 +48,7 @@ void main() {
       };
 
       final wishitem = Wishitem.fromJson(json);
-      expect(wishitem.id.value, 1);
+      expect(wishitem.wishItemId.value, 1);
       expect(wishitem.userId.value, 2);
       expect(wishitem.name, 'テストほしいもの');
       expect(wishitem.description, 'テストほしいものの説明');
@@ -57,7 +57,7 @@ void main() {
 
     test('Wishitemをコピーできる', () {
       final wishitem = Wishitem(
-        id: WishitemId.generate(),
+        wishItemId: WishitemId.generate(),
         userId: UserId.generate(),
         name: 'テストほしいもの',
         description: 'テストほしいものの説明',
@@ -69,7 +69,7 @@ void main() {
         price: const FamilyCoin(200),
       );
 
-      expect(copiedWishitem.id, wishitem.id);
+      expect(copiedWishitem.wishItemId, wishitem.wishItemId);
       expect(copiedWishitem.userId, wishitem.userId);
       expect(copiedWishitem.name, 'コピーされたほしいもの');
       expect(copiedWishitem.description, wishitem.description);

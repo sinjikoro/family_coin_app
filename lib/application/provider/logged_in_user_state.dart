@@ -40,7 +40,7 @@ class LoggedInUserState extends _$LoggedInUserState {
     final user = await CreateUserUseCase(
       userListState: ref.read(userListStateProvider.notifier),
     ).execute(name: 'New User');
-    await _prefs.setInt(_userIdKey, user.id.value);
+    await _prefs.setInt(_userIdKey, user.userId.value);
     return user;
   }
 

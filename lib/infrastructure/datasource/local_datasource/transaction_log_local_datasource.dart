@@ -1,18 +1,18 @@
 import 'package:family_coin/domain/model/user/transaction_log.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/infrastructure/client/sqflite_client.dart';
+import 'package:family_coin/infrastructure/datasource/local_datasource/db_schema/db_schema.dart';
 import 'package:family_coin/infrastructure/datasource/transaction_log_datasource.dart';
 
 /// タスクログのローカルデータソース
 class TransactionLogLocalDataSource implements TransactionLogDataSource {
   /// コンストラクタ
-  const TransactionLogLocalDataSource(this._client);
+  TransactionLogLocalDataSource(this._client);
 
   final SqfliteClient _client;
 
-  static const _transactionLogsTable = 'transaction_logs';
-
-  static const _userIdColumn = 'userId';
+  final String _transactionLogsTable = DbSchema.transactionLog().tableName;
+  final String _userIdColumn = DbSchema.user().idColumn;
 
   /// タスクログを作成する
   @override

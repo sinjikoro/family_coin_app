@@ -26,7 +26,7 @@ class CreateTaskUseCase {
     final repository = GetIt.instance<TaskRepository>();
 
     final task = Task(
-      id: TaskId.generate(),
+      taskId: TaskId.generate(),
       name: name,
       description: description,
       userId: userId,

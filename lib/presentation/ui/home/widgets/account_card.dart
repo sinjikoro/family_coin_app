@@ -1,6 +1,7 @@
 import 'package:family_coin/application/provider/active_user_state.dart';
 import 'package:family_coin/application/provider/user_list_state.dart';
 import 'package:family_coin/application/usecase/user/create_user_usecase.dart';
+import 'package:family_coin/application/usecase/user/delete_user_usecase.dart';
 import 'package:family_coin/application/usecase/user/update_user_name_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/user/user.dart';
@@ -49,7 +50,9 @@ class _AccountCardState extends ConsumerState<AccountCard> {
               // activeUserに初期位置を設定
               initialPage:
                   activeUser != null
-                      ? userList.indexWhere((user) => user.id == activeUser.id)
+                      ? userList.indexWhere(
+                        (user) => user.userId == activeUser.userId,
+                      )
                       : 0,
             ),
             onPageChanged: (index) => _onPageViewSwiped(index, userList),
@@ -61,6 +64,7 @@ class _AccountCardState extends ConsumerState<AccountCard> {
                   user: user,
                   onNameChanged: _updateUserName,
                   onTap: _showAccountHistorySheet,
+                  onDelete: () => _deleteUser(user),
                 );
               }
               return _EmptyCard(onTap: _addUser);
@@ -81,7 +85,7 @@ class _AccountCardState extends ConsumerState<AccountCard> {
     if (activeUser == null) return;
     // 名前変更
     await const UpdateUserNameUseCase().execute(
-      userId: activeUser.id,
+      userId: activeUser.userId,
       name: name,
     );
     // ユーザー情報を更新
@@ -104,6 +108,19 @@ class _AccountCardState extends ConsumerState<AccountCard> {
     await ref.read(activeUserStateProvider.notifier).setActiveUser(user);
   }
 
+  /// ユーザー削除時のコールバック
+  Future<void> _deleteUser(User user) async {
+    // ユーザー削除
+    await DeleteUserUseCase(
+      userListState: ref.read(userListStateProvider.notifier),
+    ).execute(userId: user.userId);
+    final loggedInUser = await ref.read(activeUserStateProvider.future);
+    await ref
+        .read(activeUserStateProvider.notifier)
+        .setActiveUser(loggedInUser!);
+    await ref.read(userListStateProvider.notifier).fetch();
+  }
+
   /// ページビューをスワイプした時のコールバック
   Future<void> _onPageViewSwiped(int index, List<User> userList) async {
     // 最後のカード（空のカード）以外の場合
@@ -122,11 +139,13 @@ class _UserCard extends StatelessWidget {
     required this.user,
     required this.onNameChanged,
     required this.onTap,
+    required this.onDelete,
   });
 
   final User user;
   final Function(String) onNameChanged;
   final Function() onTap;
+  final Function() onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -170,6 +189,8 @@ class _UserCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const Spacer(),
+                  _CardMenu(onDelete: onDelete),
                 ],
               ),
               const SizedBox(height: 16),
@@ -211,7 +232,51 @@ class _UserCard extends StatelessWidget {
           onNameChanged,
         ),
       )
-      ..add(ObjectFlagProperty<Function()>.has('onTap', onTap));
+      ..add(ObjectFlagProperty<Function()>.has('onTap', onTap))
+      ..add(ObjectFlagProperty<Function()>.has('onDelete', onDelete));
+  }
+}
+
+/// カードメニュー
+class _CardMenu extends StatelessWidget {
+  const _CardMenu({required this.onDelete});
+
+  static const _delete = 'delete';
+
+  /// 削除時のコールバック
+  final Function() onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return PopupMenuButton<String>(
+      icon: Icon(Icons.more_vert, color: theme.colorScheme.onPrimaryContainer),
+      onSelected: (value) {
+        switch (value) {
+          case _delete:
+            onDelete();
+        }
+      },
+      itemBuilder:
+          (context) => [
+            PopupMenuItem(
+              value: _delete,
+              child: Row(
+                children: [
+                  Icon(Icons.delete, size: 20, color: theme.colorScheme.error),
+                  const SizedBox(width: 8),
+                  Text('削除', style: TextStyle(color: theme.colorScheme.error)),
+                ],
+              ),
+            ),
+          ],
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty<Function()>.has('onDelete', onDelete));
   }
 }
 

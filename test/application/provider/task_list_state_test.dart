@@ -96,7 +96,7 @@ void main() {
 
       await DeleteTaskUseCase(
         taskListState: helper.container.read(taskListStateProvider.notifier),
-      ).execute(taskId: task.id);
+      ).execute(taskId: task.taskId);
 
       expect(state.length, 0);
     });

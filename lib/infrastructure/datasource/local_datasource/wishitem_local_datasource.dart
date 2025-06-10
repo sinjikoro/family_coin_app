@@ -1,19 +1,19 @@
 import 'package:family_coin/domain/model/wishitem/wishitem.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/infrastructure/client/sqflite_client.dart';
+import 'package:family_coin/infrastructure/datasource/local_datasource/db_schema/db_schema.dart';
 import 'package:family_coin/infrastructure/datasource/wishitem_datasource.dart';
 
 /// ほしいものローカルデータソース
 class WishitemLocalDataSource implements WishitemDataSource {
   /// コンストラクタ
-  const WishitemLocalDataSource(this._client);
+  WishitemLocalDataSource(this._client);
 
   final SqfliteClient _client;
 
-  static const _wishitemsTable = 'wishitems';
-
-  static const _idColumn = 'id';
-  static const _userIdColumn = 'userId';
+  final String _wishitemsTable = DbSchema.wishItem().tableName;
+  final String _idColumn = DbSchema.wishItem().idColumn;
+  final String _userIdColumn = DbSchema.user().idColumn;
 
   /// ほしいものを取得する
   @override
@@ -60,7 +60,7 @@ class WishitemLocalDataSource implements WishitemDataSource {
         _wishitemsTable,
         wishitem.toJson(),
         where: '$_idColumn = ?',
-        whereArgs: [wishitem.id.value],
+        whereArgs: [wishitem.wishItemId.value],
       );
       if (updatedCount == 0) {
         throw Exception('Wishitem not found');

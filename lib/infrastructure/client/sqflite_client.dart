@@ -1,3 +1,4 @@
+import 'package:family_coin/infrastructure/datasource/local_datasource/db_schema/db_schema.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -61,15 +62,12 @@ class SqfliteClient {
     int oldVersion,
     int newVersion,
   ) async {
-    // バージョン1から2へのマイグレーション
-    if (oldVersion < 2) {
-      await db.transaction((txn) async {
-        await txn.execute(_QueryV1.createUsersTable);
-        await txn.execute(_QueryV1.createTasksTable);
-        await txn.execute(_QueryV1.createWishitemsTable);
-        await txn.execute(_QueryV1.createTransactionLogsTable);
-      });
-    }
+    // // バージョン1から2へのマイグレーション
+    // if (oldVersion < 2) {
+    //   await db.transaction((txn) async {
+    //     await txn.execute(_QueryV1.createUsersTable);
+    //   });
+    // }
   }
 
   /// 新しいテーブルを動的に作成する
@@ -108,11 +106,35 @@ class SqfliteClient {
   }
 }
 
+/// ユーザーテーブル
+final String _userTable = DbSchema.user().tableName;
+
+/// タスクテーブル
+final String _taskTable = DbSchema.task().tableName;
+
+/// 欲しいものテーブル
+final String _wishItemTable = DbSchema.wishItem().tableName;
+
+/// トランザクションログテーブル
+final String _transactionLogTable = DbSchema.transactionLog().tableName;
+
+/// ユーザーIDカラム
+final String _userIdColumn = DbSchema.user().idColumn;
+
+/// タスクIDカラム
+final String _taskIdColumn = DbSchema.task().idColumn;
+
+/// 欲しいものIDカラム
+final String _wishItemIdColumn = DbSchema.wishItem().idColumn;
+
+/// トランザクションログIDカラム
+final String _transactionLogIdColumn = DbSchema.transactionLog().idColumn;
+
 class _QueryV1 {
   /// ユーザーテーブルを作成する
   static String get createUsersTable => '''
-    CREATE TABLE IF NOT EXISTS users(
-      id INTEGER PRIMARY KEY,
+    CREATE TABLE IF NOT EXISTS $_userTable(
+      $_userIdColumn INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
       familyCoinBalance INTEGER NOT NULL
     )
@@ -120,10 +142,10 @@ class _QueryV1 {
 
   /// タスクテーブルを作成する
   static String get createTasksTable => '''
-    CREATE TABLE IF NOT EXISTS tasks(
-      id INTEGER PRIMARY KEY,
+    CREATE TABLE IF NOT EXISTS $_taskTable(
+      $_taskIdColumn INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
-      userId INTEGER NOT NULL,
+      $_userIdColumn INTEGER NOT NULL,
       earnCoins INTEGER NOT NULL,
       description TEXT,
       difficulty TEXT
@@ -132,10 +154,10 @@ class _QueryV1 {
 
   /// ほしいものテーブルを作成する
   static String get createWishitemsTable => '''
-    CREATE TABLE IF NOT EXISTS wishitems(
-      id INTEGER PRIMARY KEY,
+    CREATE TABLE IF NOT EXISTS $_wishItemTable(
+      $_wishItemIdColumn INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
-      userId INTEGER NOT NULL,
+      $_userIdColumn INTEGER NOT NULL,
       price INTEGER NOT NULL,
       description TEXT,
       url TEXT
@@ -144,9 +166,9 @@ class _QueryV1 {
 
   /// タスクログテーブルを作成する
   static String get createTransactionLogsTable => '''
-    CREATE TABLE IF NOT EXISTS transaction_logs(
-      id INTEGER PRIMARY KEY,
-      userId INTEGER NOT NULL,
+    CREATE TABLE IF NOT EXISTS $_transactionLogTable(
+      $_transactionLogIdColumn INTEGER PRIMARY KEY,
+      $_userIdColumn INTEGER NOT NULL,
       type TEXT NOT NULL,
       amount INTEGER NOT NULL,
       description TEXT,

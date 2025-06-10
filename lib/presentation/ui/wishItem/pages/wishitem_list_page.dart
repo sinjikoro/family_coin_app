@@ -60,7 +60,7 @@ class _WishitemListPageState extends ConsumerState<WishitemListPage> {
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap:
                           () async => await context.push(
-                            RoutePath.wishItemDetail(wishitem.id),
+                            RoutePath.wishItemDetail(wishitem.wishItemId),
                           ),
                     ),
                   );

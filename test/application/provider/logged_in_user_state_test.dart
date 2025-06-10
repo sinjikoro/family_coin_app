@@ -22,7 +22,7 @@ void main() {
       final state = await helper.container.read(
         loggedInUserStateProvider.future,
       );
-      expect(state.id, isNot(const UserId.unassigned()));
+      expect(state.userId, isNot(const UserId.unassigned()));
       expect(state.name, 'New User');
       expect(state.familyCoinBalance, const FamilyCoin(0));
     });

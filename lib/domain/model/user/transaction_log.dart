@@ -11,7 +11,7 @@ part 'transaction_log.g.dart';
 abstract class TransactionLog with _$TransactionLog {
   /// Constructor
   const factory TransactionLog({
-    @LogIdJsonConverter() required LogId id,
+    @LogIdJsonConverter() required LogId transactionLogId,
     @UserIdJsonConverter() required UserId userId,
     @TransactionTypeJsonConverter() required TransactionType type,
     @FamilyCoinJsonConverter() required FamilyCoin amount,

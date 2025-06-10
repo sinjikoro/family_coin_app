@@ -108,7 +108,7 @@ void main() {
         wishitemListState: helper.container.read(
           wishitemListStateProvider.notifier,
         ),
-      ).execute(wishitemId: wishitem.id);
+      ).execute(wishitemId: wishitem.wishItemId);
 
       expect(state.length, 0);
     });

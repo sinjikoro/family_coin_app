@@ -23,7 +23,7 @@ class CreateWishitemUseCase {
   }) async {
     final repository = GetIt.instance<WishitemRepository>();
     final wishitem = Wishitem(
-      id: WishitemId.generate(),
+      wishItemId: WishitemId.generate(),
       name: name,
       userId: userId,
       price: price,

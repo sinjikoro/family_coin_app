@@ -1,4 +1,5 @@
 import 'package:family_coin/application/provider/wishitem_list_state.dart';
+import 'package:family_coin/application/usecase/wishitem/delete_wishitem_usecase.dart';
 import 'package:family_coin/application/usecase/wishitem/get_wishitem_usecase.dart';
 import 'package:family_coin/application/usecase/wishitem/update_wishitem_usecase.dart';
 import 'package:family_coin/core/extension/context_extension.dart';
@@ -11,6 +12,7 @@ import 'package:family_coin/presentation/ui/wishItem/widgets/wishitem_read_only_
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// ほしいもの詳細
 class WishitemDetailPage extends StatelessWidget {
@@ -80,7 +82,10 @@ class _WishitemDetailPageState extends ConsumerState<_WishitemDetailPage> {
       title: Text(_currentWishitem.name),
       actions: [
         if (!isEditing)
-          IconButton(icon: const Icon(Icons.edit), onPressed: toggleEditing),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: _deleteWishitem,
+          ),
       ],
     ),
     body:
@@ -88,7 +93,7 @@ class _WishitemDetailPageState extends ConsumerState<_WishitemDetailPage> {
             ? WishitemFormWidget(
               wishitem: widget.wishitem,
               onSave: _updateWishitem,
-              onCancel: toggleEditing,
+              onCancel: _toggleEditing,
             )
             : WishitemReadOnlyWidget(
               wishitemName: _currentWishitem.name,
@@ -96,10 +101,25 @@ class _WishitemDetailPageState extends ConsumerState<_WishitemDetailPage> {
               wishitemPrice: _currentWishitem.price,
               wishitemUrl: _currentWishitem.url,
             ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: _toggleEditing,
+      child: const Icon(Icons.edit),
+    ),
   );
 
   /// 編集モードを切り替える
-  void toggleEditing() => setState(() => isEditing = !isEditing);
+  void _toggleEditing() => setState(() => isEditing = !isEditing);
+
+  /// ほしいものを削除する
+  Future<void> _deleteWishitem() async {
+    final wishitemListState = ref.read(wishitemListStateProvider.notifier);
+    await DeleteWishitemUseCase(
+      wishitemListState: wishitemListState,
+    ).execute(wishitemId: widget.wishitem.wishItemId);
+    if (mounted) {
+      context.pop();
+    }
+  }
 
   /// ほしいものを更新する
   Future<void> _updateWishitem({
@@ -118,7 +138,7 @@ class _WishitemDetailPageState extends ConsumerState<_WishitemDetailPage> {
       wishitemListState: ref.read(wishitemListStateProvider.notifier),
     ).execute(wishitem: updatedWishitem);
     if (mounted) {
-      toggleEditing();
+      _toggleEditing();
       _currentWishitem = updatedWishitem;
     }
   }

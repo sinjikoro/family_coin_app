@@ -13,20 +13,24 @@ class MockTaskRepository extends Mock implements TaskRepository {
 
   @override
   Future<Task> getTask({required TaskId taskId}) async =>
-      dummyTaskList.firstWhere((element) => element.id == taskId);
+      dummyTaskList.firstWhere((element) => element.taskId == taskId);
 
   @override
   Future<void> createTask(Task task) async => dummyTaskList.add(task);
 
   @override
   Future<void> updateTask({required Task task}) async {
-    final index = dummyTaskList.indexWhere((element) => element.id == task.id);
+    final index = dummyTaskList.indexWhere(
+      (element) => element.taskId == task.taskId,
+    );
     dummyTaskList[index] = task;
   }
 
   @override
   Future<void> deleteTask({required TaskId taskId}) async {
-    final index = dummyTaskList.indexWhere((element) => element.id == taskId);
+    final index = dummyTaskList.indexWhere(
+      (element) => element.taskId == taskId,
+    );
     dummyTaskList.removeAt(index);
   }
 }

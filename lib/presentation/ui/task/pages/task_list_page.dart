@@ -35,8 +35,9 @@ class _TaskListPageState extends ConsumerState<TaskListPage> {
                     subtitle: Text(task.earnCoins.toString()),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap:
-                        () async =>
-                            await context.push(RoutePath.taskDetail(task.id)),
+                        () async => await context.push(
+                          RoutePath.taskDetail(task.taskId),
+                        ),
                   );
                 },
               ),

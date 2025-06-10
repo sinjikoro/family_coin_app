@@ -19,7 +19,7 @@ class CreateUserUseCase {
     final repository = GetIt.instance<UserRepository>();
 
     final user = User(
-      id: UserId.generate(),
+      userId: UserId.generate(),
       name: name,
       familyCoinBalance: const FamilyCoin(0),
     );

@@ -22,17 +22,17 @@ class ExchangeWishitemUseCase {
     final userRepository = GetIt.instance<UserRepository>();
 
     // ユーザーのコイン残高を更新
-    final updateUser = await userRepository.getUser(userId: user.id);
+    final updateUser = await userRepository.getUser(userId: user.userId);
     await userRepository.updateUser(
-      userId: user.id,
+      userId: user.userId,
       user: updateUser.useFamilyCoin(amount: wishitem.price),
     );
 
     // 交換履歴を作成
     final now = DateTime.now();
     final log = TransactionLog(
-      id: LogId.generate(),
-      userId: user.id,
+      transactionLogId: LogId.generate(),
+      userId: user.userId,
       type: TransactionType.exchange,
       amount: wishitem.price,
       description: wishitem.name,

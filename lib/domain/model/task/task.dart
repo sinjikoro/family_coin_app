@@ -11,7 +11,7 @@ part 'task.g.dart';
 abstract class Task with _$Task {
   /// constructor
   const factory Task({
-    @TaskIdJsonConverter() required TaskId id,
+    @TaskIdJsonConverter() required TaskId taskId,
     required String name,
     @UserIdJsonConverter() required UserId userId,
     @FamilyCoinJsonConverter() required FamilyCoin earnCoins,
@@ -26,7 +26,7 @@ abstract class Task with _$Task {
 
   /// 初期化
   factory Task.initial(UserId userId) => Task(
-    id: const TaskId.unassigned(),
+    taskId: const TaskId.unassigned(),
     name: '',
     userId: userId,
     earnCoins: const FamilyCoin(0),

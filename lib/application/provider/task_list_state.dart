@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'task_list_state.g.dart';
 
-/// タスク一覧の状態を管理するプロバイダー
+/// アクティブなユーザーのタスク一覧
 @riverpod
 class TaskListState extends _$TaskListState {
   final TaskRepository _repository = GetIt.instance<TaskRepository>();

@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_list_state.g.dart';
 
-/// ユーザー一覧の状態を管理するプロバイダー
+/// ユーザー一覧
 @riverpod
 class UserListState extends _$UserListState {
   final UserRepository _repository = GetIt.instance<UserRepository>();

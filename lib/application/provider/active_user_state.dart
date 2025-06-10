@@ -10,7 +10,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'active_user_state.g.dart';
 
-/// アクティブなユーザーのState
+/// Home(AccountCard)で選択されているアクティブなユーザー
 @Riverpod(keepAlive: true)
 class ActiveUserState extends _$ActiveUserState {
   final UserRepository _repository = GetIt.instance<UserRepository>();

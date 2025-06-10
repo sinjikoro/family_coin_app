@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'wishitem_list_state.g.dart';
 
-/// ほしいもの一覧の状態を管理するプロバイダー
+/// アクティブなユーザーのほしいもの一覧
 @riverpod
 class WishitemListState extends _$WishitemListState {
   final WishitemRepository _repository = GetIt.instance<WishitemRepository>();

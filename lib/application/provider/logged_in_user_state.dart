@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'logged_in_user_state.g.dart';
 
-/// ユーザーのNotifier
+/// ログイン中のユーザー
 @riverpod
 class LoggedInUserState extends _$LoggedInUserState {
   final SharedPreferences _prefs = GetIt.instance<SharedPreferences>();

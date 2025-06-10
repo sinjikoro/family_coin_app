@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'transaction_log_list_state.g.dart';
 
-/// タスクログ一覧のState
+/// アクティブなユーザーの取引履歴一覧
 @riverpod
 class TransactionLogListState extends _$TransactionLogListState {
   final TransactionLogRepository _repository =

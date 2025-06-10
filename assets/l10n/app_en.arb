@@ -44,7 +44,7 @@
       }
     }
   },
-  "notFoundError": "Not Found",
+  "errorNotFoundData": "Not Found",
   "errorNotEnoughCoins": "Not Enough coins",
-  "unexpectedError": "Unexpected Error"
+  "errorUnexpected": "Unexpected Error"
 } 

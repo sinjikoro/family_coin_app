@@ -1,7 +1,7 @@
 {
   "homeTitle": "ホーム",
   "homeCoinBalance": "コイン残高: {balance}",
-  "@home_coin_balance" : {
+  "@homeCoinBalance" : {
     "placeholders": {
       "balance": {
       }

@@ -30,6 +30,7 @@ class _AccountCardState extends ConsumerState<AccountCard> {
     builder: (context, snapshot) {
       switch (snapshot.connectionState) {
         case ConnectionState.done:
+          // データが正常に取得できない場合はエラーページを表示
           if (snapshot.hasError ||
               !snapshot.hasData ||
               snapshot.data!.length < 2) {
@@ -37,14 +38,15 @@ class _AccountCardState extends ConsumerState<AccountCard> {
               child: ErrorPage(errorMessage: context.l10n.errorUnexpected),
             );
           }
-          final userList =
-              snapshot.data![0]! as List<User>; // userListStateProvider
-          final activeUser =
-              snapshot.data![1] as User?; // activeUserStateProvider
+          // userListStateProvider
+          final userList = snapshot.data![0]! as List<User>;
+          // activeUserStateProvider
+          final activeUser = snapshot.data![1] as User?;
 
           return PageView.builder(
-            itemCount: userList.length + 1,
+            itemCount: userList.length + 1, // ユーザー追加カードがあるので + 1
             controller: PageController(
+              // activeUserに初期位置を設定
               initialPage:
                   activeUser != null
                       ? userList.indexWhere((user) => user.id == activeUser.id)
@@ -52,15 +54,16 @@ class _AccountCardState extends ConsumerState<AccountCard> {
             ),
             onPageChanged: (index) => _onPageViewSwiped(index, userList),
             itemBuilder: (context, index) {
+              // userList.lengthまではユーザーカード、+1の分はユーザー追加カード
               if (index < userList.length) {
                 final user = userList[index];
                 return _UserCard(
                   user: user,
-                  onNameChanged: _onNameChanged,
+                  onNameChanged: _updateUserName,
                   onTap: _showAccountHistorySheet,
                 );
               }
-              return _EmptyCard(onTap: _onAddUser);
+              return _EmptyCard(onTap: _addUser);
             },
           );
         case ConnectionState.none:
@@ -72,7 +75,7 @@ class _AccountCardState extends ConsumerState<AccountCard> {
   );
 
   /// 名前変更時のコールバック
-  Future<void> _onNameChanged(String name) async {
+  Future<void> _updateUserName(String name) async {
     // ログイン中のユーザー取得
     final activeUser = await ref.read(activeUserStateProvider.future);
     if (activeUser == null) return;
@@ -94,7 +97,7 @@ class _AccountCardState extends ConsumerState<AccountCard> {
   }
 
   /// ユーザー追加時のコールバック
-  Future<void> _onAddUser() async {
+  Future<void> _addUser() async {
     final user = await CreateUserUseCase(
       userListState: ref.read(userListStateProvider.notifier),
     ).execute(name: 'New User');

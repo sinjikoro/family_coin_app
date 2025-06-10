@@ -97,11 +97,11 @@ class L10nEn extends L10n {
   }
 
   @override
-  String get errorNotFoundData => 'データが見つかりませんでした。';
+  String get errorNotFoundData => 'Not Found';
 
   @override
   String get errorNotEnoughCoins => 'Not Enough coins';
 
   @override
-  String get errorUnexpected => '予期せぬエラーが発生しました。';
+  String get errorUnexpected => 'Unexpected Error';
 }

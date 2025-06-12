@@ -1,6 +1,7 @@
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
+import 'package:family_coin/domain/value_object/recurrence_rule.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'task.freezed.dart';
@@ -19,6 +20,7 @@ abstract class Task with _$Task {
     @DifficultyJsonConverter()
     @Default(Difficulty.normal)
     Difficulty difficulty,
+    @RRuleJsonConverter() RRule? recurrenceRule,
   }) = _Task;
 
   /// Constructor

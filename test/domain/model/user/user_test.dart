@@ -31,7 +31,7 @@ void main() {
     });
 
     test('JSONからUserを生成できる', () {
-      final json = {'id': 1, 'name': 'テストユーザー', 'familyCoinBalance': 1000};
+      final json = {'userId': 1, 'name': 'テストユーザー', 'familyCoinBalance': 1000};
 
       final user = User.fromJson(json);
       expect(user.userId.value, 1);

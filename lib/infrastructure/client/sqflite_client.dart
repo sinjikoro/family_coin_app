@@ -148,7 +148,8 @@ class _QueryV1 {
       $_userIdColumn INTEGER NOT NULL,
       earnCoins INTEGER NOT NULL,
       description TEXT,
-      difficulty TEXT
+      difficulty TEXT,
+      recurrenceRule TEXT
     )
   ''';
 

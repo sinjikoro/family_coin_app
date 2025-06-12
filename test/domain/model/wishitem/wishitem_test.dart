@@ -40,7 +40,7 @@ void main() {
 
     test('JSONからWishitemを生成できる', () {
       final json = {
-        'id': 1,
+        'wishItemId': 1,
         'userId': 2,
         'name': 'テストほしいもの',
         'description': 'テストほしいものの説明',

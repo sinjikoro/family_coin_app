@@ -45,7 +45,7 @@ void main() {
 
     test('JSONからTaskを生成できる', () {
       final json = {
-        'id': 1,
+        'taskId': 1,
         'userId': 2,
         'name': 'テストタスク',
         'description': 'テストタスクの説明',

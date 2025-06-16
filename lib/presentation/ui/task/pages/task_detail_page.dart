@@ -2,14 +2,13 @@ import 'package:family_coin/application/provider/task_list_state.dart';
 import 'package:family_coin/application/usecase/task/delete_task_usecase.dart';
 import 'package:family_coin/application/usecase/task/get_task_usecase.dart';
 import 'package:family_coin/application/usecase/task/update_task_usecase.dart';
-import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:family_coin/presentation/ui/common/pages/error_page.dart';
 import 'package:family_coin/presentation/ui/task/widgets/task_form_widget.dart';
-import 'package:family_coin/presentation/ui/task/widgets/task_read_only_widget.dart';
+import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -84,27 +83,8 @@ class _TaskDetailPageState extends ConsumerState<_TaskDetailPage> {
           IconButton(icon: const Icon(Icons.delete), onPressed: _deleteTask),
       ],
     ),
-    body:
-        isEditing
-            ? TaskFormWidget(
-              task: _currentTask,
-              onSave: _updateTask,
-              onCancel: _toggleEditing,
-            )
-            : TaskReadOnlyWidget(
-              taskName: _currentTask.name,
-              taskDescription: _currentTask.description,
-              taskEarnCoins: _currentTask.earnCoins,
-              taskDifficulty: _currentTask.difficulty,
-            ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: _toggleEditing,
-      child: const Icon(Icons.edit),
-    ),
+    body: TaskFormWidget(task: _currentTask, onSave: _updateTask),
   );
-
-  /// 編集モードを切り替える
-  void _toggleEditing() => setState(() => isEditing = !isEditing);
 
   /// タスクを削除する
   Future<void> _deleteTask() async {
@@ -134,8 +114,7 @@ class _TaskDetailPageState extends ConsumerState<_TaskDetailPage> {
       taskListState: ref.read(taskListStateProvider.notifier),
     ).execute(task: updatedTask);
     if (mounted) {
-      _toggleEditing();
-      _currentTask = updatedTask;
+      context.pop();
     }
   }
 

@@ -205,6 +205,48 @@ abstract class L10n {
   /// **'完了'**
   String get taskDone;
 
+  /// No description provided for @taskScheduledSelect.
+  ///
+  /// In ja, this message translates to:
+  /// **'スケジュール選択'**
+  String get taskScheduledSelect;
+
+  /// No description provided for @taskNotScheduled.
+  ///
+  /// In ja, this message translates to:
+  /// **'日付指定なし'**
+  String get taskNotScheduled;
+
+  /// No description provided for @taskScheduledToday.
+  ///
+  /// In ja, this message translates to:
+  /// **'今日'**
+  String get taskScheduledToday;
+
+  /// No description provided for @taskScheduledTommorow.
+  ///
+  /// In ja, this message translates to:
+  /// **'明日'**
+  String get taskScheduledTommorow;
+
+  /// No description provided for @taskScheduledWeekend.
+  ///
+  /// In ja, this message translates to:
+  /// **'今週末'**
+  String get taskScheduledWeekend;
+
+  /// No description provided for @taskScheduleCustom.
+  ///
+  /// In ja, this message translates to:
+  /// **'カスタム'**
+  String get taskScheduleCustom;
+
+  /// No description provided for @taskScheduleNotRecurrence.
+  ///
+  /// In ja, this message translates to:
+  /// **'繰り返しなし'**
+  String get taskScheduleNotRecurrence;
+
   /// No description provided for @wishitemListTitle.
   ///
   /// In ja, this message translates to:
@@ -259,6 +301,12 @@ abstract class L10n {
   /// **'購入'**
   String get wishItemExchange;
 
+  /// No description provided for @dateFormat.
+  ///
+  /// In ja, this message translates to:
+  /// **'yyyy/MM/dd (EEE)'**
+  String get dateFormat;
+
   /// No description provided for @error.
   ///
   /// In ja, this message translates to:
@@ -282,6 +330,18 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'予期せぬエラーが発生しました。'**
   String get errorUnexpected;
+
+  /// No description provided for @cancel.
+  ///
+  /// In ja, this message translates to:
+  /// **'キャンセル'**
+  String get cancel;
+
+  /// No description provided for @ok.
+  ///
+  /// In ja, this message translates to:
+  /// **'OK'**
+  String get ok;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

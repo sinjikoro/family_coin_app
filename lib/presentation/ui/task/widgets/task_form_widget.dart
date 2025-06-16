@@ -1,14 +1,16 @@
-import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
+import 'package:family_coin/presentation/ui/task/widgets/schedule_picker.dart';
+import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /// タスクフォームウィジェット
 class TaskFormWidget extends StatefulWidget {
   /// constructor
-  const TaskFormWidget({required this.task, required this.onSave, required this.onCancel, super.key});
+  const TaskFormWidget({required this.task, required this.onSave, super.key});
 
   /// タスク
   final Task task;
@@ -21,9 +23,6 @@ class TaskFormWidget extends StatefulWidget {
     required Difficulty difficulty,
   })
   onSave;
-
-  /// キャンセル時のコールバック
-  final VoidCallback onCancel;
 
   @override
   State<TaskFormWidget> createState() => _TaskFormWidgetState();
@@ -42,8 +41,7 @@ class TaskFormWidget extends StatefulWidget {
             required String name,
           })
         >.has('onSave', onSave),
-      )
-      ..add(ObjectFlagProperty<VoidCallback>.has('onCancel', onCancel));
+      );
   }
 }
 
@@ -53,14 +51,21 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
   late final TextEditingController _earnCoinsController;
   late final TextEditingController _descriptionController;
   late final TextEditingController _difficultyController;
+  DateTime? _selectedDate;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.task.name);
-    _earnCoinsController = TextEditingController(text: widget.task.earnCoins.value.toString());
-    _descriptionController = TextEditingController(text: widget.task.description);
-    _difficultyController = TextEditingController(text: widget.task.difficulty.value);
+    _earnCoinsController = TextEditingController(
+      text: widget.task.earnCoins.value.toString(),
+    );
+    _descriptionController = TextEditingController(
+      text: widget.task.description,
+    );
+    _difficultyController = TextEditingController(
+      text: widget.task.difficulty.value,
+    );
   }
 
   @override
@@ -75,65 +80,50 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
   @override
   Widget build(BuildContext context) => Form(
     key: _formKey,
-    child: ListView(
-      padding: const EdgeInsets.all(16),
+    child: Column(
       children: [
-        TextFormField(
-          controller: _nameController,
-          decoration: InputDecoration(labelText: context.l10n.taskName),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return context.l10n.taskNameRequired;
-            }
-            return null;
-          },
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              spacing: 16,
+              children: [
+                _TaskNameField(nameController: _nameController),
+                _EarnCoinField(earnCoinsController: _earnCoinsController),
+                _DescriptionField(
+                  descriptionController: _descriptionController,
+                ),
+                // 難易度
+                _DifficultyField(
+                  initialValue: widget.task.difficulty,
+                  onChanged: (value) {
+                    setState(() {
+                      _difficultyController.text = value.value;
+                    });
+                  },
+                ),
+                // スケジュール
+                _ScheduleField(
+                  selectedDate: _selectedDate,
+                  onDateSelected: (date) {
+                    setState(() {
+                      _selectedDate = date;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
-        const SizedBox(height: 16),
-        TextFormField(
-          controller: _earnCoinsController,
-          decoration: InputDecoration(labelText: context.l10n.taskEarnCoin),
-          keyboardType: TextInputType.number,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return context.l10n.taskEarnCoinRequired;
-            }
-            if (int.tryParse(value) == null) {
-              return context.l10n.taskEarnCoinMustBeNumber;
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 16),
-        TextFormField(
-          controller: _descriptionController,
-          decoration: InputDecoration(labelText: context.l10n.taskDescription),
-          maxLines: 3,
-        ),
-        const SizedBox(height: 16),
-        DropdownButtonFormField<Difficulty>(
-          value: widget.task.difficulty,
-          items:
-              [
-                Difficulty.easy,
-                Difficulty.normal,
-                Difficulty.hard,
-              ].map((e) => DropdownMenuItem(value: e, child: Text(e.value))).toList(),
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                _difficultyController.text = value.value;
-              });
-            }
-          },
-        ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(onPressed: widget.onCancel, child: const Icon(Icons.cancel)),
-            const SizedBox(width: 8),
-            ElevatedButton(onPressed: _saveTask, child: const Icon(Icons.save)),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+              onPressed: _saveTask,
+              child: const Icon(Icons.save),
+            ),
+          ),
         ),
       ],
     ),
@@ -150,4 +140,136 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
       difficulty: Difficulty.byName(_difficultyController.text),
     );
   }
+}
+
+/// タスク名フィールド
+class _TaskNameField extends StatelessWidget {
+  const _TaskNameField({required TextEditingController nameController})
+    : _nameController = nameController;
+
+  final TextEditingController _nameController;
+
+  @override
+  Widget build(BuildContext context) => TextFormField(
+    controller: _nameController,
+    decoration: InputDecoration(labelText: context.l10n.taskName),
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return context.l10n.taskNameRequired;
+      }
+      return null;
+    },
+  );
+}
+
+/// 獲得コインフィールド
+class _EarnCoinField extends StatelessWidget {
+  const _EarnCoinField({required TextEditingController earnCoinsController})
+    : _earnCoinsController = earnCoinsController;
+
+  final TextEditingController _earnCoinsController;
+
+  @override
+  Widget build(BuildContext context) => TextFormField(
+    controller: _earnCoinsController,
+    decoration: InputDecoration(labelText: context.l10n.taskEarnCoin),
+    keyboardType: TextInputType.number,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return context.l10n.taskEarnCoinRequired;
+      }
+      if (int.tryParse(value) == null) {
+        return context.l10n.taskEarnCoinMustBeNumber;
+      }
+      return null;
+    },
+  );
+}
+
+/// 説明フィールド
+class _DescriptionField extends StatelessWidget {
+  const _DescriptionField({
+    required TextEditingController descriptionController,
+  }) : _descriptionController = descriptionController;
+
+  final TextEditingController _descriptionController;
+
+  @override
+  Widget build(BuildContext context) => TextFormField(
+    controller: _descriptionController,
+    decoration: InputDecoration(labelText: context.l10n.taskDescription),
+    maxLines: 3,
+  );
+}
+
+/// 難易度フィールド
+class _DifficultyField extends StatelessWidget {
+  const _DifficultyField({
+    required Difficulty initialValue,
+    required void Function(Difficulty) onChanged,
+  }) : _initialValue = initialValue,
+       _onChanged = onChanged;
+
+  final Difficulty _initialValue;
+  final void Function(Difficulty) _onChanged;
+
+  @override
+  Widget build(BuildContext context) => DropdownButtonFormField<Difficulty>(
+    value: _initialValue,
+    items:
+        [
+          Difficulty.easy,
+          Difficulty.normal,
+          Difficulty.hard,
+        ].map((e) => DropdownMenuItem(value: e, child: Text(e.value))).toList(),
+    onChanged: (value) {
+      if (value != null) {
+        _onChanged(value);
+      }
+    },
+  );
+}
+
+/// スケジュールフィールド
+class _ScheduleField extends StatelessWidget {
+  const _ScheduleField({
+    required DateTime? selectedDate,
+    required void Function(DateTime?) onDateSelected,
+  }) : _selectedDate = selectedDate,
+       _onDateSelected = onDateSelected;
+
+  final DateTime? _selectedDate;
+  final void Function(DateTime?) _onDateSelected;
+
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+    onTap: () async {
+      await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        constraints: BoxConstraints(maxHeight: context.screenHeight * 0.7),
+        builder:
+            (context) => SchedulePicker(
+              onDateSelected: _onDateSelected,
+              initialDate: _selectedDate,
+            ),
+      );
+    },
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(),
+      ),
+      height: 50,
+      alignment: Alignment.center,
+      child: Text(
+        _selectedDate != null
+            ? DateFormat(
+              context.l10n.dateFormat,
+              context.l10n.localeName,
+            ).format(_selectedDate!)
+            : context.l10n.taskNotScheduled,
+      ),
+    ),
+  );
 }

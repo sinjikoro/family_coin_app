@@ -25,6 +25,13 @@
   "taskDescription": "description",
   "taskDifficulty": "difficulty",
   "taskDone": "done",
+  "taskScheduledSelect": "select schedule",
+  "taskNotScheduled": "not scheduled",
+  "taskScheduledToday": "today",
+  "taskScheduledTommorow": "tommorow",
+  "taskScheduledWeekend": "week end",
+  "taskScheduleCustom": "custom",
+  "taskScheduleNotRecurrence": "no recurrence",
 
   "wishitemListTitle": "wishitem list",
   "wishitemListEmpty": "empty..",
@@ -37,6 +44,8 @@
   "wishItemURL": "URL(optional)",
   "wishItemExchange": "exchange",
 
+  "dateFormat": "MM/dd/yyyy (EEE)",
+
   "error": "error occurred! : {errorMessage}",
   "@errorMessage": {
     "placeholders": {
@@ -46,5 +55,8 @@
   },
   "errorNotFoundData": "Not Found",
   "errorNotEnoughCoins": "Not Enough coins",
-  "errorUnexpected": "Unexpected Error"
+  "errorUnexpected": "Unexpected Error",
+
+  "cancel": "Cancel",
+  "ok": "OK"
 } 

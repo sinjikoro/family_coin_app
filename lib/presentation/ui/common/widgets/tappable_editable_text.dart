@@ -56,7 +56,7 @@ class _TappableEditableTextState extends State<TappableEditableText> {
 
   @override
   Widget build(BuildContext context) =>
-      Expanded(child: _isEditing ? _inputField() : _labelField());
+      _isEditing ? _inputField() : _labelField();
 
   /// ラベルフィールド
   GestureDetector _labelField() => GestureDetector(
@@ -86,10 +86,6 @@ class _TappableEditableTextState extends State<TappableEditableText> {
     onSubmitted: (value) {
       setState(() => _isEditing = false);
       widget.onChanged(value);
-    },
-    onEditingComplete: () {
-      setState(() => _isEditing = false);
-      widget.onChanged(_controller.text);
     },
   );
 }

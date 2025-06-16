@@ -65,6 +65,27 @@ class L10nEn extends L10n {
   String get taskDone => 'done';
 
   @override
+  String get taskScheduledSelect => 'select schedule';
+
+  @override
+  String get taskNotScheduled => 'not scheduled';
+
+  @override
+  String get taskScheduledToday => 'today';
+
+  @override
+  String get taskScheduledTommorow => 'tommorow';
+
+  @override
+  String get taskScheduledWeekend => 'week end';
+
+  @override
+  String get taskScheduleCustom => 'custom';
+
+  @override
+  String get taskScheduleNotRecurrence => 'no recurrence';
+
+  @override
   String get wishitemListTitle => 'wishitem list';
 
   @override
@@ -92,6 +113,9 @@ class L10nEn extends L10n {
   String get wishItemExchange => 'exchange';
 
   @override
+  String get dateFormat => 'MM/dd/yyyy (EEE)';
+
+  @override
   String error(Object errorMessage) {
     return 'error occurred! : $errorMessage';
   }
@@ -104,4 +128,10 @@ class L10nEn extends L10n {
 
   @override
   String get errorUnexpected => 'Unexpected Error';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get ok => 'OK';
 }

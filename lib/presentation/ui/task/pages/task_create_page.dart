@@ -1,10 +1,10 @@
 import 'package:family_coin/application/provider/active_user_state.dart';
 import 'package:family_coin/application/provider/task_list_state.dart';
 import 'package:family_coin/application/usecase/task/create_task_usecase.dart';
-import 'package:family_coin/core/extension/context_extension.dart';
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/presentation/ui/common/pages/error_page.dart';
 import 'package:family_coin/presentation/ui/task/widgets/task_form_widget.dart';
+import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,7 +43,6 @@ class TaskCreatePage extends ConsumerWidget {
             Navigator.of(context).pop();
           }
         },
-        onCancel: () => Navigator.of(context).pop(),
       ),
     );
   }

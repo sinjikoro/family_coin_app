@@ -1,3 +1,5 @@
+import 'package:family_coin/domain/value_object/converter/family_coin_json_converter.dart';
+import 'package:family_coin/domain/value_object/converter/id_json_converter.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

@@ -1,5 +1,4 @@
 import 'package:family_coin/domain/value_object/base/value_object.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 const _earn = 'earn';
 const _exchange = 'exchange';
@@ -37,17 +36,4 @@ final class _Exchange extends TransactionType {
   /// 値
   @override
   String get value => _exchange;
-}
-
-/// FamilyCoinの取引タイプのJSONコンバーター
-class TransactionTypeJsonConverter
-    implements JsonConverter<TransactionType, String> {
-  /// Constructor
-  const TransactionTypeJsonConverter();
-
-  @override
-  TransactionType fromJson(String json) => TransactionType.byName(json);
-
-  @override
-  String toJson(TransactionType object) => object.value;
 }

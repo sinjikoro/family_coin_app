@@ -1,5 +1,5 @@
-import 'package:family_coin/core/l10n/l10n.dart';
 import 'package:family_coin/infrastructure/client/sqflite_client.dart';
+import 'package:family_coin/presentation/l10n/l10n.dart';
 import 'package:family_coin/presentation/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,14 +37,17 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final GoRouter router = ref.watch(routerProvider);
 
-    return MaterialApp.router(
-      localizationsDelegates: L10n.localizationsDelegates,
-      supportedLocales: L10n.supportedLocales,
-      theme: ThemeData(primarySwatch: Colors.indigo),
-      routerConfig: router,
-      builder:
-          (context, child) =>
-              Localizations.override(context: context, child: child),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: MaterialApp.router(
+        localizationsDelegates: L10n.localizationsDelegates,
+        supportedLocales: L10n.supportedLocales,
+        theme: ThemeData(primarySwatch: Colors.indigo),
+        routerConfig: router,
+        builder:
+            (context, child) =>
+                Localizations.override(context: context, child: child),
+      ),
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:family_coin/domain/error/domain_error.dart';
 import 'package:family_coin/domain/error/error_code.dart';
 import 'package:family_coin/domain/value_object/base/value_object.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 /// ファミリーコイン
 class FamilyCoin extends ValueObject<int> {
@@ -73,16 +72,4 @@ class FamilyCoin extends ValueObject<int> {
 
   @override
   int get hashCode => value.hashCode;
-}
-
-/// ファミリーコインのJSONコンバーター
-class FamilyCoinJsonConverter implements JsonConverter<FamilyCoin, int> {
-  /// Constructor
-  const FamilyCoinJsonConverter();
-
-  @override
-  FamilyCoin fromJson(int json) => FamilyCoin(json);
-
-  @override
-  int toJson(FamilyCoin object) => object.value;
 }

@@ -25,6 +25,13 @@
   "taskDescription": "説明",
   "taskDifficulty": "難易度",
   "taskDone": "完了",
+  "taskScheduledSelect": "スケジュール選択",
+  "taskNotScheduled": "日付指定なし",
+  "taskScheduledToday": "今日",
+  "taskScheduledTommorow": "明日",
+  "taskScheduledWeekend": "今週末",
+  "taskScheduleCustom": "カスタム",
+  "taskScheduleNotRecurrence": "繰り返しなし",
 
   "wishitemListTitle": "ほしいもの一覧",
   "wishitemListEmpty": "ほしいものはありません",
@@ -37,6 +44,8 @@
   "wishItemURL": "URL（任意）",
   "wishItemExchange": "購入",
 
+  "dateFormat": "yyyy/MM/dd (EEE)",
+
   "error": "エラーが発生しました! : {errorMessage}",
   "@errorMessage": {
     "placeholders": {
@@ -46,5 +55,8 @@
   },
   "errorNotFoundData": "データが見つかりませんでした。",
   "errorNotEnoughCoins": "コインが足りません。",
-  "errorUnexpected": "予期せぬエラーが発生しました。"
+  "errorUnexpected": "予期せぬエラーが発生しました。",
+
+  "cancel": "キャンセル",
+  "ok": "OK"
 } 

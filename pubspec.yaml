@@ -24,6 +24,7 @@ dependencies:
   rrule: ^0.2.17
   shared_preferences: ^2.5.3
   sqflite: ^2.4.2
+  table_calendar: ^3.2.0
 
 dev_dependencies:
   analyzer: 7.3.0

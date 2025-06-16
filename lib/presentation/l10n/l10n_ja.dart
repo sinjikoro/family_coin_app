@@ -65,6 +65,27 @@ class L10nJa extends L10n {
   String get taskDone => '完了';
 
   @override
+  String get taskScheduledSelect => 'スケジュール選択';
+
+  @override
+  String get taskNotScheduled => '日付指定なし';
+
+  @override
+  String get taskScheduledToday => '今日';
+
+  @override
+  String get taskScheduledTommorow => '明日';
+
+  @override
+  String get taskScheduledWeekend => '今週末';
+
+  @override
+  String get taskScheduleCustom => 'カスタム';
+
+  @override
+  String get taskScheduleNotRecurrence => '繰り返しなし';
+
+  @override
   String get wishitemListTitle => 'ほしいもの一覧';
 
   @override
@@ -92,6 +113,9 @@ class L10nJa extends L10n {
   String get wishItemExchange => '購入';
 
   @override
+  String get dateFormat => 'yyyy/MM/dd (EEE)';
+
+  @override
   String error(Object errorMessage) {
     return 'エラーが発生しました! : $errorMessage';
   }
@@ -104,4 +128,10 @@ class L10nJa extends L10n {
 
   @override
   String get errorUnexpected => '予期せぬエラーが発生しました。';
+
+  @override
+  String get cancel => 'キャンセル';
+
+  @override
+  String get ok => 'OK';
 }

@@ -17,10 +17,10 @@ class CreateTaskUseCase {
   /// タスクを作成する
   Future<void> execute({
     required String name,
-    required String description,
     required UserId userId,
     required FamilyCoin earnCoins,
-    required Difficulty difficulty,
+    String description = '',
+    Difficulty difficulty = Difficulty.normal,
   }) async {
     /// タスクリポジトリ
     final repository = GetIt.instance<TaskRepository>();

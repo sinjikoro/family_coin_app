@@ -1,3 +1,4 @@
+import 'package:family_coin/domain/value_object/converter/id_json_converter.dart';
 import 'package:family_coin/domain/value_object/id.dart';
 import 'package:flutter_test/flutter_test.dart';
 

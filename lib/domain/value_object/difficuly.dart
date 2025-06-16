@@ -1,5 +1,4 @@
 import 'package:family_coin/domain/value_object/base/value_object.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 const _easy = 'easy';
 const _normal = 'normal';
@@ -56,16 +55,4 @@ final class _Hard extends Difficulty {
   /// 値
   @override
   String get value => _hard;
-}
-
-/// 難易度のJSONコンバーター
-class DifficultyJsonConverter implements JsonConverter<Difficulty, String> {
-  /// Constructor
-  const DifficultyJsonConverter();
-
-  @override
-  Difficulty fromJson(String json) => Difficulty.byName(json);
-
-  @override
-  String toJson(Difficulty object) => object.value;
 }

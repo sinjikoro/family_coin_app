@@ -57,6 +57,15 @@ class _SchedulePickerState extends State<SchedulePicker> {
   /// ローカライズの初期化済みフラグ
   bool _isL10nInitialized = false;
 
+  /// カスタム選択中フラグ
+  bool _isCustomRuleSelected = false;
+
+  /// カスタム選択時の選択されているインターバル
+  int _selectedCustomRuleInterval = 2;
+
+  /// カスタム選択時の選択されている頻度
+  Frequency _selectedCustomRuleFrequency = Frequency.weekly;
+
   @override
   void initState() {
     super.initState();
@@ -121,61 +130,118 @@ class _SchedulePickerState extends State<SchedulePicker> {
               }
             },
           ),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              _QuickSelectButton(
-                label: context.l10n.taskScheduleNotRecurrence,
-                onTap: () {
-                  setState(() {
-                    _selectedRule = null;
-                  });
-                },
-              ),
-              _QuickSelectButton(
-                label: _rruleEveryDay().toText(l10n: l10n),
-                onTap: () {
-                  setState(() {
-                    _selectedRule = _rruleEveryDay();
-                  });
-                },
-              ),
-              _QuickSelectButton(
-                label: _rruleEveryWeek(_selectedDate).toText(l10n: l10n),
-                onTap: () {
-                  setState(() {
-                    _selectedRule = _rruleEveryWeek(_selectedDate);
-                  });
-                },
-              ),
-              _QuickSelectButton(
-                label: _rruleEveryWeekdays().toText(l10n: l10n),
-                onTap: () {
-                  setState(() {
-                    _selectedRule = _rruleEveryWeekdays();
-                  });
-                },
-              ),
-              _QuickSelectButton(
-                label: _rruleEveryMonth(_selectedDate).toText(l10n: l10n),
-                onTap: () {
-                  setState(() {
-                    _selectedRule = _rruleEveryMonth(_selectedDate);
-                  });
-                },
-              ),
-            ],
+          Expanded(
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                // 繰り返しなし
+                _QuickSelectButton(
+                  label: context.l10n.taskScheduleNotRecurrence,
+                  isSelected: _selectedRule == null,
+                  onTap: () {
+                    setState(() {
+                      _selectedRule = null;
+                      _isCustomRuleSelected = false;
+                    });
+                  },
+                ),
+                // 毎日
+                _QuickSelectButton(
+                  label: _rruleEveryDay().toText(l10n: l10n),
+                  isSelected: _selectedRule == _rruleEveryDay(),
+                  onTap: () {
+                    setState(() {
+                      _selectedRule = _rruleEveryDay();
+                      _isCustomRuleSelected = false;
+                    });
+                  },
+                ),
+                // 週次
+                _QuickSelectButton(
+                  label: _rruleEveryWeek(_selectedDate).toText(l10n: l10n),
+                  isSelected: _selectedRule == _rruleEveryWeek(_selectedDate),
+                  onTap: () {
+                    setState(() {
+                      _selectedRule = _rruleEveryWeek(_selectedDate);
+                      _isCustomRuleSelected = false;
+                    });
+                  },
+                ),
+                // 平日
+                _QuickSelectButton(
+                  label: _rruleEveryWeekdays().toText(l10n: l10n),
+                  isSelected: _selectedRule == _rruleEveryWeekdays(),
+                  onTap: () {
+                    setState(() {
+                      _selectedRule = _rruleEveryWeekdays();
+                      _isCustomRuleSelected = false;
+                    });
+                  },
+                ),
+                // 月次
+                _QuickSelectButton(
+                  label: _rruleEveryMonth(_selectedDate).toText(l10n: l10n),
+                  isSelected: _selectedRule == _rruleEveryMonth(_selectedDate),
+                  onTap: () {
+                    setState(() {
+                      _selectedRule = _rruleEveryMonth(_selectedDate);
+                      _isCustomRuleSelected = false;
+                    });
+                  },
+                ),
+                // カスタム
+                _QuickSelectButton(
+                  label: context.l10n.taskScheduleCustom,
+                  isSelected: _isCustomRuleSelected,
+                  onTap: () {
+                    setState(() {
+                      _isCustomRuleSelected = true;
+                      _selectedRule = RecurrenceRule(
+                        frequency: _selectedCustomRuleFrequency,
+                        interval: _selectedCustomRuleInterval,
+                      );
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
+          if (_isCustomRuleSelected)
+            // カスタムルールの入力フィールド
+            Column(
+              children: [
+                // Interval選択ドロップダウン
+                _CustomInvervalSelectDropDown(
+                  onChanged: (selectedInterval) {
+                    if (selectedInterval == null) return;
+                    _selectedCustomRuleInterval = selectedInterval;
+                    setState(() {
+                      _selectedRule = RecurrenceRule(
+                        frequency: _selectedCustomRuleFrequency,
+                        interval: selectedInterval,
+                      );
+                    });
+                  },
+                ),
+                // Frequency選択ドロップダウン
+                _CustomFrequencySelectDropDown(
+                  onChanged: (selectedFrequency) {
+                    if (selectedFrequency == null) return;
+                    _selectedCustomRuleFrequency = selectedFrequency;
+                    setState(() {
+                      _selectedRule = RecurrenceRule(
+                        frequency: selectedFrequency,
+                        interval: _selectedCustomRuleInterval,
+                      );
+                    });
+                  },
+                ),
+              ],
+            ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // キャンセルボタン
-              _CancelButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
               // 確定ボタン
               _SubmitButton(
                 onPressed: () {
@@ -300,10 +366,15 @@ class _Calendar extends StatelessWidget {
 
 /// クイック選択ボタン
 class _QuickSelectButton extends StatelessWidget {
-  const _QuickSelectButton({required this.label, required this.onTap});
+  const _QuickSelectButton({
+    required this.label,
+    required this.onTap,
+    required this.isSelected,
+  });
 
   final String label;
   final VoidCallback onTap;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) => InkWell(
@@ -311,11 +382,21 @@ class _QuickSelectButton extends StatelessWidget {
     borderRadius: BorderRadius.circular(8),
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(8),
+      decoration:
+          isSelected
+              ? BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(8),
+              )
+              : BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8),
+              ),
+      child: Text(
+        label,
+        style: TextStyle(color: isSelected ? Colors.white : Colors.black),
       ),
-      child: Text(label),
     ),
   );
 
@@ -324,7 +405,8 @@ class _QuickSelectButton extends StatelessWidget {
     super.debugFillProperties(properties);
     properties
       ..add(StringProperty('label', label))
-      ..add(ObjectFlagProperty<VoidCallback>.has('onTap', onTap));
+      ..add(ObjectFlagProperty<VoidCallback>.has('onTap', onTap))
+      ..add(DiagnosticsProperty<bool>('isSelected', isSelected));
   }
 }
 
@@ -348,22 +430,63 @@ class _SubmitButton extends StatelessWidget {
   }
 }
 
-/// キャンセルボタン
-class _CancelButton extends StatelessWidget {
-  const _CancelButton({required this.onPressed});
+/// カスタムルールのInterval選択ドロップダウン
+class _CustomInvervalSelectDropDown extends StatelessWidget {
+  const _CustomInvervalSelectDropDown({required this.onChanged});
 
-  /// ボタンのコールバック
-  final VoidCallback? onPressed;
+  final Function(int?) onChanged;
 
   @override
-  Widget build(BuildContext context) =>
-      ElevatedButton(onPressed: onPressed, child: const Icon(Icons.cancel));
+  Widget build(BuildContext context) => DropdownButtonFormField<int>(
+    items: List.generate(
+      10,
+      (index) =>
+          DropdownMenuItem<int>(value: index + 1, child: Text('${index + 1}')),
+    ),
+    onChanged: onChanged,
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-      ObjectFlagProperty<VoidCallback?>.has('onPressed', onPressed),
+      ObjectFlagProperty<Function(int? p1)>.has('onChanged', onChanged),
+    );
+  }
+}
+
+/// 繰り返しカスタム時のFreqency選択ドロップダウン
+class _CustomFrequencySelectDropDown extends StatelessWidget {
+  _CustomFrequencySelectDropDown({required this.onChanged});
+
+  final Function(Frequency?) onChanged;
+
+  final _frequencyList = <Frequency>[
+    Frequency.daily,
+    Frequency.weekly,
+    Frequency.monthly,
+    Frequency.yearly,
+  ];
+
+  @override
+  Widget build(BuildContext context) => DropdownButtonFormField<Frequency>(
+    items:
+        _frequencyList
+            .map(
+              (frequency) => DropdownMenuItem<Frequency>(
+                value: frequency,
+                child: Text(frequency.toString().split('.').last),
+              ),
+            )
+            .toList(),
+    onChanged: onChanged,
+  );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+      ObjectFlagProperty<Function(Frequency? p1)>.has('onChanged', onChanged),
     );
   }
 }

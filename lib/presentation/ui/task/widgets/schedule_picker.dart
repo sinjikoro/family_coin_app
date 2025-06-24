@@ -119,6 +119,38 @@ class _SchedulePickerState extends State<SchedulePicker> {
               if (date != null) {
                 setState(() {
                   _selectedDate = date;
+                  // 選択されたルールに応じてbyWeekDayやbyMonthDayを更新
+                  if (_selectedRule != null) {
+                    final selectedRule = _selectedRule!;
+                    switch (selectedRule.frequency) {
+                      case Frequency.weekly:
+                        // 毎週X曜日の場合、selectedDateに併せてselectedRuleのbyWeekDaysを更新
+                        if (selectedRule.byWeekDays.length == 1) {
+                          _selectedRule = selectedRule.copyWith(
+                            byWeekDays: [ByWeekDayEntry(date.weekday)],
+                          );
+                        }
+                      case Frequency.monthly:
+                        if (selectedRule.hasByMonthDays) {
+                          // 毎月X日の場合、selectedDateに併せてselectedRuleのbyMonthDaysを更新
+                          _selectedRule = selectedRule.copyWith(
+                            byMonthDays: [date.day],
+                          );
+                        } else if (selectedRule.hasByWeekDays) {
+                          // 毎月第X Y曜日の場合、selectedDateに併せて
+                          _selectedRule = selectedRule.copyWith(
+                            byWeekDays: [
+                              ByWeekDayEntry(date.weekday, date.weekOfMonth),
+                            ],
+                          );
+                        }
+                      case Frequency.yearly:
+                      case Frequency.daily:
+                      case Frequency.hourly:
+                      case Frequency.minutely:
+                      case Frequency.secondly:
+                    }
+                  }
                 });
               }
             },
@@ -216,7 +248,6 @@ class _SchedulePickerState extends State<SchedulePicker> {
                         onSelected: (selected) {
                           setState(() {
                             _isCustomRuleSelected = true;
-                            _selectedRule = null;
                           });
                         },
                       ),
@@ -224,6 +255,8 @@ class _SchedulePickerState extends State<SchedulePicker> {
                   ),
                   if (_isCustomRuleSelected)
                     CustomRuleContainer(
+                      selectedDate: _selectedDate,
+                      initialRule: _selectedRule,
                       onRuleChanged: (rule) {
                         setState(() {
                           _isCustomRuleSelected = true;
@@ -254,16 +287,19 @@ class _SchedulePickerState extends State<SchedulePicker> {
   }
 
   /// RecurrenceRule : 毎日
-  RecurrenceRule _rruleEveryDay() => RecurrenceRule(frequency: Frequency.daily);
+  RecurrenceRule _rruleEveryDay() =>
+      RecurrenceRule(interval: 1, frequency: Frequency.daily);
 
   /// RecurrenceRule : 毎週
   RecurrenceRule _rruleEveryWeek(DateTime date) => RecurrenceRule(
+    interval: 1,
     frequency: Frequency.weekly,
     byWeekDays: [ByWeekDayEntry(date.weekday)],
   );
 
   /// RecurrenceRule : 毎週平日
   RecurrenceRule _rruleEveryWeekdays() => RecurrenceRule(
+    interval: 1,
     frequency: Frequency.weekly,
     byWeekDays: [
       ByWeekDayEntry(WeekDay.monday.value),
@@ -275,8 +311,11 @@ class _SchedulePickerState extends State<SchedulePicker> {
   );
 
   /// RecurrenceRule : 毎月
-  RecurrenceRule _rruleEveryMonth(DateTime date) =>
-      RecurrenceRule(frequency: Frequency.monthly, byMonthDays: [date.day]);
+  RecurrenceRule _rruleEveryMonth(DateTime date) => RecurrenceRule(
+    interval: 1,
+    frequency: Frequency.monthly,
+    byMonthDays: [date.day],
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

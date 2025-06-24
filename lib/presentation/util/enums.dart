@@ -26,4 +26,8 @@ enum WeekDay {
 
   /// 曜日の値
   final int value;
+
+  /// 曜日を取得
+  static WeekDay fromValue(int value) =>
+      WeekDay.values.firstWhere((e) => e.value == value);
 }

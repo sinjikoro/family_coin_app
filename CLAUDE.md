@@ -146,12 +146,87 @@ lib/
 
 ## UI構成ルール
 
-### ファイル配置
-- 画面は`lib/presentation/ui/`配下に機能別に配置
-- 共通コンポーネントは`lib/presentation/ui/common/`に配置
-- ページは`pages/`ディレクトリに配置
-- ウィジェットは`widgets/`ディレクトリに配置
-- ルーティングは`lib/presentation/routing/`に配置
+### アトミックデザイン構造
+```
+presentation/ui/
+├── components/           # アトミックデザインコンポーネント
+│   ├── atoms/           # 最小単位のUIコンポーネント
+│   │   ├── buttons/     # ボタン類
+│   │   ├── inputs/      # 入力フィールド
+│   │   ├── text/        # テキスト要素
+│   │   ├── icons/       # アイコン
+│   │   └── spacing/     # スペーシング・デザイントークン
+│   ├── molecules/       # Atomsを組み合わせた機能単位
+│   │   ├── forms/       # フォーム関連コンポーネント
+│   │   ├── cards/       # カード型コンポーネント
+│   │   ├── lists/       # リスト型コンポーネント
+│   │   └── navigation/  # ナビゲーション要素
+│   ├── organisms/       # 複雑な機能を持つコンポーネント群
+│   │   ├── sections/    # セクション・フォーム
+│   │   └── panels/      # パネル・ダッシュボード
+│   └── templates/       # ページレベルのテンプレート
+├── pages/               # 実際のページコンポーネント（従来構造）
+│   ├── home/
+│   ├── task/
+│   └── wishItem/
+└── common/              # 従来の共通コンポーネント（段階的移行）
+```
+
+### アトミックデザイン原則
+
+#### Atoms（原子）
+- **責務**: 最小単位のUIコンポーネント、再利用可能な基本要素
+- **例**: PrimaryButton, TextInput, AppText, Spacing
+- **特徴**: 
+  - 他のコンポーネントに依存しない
+  - プロパティによる振る舞いの制御
+  - デザインシステムの基盤
+
+#### Molecules（分子）
+- **責務**: 複数のAtomsを組み合わせた機能単位
+- **例**: LabeledTextInput, SchedulePicker, TappableEditableText
+- **特徴**:
+  - 特定の機能や目的を持つ
+  - Atomsのみに依存
+  - 再利用可能な機能ブロック
+
+#### Organisms（生体）
+- **責務**: 複雑なUIセクション、ビジネスロジックを含む
+- **例**: TaskFormOrganism, UserProfileOrganism
+- **特徴**:
+  - Atoms、Moleculesを組み合わせて構成
+  - 具体的なコンテキストを持つ
+  - 状態管理とビジネスロジック
+
+#### Templates（テンプレート）
+- **責務**: ページレベルのレイアウト構造
+- **例**: TaskCreateTemplate, HomeTemplate
+- **特徴**:
+  - ページの骨組みを定義
+  - Organismsの配置とレイアウト
+  - 画面遷移ロジック
+
+### ファイル命名規則
+- **Atoms**: `component_name.dart` (例: primary_button.dart)
+- **Molecules**: `component_name.dart` (例: labeled_text_input.dart)  
+- **Organisms**: `component_name_organism.dart` (例: task_form_organism.dart)
+- **Templates**: `page_name_template.dart` (例: task_create_template.dart)
+
+### インポート規則
+```dart
+// 各レベルのexportファイルを使用
+import 'package:family_coin/presentation/ui/components/atoms/atoms.dart';
+import 'package:family_coin/presentation/ui/components/molecules/molecules.dart';
+import 'package:family_coin/presentation/ui/components/organisms/organisms.dart';
+
+// または統一importを使用
+import 'package:family_coin/presentation/ui/components/components.dart';
+```
+
+### 段階的移行戦略
+1. **新規コンポーネント**: 必ずアトミックデザイン構造で作成
+2. **既存コンポーネント**: 修正時にアトミックデザインに移行
+3. **従来構造**: 当面は並存、段階的に移行
 
 ### UI/UX
 

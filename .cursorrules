@@ -1,116 +1,34 @@
 # Family Coin App プロジェクトルール
 
-## プロジェクト構成
-- lib/
-  - core/         # コア機能
-    - di/         # 依存性注入（get_it）
-    - exception/  # エラー処理
-    - l10n/       # 国際化
-  - application/  # アプリケーション層
-    - provider/   # Riverpodのプロバイダー（状態管理）
-    - usecase/    # ユースケース
-      - task/     # タスク関連のユースケース
-      - user/     # ユーザー関連のユースケース
-      - wishitem/ # 欲しいもの関連のユースケース
-  - domain/       # ドメイン層
-    - model/      # ドメインモデル
-      - task/     # タスクモデル
-      - user/     # ユーザーモデル
-      - wishitem/ # 欲しいものモデル
-    - repository/ # リポジトリインターフェース
-    - value_object/ # 値オブジェクト
-      - base/     # 基底クラス
-      - converter/ # JSON変換器
-    - error/      # ドメインエラー
-  - infrastructure/ # インフラストラクチャ層
-    - repository/   # リポジトリ実装
-    - datasource/   # データソース
-      - local_datasource/ # ローカルデータソース
-        - db_schema/ # データベーススキーマ
-    - client/       # 外部クライアント（SQLite等）
-  - presentation/ # プレゼンテーション層
-    - ui/         # UIコンポーネント
-      - common/   # 共通UI
-        - pages/  # 共通ページ
-        - theme/  # テーマ
-        - widgets/ # 共通ウィジェット
-      - home/     # ホーム画面
-      - task/     # タスク画面
-      - wishItem/ # 欲しいもの画面
-      - scaffold/ # スキャフォールド
-    - routing/    # ルーティング（go_router）
-    - l10n/       # 国際化
-    - util/       # ユーティリティ
-      - extension/ # 拡張機能
+このプロジェクトの詳細な開発ガイドライン、アーキテクチャ、コーディング規約については、**CLAUDE.md**を参照してください。
 
-## 使用ライブラリ
-- **状態管理**: flutter_riverpod ^2.6.1
-- **ルーティング**: go_router ^15.1.2
-- **依存性注入**: get_it ^8.0.3
-- **データベース**: sqflite ^2.4.2
-- **ローカルストレージ**: shared_preferences ^2.5.3
-- **コード生成**: freezed, json_annotation, riverpod_annotation
-- **国際化**: intl ^0.20.2, flutter_localizations
-- **UI**: flutter_slidable ^4.0.0, table_calendar ^3.2.0
-- **スケジュール**: rrule ^0.2.17
+## クイックリファレンス
 
-## 命名規則
-- ファイル名: スネークケース（例: get_user_info_usecase.dart）
-- クラス名: パスカルケース（例: GetUserInfoUseCase）
-- 変数名: キャメルケース（例: userRepository）
-- 定数: 大文字のスネークケース（例: MAX_COIN_BALANCE）
-- Provider名: キャメルケース（例: userStateProvider）
-- ディレクトリ名: スネークケース（例: user_list_state）
+### 重要なコマンド
+```bash
+# コード生成
+dart run build_runner build --delete-conflicting-outputs
 
-## コーディング規約
-- インデント: 2スペース
-- 行の長さ: 最大120文字
-- クラスやメソッドには必ずドキュメントコメントを付ける
-- プライベートメンバーはアンダースコアで始める（例: _userRepository）
-- ProviderはRiverpod v2の形式を使用
-  - `@riverpod`アノテーションを使用
-  - `Ref`を使用して依存関係を注入
-  - コード生成を使用（`part 'ファイル名.g.dart'`）
-- モデルクラスはfreezedを使用
-- JSON変換にはjson_annotationを使用
+# 依存性注入初期化
+DependencyInjection.local()
 
-## アーキテクチャルール
-- Clean Architectureを採用
-- 依存関係の方向: presentation → application → domain
-- ドメイン層は外部ライブラリに依存しない
-- プレゼンテーション層はRiverpod v2を使用
-- 依存性注入は`get_it`を使用
-  - アプリケーション起動時に`DependencyInjection.initialize()`で初期化
-  - シングルトンオブジェクトの管理に使用
-  - 外部リソースへのアクセスはインフラストラクチャ層で実装
-  - アプリケーション層はドメイン層のインターフェースにのみ依存
+# テスト実行
+flutter test
 
-## Providerの配置ルール
-- Providerは`lib/application/provider/`に配置
-- 関連するProviderは同じファイルにまとめる
-- Provider名は機能を表す名前にする（例: `userStateProvider`, `taskListStateProvider`）
-- 複雑なロジックはUseCaseに委譲する
-- 外部リソースへのアクセスはUseCaseで行う
-- プレゼンテーション層はアプリケーション層のProviderのみを使用
+# 静的解析
+flutter analyze
+```
 
-## UI構成ルール
-- 画面は`lib/presentation/ui/`配下に機能別に配置
-- 共通コンポーネントは`lib/presentation/ui/common/`に配置
-- ページは`pages/`ディレクトリに配置
-- ウィジェットは`widgets/`ディレクトリに配置
-- ルーティングは`lib/presentation/routing/`に配置
+### 主要ディレクトリ
+- `lib/application/provider/` - Riverpod状態管理
+- `lib/domain/` - ビジネスロジック
+- `lib/infrastructure/` - データアクセス
+- `lib/presentation/ui/` - UIコンポーネント
 
-## データベースルール
-- SQLiteを使用（sqflite）
-- スキーマ定義は`lib/infrastructure/datasource/local_datasource/db_schema/`に配置
-- マイグレーションは適切に管理する
-- ローカルデータソースは`lib/infrastructure/datasource/local_datasource/`に配置
+### 命名規則
+- ファイル名: snake_case
+- クラス名: PascalCase  
+- 変数名: camelCase
+- 定数: SCREAMING_SNAKE_CASE
 
-## その他のルール
-- テストはtest/ディレクトリに配置
-- 環境変数は.envファイルで管理
-- コミットメッセージは日本語で記述
-- コード生成が必要な場合は`build_runner`を使用
-  - `dart run build_runner build -d`
-- 国際化は`lib/presentation/l10n/`で管理
-- エラーハンドリングは適切な層で実装
+詳細は **CLAUDE.md** を確認してください。

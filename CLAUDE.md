@@ -3,20 +3,106 @@
 ## プロジェクト概要
 家族向けコイン管理アプリケーション。タスク完了によるコイン獲得、ウィッシュアイテムとの交換機能を提供。
 
-## アーキテクチャ
+## プロジェクト構成
+
+### ディレクトリ構造
+```
+lib/
+├── core/                    # コア機能
+│   ├── di/                 # 依存性注入（get_it）
+│   ├── exception/          # エラー処理
+│   └── l10n/              # 国際化（廃止予定）
+├── application/            # アプリケーション層
+│   ├── provider/          # Riverpodのプロバイダー（状態管理）
+│   └── usecase/           # ユースケース
+│       ├── task/          # タスク関連のユースケース
+│       ├── user/          # ユーザー関連のユースケース
+│       └── wishitem/      # 欲しいもの関連のユースケース
+├── domain/                # ドメイン層
+│   ├── model/             # ドメインモデル
+│   │   ├── task/          # タスクモデル
+│   │   ├── user/          # ユーザーモデル
+│   │   └── wishitem/      # 欲しいものモデル
+│   ├── repository/        # リポジトリインターフェース
+│   ├── value_object/      # 値オブジェクト
+│   │   ├── base/          # 基底クラス
+│   │   └── converter/     # JSON変換器
+│   └── error/             # ドメインエラー
+├── infrastructure/        # インフラストラクチャ層
+│   ├── repository/        # リポジトリ実装
+│   ├── datasource/        # データソース
+│   │   └── local_datasource/ # ローカルデータソース
+│   │       └── db_schema/ # データベーススキーマ
+│   └── client/            # 外部クライアント（SQLite等）
+└── presentation/          # プレゼンテーション層
+    ├── ui/                # UIコンポーネント
+    │   ├── common/        # 共通UI
+    │   │   ├── pages/     # 共通ページ
+    │   │   ├── theme/     # テーマ
+    │   │   └── widgets/   # 共通ウィジェット
+    │   ├── home/          # ホーム画面
+    │   ├── task/          # タスク画面
+    │   ├── wishItem/      # 欲しいもの画面
+    │   └── scaffold/      # スキャフォールド
+    ├── routing/           # ルーティング（go_router）
+    ├── l10n/              # 国際化
+    └── util/              # ユーティリティ
+        └── extension/     # 拡張機能
+```
+
+## 技術スタック
+
+### 使用ライブラリ
+- **状態管理**: flutter_riverpod ^2.6.1
+- **ルーティング**: go_router ^15.1.2
+- **依存性注入**: get_it ^8.0.3
+- **データベース**: sqflite ^2.4.2
+- **ローカルストレージ**: shared_preferences ^2.5.3
+- **コード生成**: freezed, json_annotation, riverpod_annotation
+- **国際化**: intl ^0.20.2, flutter_localizations
+- **UI**: flutter_slidable ^4.0.0, table_calendar ^3.2.0
+- **スケジュール**: rrule ^0.2.17
+
+### 開発ツール
+- build_runner: コード生成
+- flutter_lints: Lint
+- mocktail: テスト用モック
+
+## アーキテクチャルール
 
 ### Clean Architecture
-- `domain/`: ビジネスロジック、エンティティ、Value Object
-- `application/`: ユースケース、状態管理（Riverpod）
-- `infrastructure/`: データアクセス、外部サービス
-- `presentation/`: UI、ルーティング、ローカライゼーション
+- 依存関係の方向: presentation → application → domain
+- ドメイン層は外部ライブラリに依存しない
+- プレゼンテーション層はRiverpod v2を使用
 
 ### 依存性注入
-- GetItを使用したDIコンテナ
+- `get_it`を使用したDIコンテナ
+- アプリケーション起動時に`DependencyInjection.local()`で初期化
 - `lib/core/di/dependency_injection.dart`で管理
+- シングルトンオブジェクトの管理に使用
+- 外部リソースへのアクセスはインフラストラクチャ層で実装
+- アプリケーション層はドメイン層のインターフェースにのみ依存
 - テスト用リセット機能あり
 
-## コード規約
+## コーディング規約
+
+### 命名規則
+- **ファイル名**: スネークケース（例: get_user_info_usecase.dart）
+- **クラス名**: パスカルケース（例: GetUserInfoUseCase）
+- **変数名**: キャメルケース（例: userRepository）
+- **定数**: 大文字のスネークケース（例: MAX_COIN_BALANCE）
+- **Provider名**: キャメルケース（例: userStateProvider）
+- **ディレクトリ名**: スネークケース（例: user_list_state）
+
+### フォーマットルール
+- **インデント**: 2スペース
+- **行の長さ**: 最大120文字
+- **プライベートメンバー**: アンダースコアで始める（例: _userRepository）
+
+### コメント
+- 日本語コメント使用可
+- クラスやメソッドには必ずドキュメントコメントを付ける
+- `/// constructor`形式でコンストラクタをコメント
 
 ### Lint Rules
 - `analysis_options.yaml`で厳格なルールを適用
@@ -25,76 +111,77 @@
   - `lines_longer_than_80_chars`: 120文字まで許容
   - `unnecessary_await_in_return`: パフォーマンス考慮
 
-### 命名規約
-- クラス名: PascalCase
-- メソッド/変数名: camelCase
-- ファイル名: snake_case
-- 定数: SCREAMING_SNAKE_CASE
-
-### コメント
-- 日本語コメント使用可
-- クラス・メソッドにはドキュメントコメント必須
-- `/// constructor`形式でコンストラクタをコメント
-
-## 技術スタック
-
-### 主要依存関係
-- Flutter SDK: ^3.7.2
-- flutter_riverpod: ^2.6.1 (状態管理)
-- go_router: ^15.1.2 (ルーティング)
-- freezed: ^3.0.6 (データクラス)
-- sqflite: ^2.4.2 (ローカルDB)
-- get_it: ^8.0.3 (DI)
-- rrule: ^0.2.17 (繰り返しルール)
-- table_calendar: ^3.2.0 (カレンダー)
-
-### 開発ツール
-- build_runner: コード生成
-- flutter_lints: Lint
-- mocktail: テスト用モック
-
 ## データモデル設計
+
+### Freezed データクラス
+- モデルクラスはfreezedを使用
+- `copyWith`, `==`, `hashCode`自動生成
+- JSON serialization対応
 
 ### Value Object パターン
 - `lib/domain/value_object/base/value_object.dart`をベースとした値オブジェクト
 - 不変性保証、等価性比較実装
 - JSON変換用コンバーター提供
 
-### Freezed データクラス
-- 全モデルクラスでFreezedを使用
-- `copyWith`, `==`, `hashCode`自動生成
-- JSON serialization対応
+### JSON変換
+- json_annotationを使用
+- コンバーターは`lib/domain/value_object/converter/`に配置
 
 ## 状態管理
 
-### Riverpod
+### Riverpod v2
+- ProviderはRiverpod v2の形式を使用
+- `@riverpod`アノテーションを使用
+- `Ref`を使用して依存関係を注入
+- コード生成を使用（`part 'ファイル名.g.dart'`）
 - ConsumerWidget/ConsumerStatefulWidgetを使用
-- Provider定義はriverpod_generatorで自動生成
-- 状態は`application/provider/`で管理
 
-## UI/UX
+### Providerの配置ルール
+- Providerは`lib/application/provider/`に配置
+- 関連するProviderは同じファイルにまとめる
+- Provider名は機能を表す名前にする（例: `userStateProvider`, `taskListStateProvider`）
+- 複雑なロジックはUseCaseに委譲する
+- 外部リソースへのアクセスはUseCaseで行う
+- プレゼンテーション層はアプリケーション層のProviderのみを使用
 
-### ローカライゼーション
+## UI構成ルール
+
+### ファイル配置
+- 画面は`lib/presentation/ui/`配下に機能別に配置
+- 共通コンポーネントは`lib/presentation/ui/common/`に配置
+- ページは`pages/`ディレクトリに配置
+- ウィジェットは`widgets/`ディレクトリに配置
+- ルーティングは`lib/presentation/routing/`に配置
+
+### UI/UX
+
+#### ローカライゼーション
 - 英語・日本語対応
 - `assets/l10n/`にARBファイル
 - `context.l10n`で翻訳文字列アクセス
+- 国際化は`lib/presentation/l10n/`で管理
 
-### テーマ
+#### テーマ
 - Material Design準拠
 - primarySwatch: Colors.indigo
 - カスタムスペーシング定義済み
 
-### ナビゲーション
+#### ナビゲーション
 - go_routerによる宣言的ルーティング
 - タイプセーフなルート定義
 - BottomNavigationBar対応
 
-## データベース
+## データベースルール
 
 ### SQLite (sqflite)
 - ローカルストレージ
 - `lib/infrastructure/client/sqflite_client.dart`で管理
 - アプリライフサイクル連動
+
+### スキーマ管理
+- スキーマ定義は`lib/infrastructure/datasource/local_datasource/db_schema/`に配置
+- マイグレーションは適切に管理する
+- ローカルデータソースは`lib/infrastructure/datasource/local_datasource/`に配置
 
 ### テーブル設計
 - users: ユーザー情報
@@ -105,6 +192,7 @@
 ## テスト
 
 ### テスト構成
+- テストはtest/ディレクトリに配置
 - unit tests: domain層中心
 - widget tests: presentation層
 - mock使用: mocktailライブラリ
@@ -150,6 +238,12 @@ flutter build ios --release
 1. `flutter analyze`: 静的解析
 2. `flutter test`: テスト実行
 3. `dart format .`: コードフォーマット
+
+### その他のルール
+- 環境変数は.envファイルで管理
+- コミットメッセージは日本語で記述
+- コード生成が必要な場合は`build_runner`を使用
+- エラーハンドリングは適切な層で実装
 
 ## トラブルシューティング
 

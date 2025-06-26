@@ -1,4 +1,4 @@
-import 'package:family_coin/presentation/ui/components/atoms/inputs/text_input.dart';
+import 'package:family_coin/presentation/ui/components/atoms/inputs/app_text_field.dart';
 import 'package:family_coin/presentation/ui/components/atoms/text/app_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,7 @@ class LabeledTextInput extends StatelessWidget {
     children: [
       AppText.caption(label),
       const SizedBox(height: 8),
-      TextInput(
+      AppTextField(
         controller: controller,
         validator: validator,
         keyboardType: keyboardType,

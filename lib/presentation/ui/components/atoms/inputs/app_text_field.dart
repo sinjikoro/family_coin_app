@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// テキスト入力フィールド（Atom）
-class TextInput extends StatelessWidget {
+/// アプリケーション用テキスト入力フィールド（Atom）
+class AppTextField extends StatelessWidget {
   /// Constructor
-  const TextInput({
+  const AppTextField({
     this.controller,
     this.labelText,
     this.hintText,

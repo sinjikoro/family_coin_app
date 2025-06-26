@@ -176,7 +176,7 @@ presentation/ui/
 
 #### Atoms（原子）
 - **責務**: 最小単位のUIコンポーネント、再利用可能な基本要素
-- **例**: PrimaryButton, TextInput, AppText, Spacing
+- **例**: PrimaryButton, AppTextField, AppText, Spacing
 - **特徴**: 
   - 他のコンポーネントに依存しない
   - プロパティによる振る舞いの制御

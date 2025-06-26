@@ -20,10 +20,7 @@ class AppText extends StatelessWidget {
     this.overflow,
     this.maxLines,
     super.key,
-  }) : style = const TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.bold,
-        );
+  }) : style = const TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
 
   /// 見出し2スタイル
   const AppText.heading2(
@@ -32,10 +29,7 @@ class AppText extends StatelessWidget {
     this.overflow,
     this.maxLines,
     super.key,
-  }) : style = const TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        );
+  }) : style = const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
 
   /// 見出し3スタイル
   const AppText.heading3(
@@ -44,10 +38,7 @@ class AppText extends StatelessWidget {
     this.overflow,
     this.maxLines,
     super.key,
-  }) : style = const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        );
+  }) : style = const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
 
   /// 本文スタイル
   const AppText.body(
@@ -56,10 +47,7 @@ class AppText extends StatelessWidget {
     this.overflow,
     this.maxLines,
     super.key,
-  }) : style = const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.normal,
-        );
+  }) : style = const TextStyle(fontSize: 16, fontWeight: FontWeight.normal);
 
   /// キャプションスタイル
   const AppText.caption(
@@ -68,10 +56,7 @@ class AppText extends StatelessWidget {
     this.overflow,
     this.maxLines,
     super.key,
-  }) : style = const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
-        );
+  }) : style = const TextStyle(fontSize: 12, fontWeight: FontWeight.normal);
 
   /// テキストデータ
   final String data;

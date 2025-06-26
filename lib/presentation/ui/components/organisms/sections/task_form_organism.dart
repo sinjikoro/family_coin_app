@@ -2,7 +2,6 @@ import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/presentation/ui/components/atoms/buttons/primary_button.dart';
-import 'package:family_coin/presentation/ui/components/molecules/forms/labeled_text_input.dart';
 import 'package:family_coin/presentation/ui/components/molecules/forms/schedule_picker.dart';
 import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/foundation.dart';

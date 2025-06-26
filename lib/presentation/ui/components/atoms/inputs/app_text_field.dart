@@ -84,6 +84,32 @@ class AppTextField extends StatelessWidget {
       ..add(StringProperty('hintText', hintText))
       ..add(IntProperty('maxLines', maxLines))
       ..add(FlagProperty('enabled', value: enabled, ifFalse: 'disabled'))
-      ..add(FlagProperty('obscureText', value: obscureText, ifTrue: 'obscured'));
+      ..add(FlagProperty('obscureText', value: obscureText, ifTrue: 'obscured'))
+      ..add(
+        DiagnosticsProperty<TextEditingController?>('controller', controller),
+      )
+      ..add(
+        ObjectFlagProperty<String? Function(String? p1)?>.has(
+          'validator',
+          validator,
+        ),
+      )
+      ..add(DiagnosticsProperty<TextInputType?>('keyboardType', keyboardType))
+      ..add(EnumProperty<TextInputAction?>('textInputAction', textInputAction))
+      ..add(
+        ObjectFlagProperty<ValueChanged<String>?>.has('onChanged', onChanged),
+      )
+      ..add(
+        ObjectFlagProperty<ValueChanged<String>?>.has(
+          'onSubmitted',
+          onSubmitted,
+        ),
+      )
+      ..add(
+        IterableProperty<TextInputFormatter>(
+          'inputFormatters',
+          inputFormatters,
+        ),
+      );
   }
 }

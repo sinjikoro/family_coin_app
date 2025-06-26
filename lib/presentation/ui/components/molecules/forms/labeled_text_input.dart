@@ -67,6 +67,25 @@ class LabeledTextInput extends StatelessWidget {
     properties
       ..add(StringProperty('label', label))
       ..add(StringProperty('hintText', hintText))
-      ..add(IntProperty('maxLines', maxLines));
+      ..add(IntProperty('maxLines', maxLines))
+      ..add(
+        DiagnosticsProperty<TextEditingController?>('controller', controller),
+      )
+      ..add(
+        ObjectFlagProperty<String? Function(String? p1)?>.has(
+          'validator',
+          validator,
+        ),
+      )
+      ..add(DiagnosticsProperty<TextInputType?>('keyboardType', keyboardType))
+      ..add(
+        IterableProperty<TextInputFormatter>(
+          'inputFormatters',
+          inputFormatters,
+        ),
+      )
+      ..add(
+        ObjectFlagProperty<ValueChanged<String>?>.has('onChanged', onChanged),
+      );
   }
 }

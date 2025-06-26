@@ -13,8 +13,8 @@ class SchedulePicker extends StatefulWidget {
   /// constructor
   const SchedulePicker({
     required this.onDateSelected,
-    this.initialDate,
-    this.initialRule,
+    required this.initialDate,
+    required this.initialRule,
     super.key,
   });
 
@@ -25,7 +25,8 @@ class SchedulePicker extends StatefulWidget {
   final RecurrenceRule? initialRule;
 
   /// 日付選択時のコールバック
-  final void Function(DateTime?)? onDateSelected;
+  final void Function(DateTime? selectedDate, RecurrenceRule? selectedRule)
+  onDateSelected;
 
   @override
   State<SchedulePicker> createState() => _SchedulePickerState();
@@ -37,10 +38,9 @@ class SchedulePicker extends StatefulWidget {
       ..add(DiagnosticsProperty<DateTime?>('initialDate', initialDate))
       ..add(DiagnosticsProperty<RecurrenceRule?>('initialRule', initialRule))
       ..add(
-        ObjectFlagProperty<void Function(DateTime? p1)?>.has(
-          'onDateSelected',
-          onDateSelected,
-        ),
+        ObjectFlagProperty<
+          void Function(DateTime? p1, RecurrenceRule? p2)?
+        >.has('onDateSelected', onDateSelected),
       );
   }
 }
@@ -69,6 +69,11 @@ class _SchedulePickerState extends State<SchedulePicker> {
     }
     if (widget.initialRule != null) {
       _selectedRule = widget.initialRule;
+      _isCustomRuleSelected =
+          _selectedRule != _rruleEveryDay() &&
+          _selectedRule != _rruleEveryWeek(_selectedDate) &&
+          _selectedRule != _rruleEveryWeekdays() &&
+          _selectedRule != _rruleEveryMonth(_selectedDate);
     }
   }
 
@@ -275,7 +280,7 @@ class _SchedulePickerState extends State<SchedulePicker> {
             children: [
               _SubmitButton(
                 onPressed: () {
-                  widget.onDateSelected?.call(_selectedDate);
+                  widget.onDateSelected.call(_selectedDate, _selectedRule);
                   Navigator.pop(context);
                 },
               ),
@@ -323,10 +328,9 @@ class _SchedulePickerState extends State<SchedulePicker> {
     properties
       ..add(DiagnosticsProperty<DateTime?>('initialDate', widget.initialDate))
       ..add(
-        ObjectFlagProperty<void Function(DateTime? p1)?>.has(
-          'onDateSelected',
-          widget.onDateSelected,
-        ),
+        ObjectFlagProperty<
+          void Function(DateTime? p1, RecurrenceRule? p2)?
+        >.has('onDateSelected', widget.onDateSelected),
       )
       ..add(DiagnosticsProperty<RruleL10n?>('rruleL10n', rruleL10n));
   }

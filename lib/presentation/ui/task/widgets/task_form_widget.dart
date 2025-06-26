@@ -6,6 +6,7 @@ import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:rrule/rrule.dart';
 
 /// タスクフォームウィジェット
 class TaskFormWidget extends StatefulWidget {
@@ -52,6 +53,7 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
   late final TextEditingController _descriptionController;
   late final TextEditingController _difficultyController;
   DateTime? _selectedDate;
+  RecurrenceRule? _selectedRule;
 
   @override
   void initState() {
@@ -105,9 +107,11 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
                 // スケジュール
                 _ScheduleField(
                   selectedDate: _selectedDate,
-                  onDateSelected: (date) {
+                  selectedRule: _selectedRule,
+                  onDateSelected: (date, rule) {
                     setState(() {
                       _selectedDate = date;
+                      _selectedRule = rule;
                     });
                   },
                 ),
@@ -234,12 +238,15 @@ class _DifficultyField extends StatelessWidget {
 class _ScheduleField extends StatelessWidget {
   const _ScheduleField({
     required DateTime? selectedDate,
-    required void Function(DateTime?) onDateSelected,
+    required RecurrenceRule? selectedRule,
+    required void Function(DateTime?, RecurrenceRule?) onDateSelected,
   }) : _selectedDate = selectedDate,
+       _selectedRule = selectedRule,
        _onDateSelected = onDateSelected;
 
   final DateTime? _selectedDate;
-  final void Function(DateTime?) _onDateSelected;
+  final RecurrenceRule? _selectedRule;
+  final void Function(DateTime?, RecurrenceRule?) _onDateSelected;
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -252,6 +259,7 @@ class _ScheduleField extends StatelessWidget {
             (context) => SchedulePicker(
               onDateSelected: _onDateSelected,
               initialDate: _selectedDate,
+              initialRule: _selectedRule,
             ),
       );
     },

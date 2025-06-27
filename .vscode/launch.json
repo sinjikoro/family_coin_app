@@ -11,6 +11,12 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "widgetbook",
+            "request": "launch",
+            "type": "dart",
+            "program": "widgetbook/lib/main.dart"
         }
     ]
 }

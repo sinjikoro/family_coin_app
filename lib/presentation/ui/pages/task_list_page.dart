@@ -4,7 +4,7 @@ import 'package:family_coin/application/usecase/task/create_task_usecase.dart';
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/presentation/routing/route_path.dart';
-import 'package:family_coin/presentation/ui/common/widgets/tappable_editable_text.dart';
+import 'package:family_coin/presentation/ui/components/atoms/tappable_editable_text.dart';
 import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

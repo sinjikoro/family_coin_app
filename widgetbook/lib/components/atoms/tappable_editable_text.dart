@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:family_coin_app/presentation/ui/common/widgets/tappable_editable_text.dart';
+import 'package:family_coin/presentation/ui/components/atoms/tappable_editable_text.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(name: 'Default', type: TappableEditableText)

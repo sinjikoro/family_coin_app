@@ -1,5 +1,5 @@
 import 'package:family_coin/presentation/l10n/rrule_l10n_ja.dart';
-import 'package:family_coin/presentation/ui/task/widgets/custom_rule_container.dart';
+import 'package:family_coin/presentation/ui/components/organisms/custom_rule_container.dart';
 import 'package:family_coin/presentation/util/enums.dart';
 import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:family_coin/presentation/util/extension/datetime_extension.dart';

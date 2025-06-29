@@ -5,9 +5,9 @@ import 'package:family_coin/application/usecase/wishitem/update_wishitem_usecase
 import 'package:family_coin/domain/model/wishitem/wishitem.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
 import 'package:family_coin/domain/value_object/id.dart';
-import 'package:family_coin/presentation/ui/common/pages/error_page.dart';
-import 'package:family_coin/presentation/ui/wishItem/widgets/wishitem_form_widget.dart';
-import 'package:family_coin/presentation/ui/wishItem/widgets/wishitem_read_only_widget.dart';
+import 'package:family_coin/presentation/ui/components/organisms/wishitem_form_widget.dart';
+import 'package:family_coin/presentation/ui/components/organisms/wishitem_read_only_widget.dart';
+import 'package:family_coin/presentation/ui/pages/error_page.dart';
 import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

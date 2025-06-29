@@ -3,7 +3,7 @@ import 'package:family_coin/application/provider/task_list_state.dart';
 import 'package:family_coin/application/provider/transaction_log_list_state.dart';
 import 'package:family_coin/application/usecase/task/complete_task_usecase.dart';
 import 'package:family_coin/domain/model/task/task.dart';
-import 'package:family_coin/presentation/ui/common/theme/spacing.dart';
+import 'package:family_coin/presentation/ui/theme/spacing.dart';
 import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -7,7 +7,7 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
-  family_coin_app:
+  family_coin:
     path: ../
   flutter:
     sdk: flutter

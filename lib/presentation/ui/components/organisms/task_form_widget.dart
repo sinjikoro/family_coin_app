@@ -1,7 +1,7 @@
 import 'package:family_coin/domain/model/task/task.dart';
 import 'package:family_coin/domain/value_object/difficuly.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
-import 'package:family_coin/presentation/ui/task/widgets/schedule_picker.dart';
+import 'package:family_coin/presentation/ui/components/organisms/schedule_picker.dart';
 import 'package:family_coin/presentation/util/extension/context_extension.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

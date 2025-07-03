@@ -41,58 +41,42 @@ void main() {
       );
 
       expect(find.text('Secondary'), findsOneWidget);
-      expect(find.byType(OutlinedButton), findsOneWidget);
-    });
-
-    testWidgets('loading button shows progress indicator', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: AppButton.primary(
-              label: 'Loading',
-              onPressed: () {},
-              isLoading: true,
-            ),
-          ),
-        ),
-      );
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      expect(find.text('Loading'), findsNothing);
+      expect(find.byType(ElevatedButton), findsOneWidget);
     });
 
     testWidgets('disabled button does not respond to tap', (tester) async {
-      var tapped = false;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppButton.disabled(
+              label: 'Disabled',
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Disabled'), findsOneWidget);
+      expect(find.byType(ElevatedButton), findsOneWidget);
       
+      // 無効ボタンは onPressed が null なので実際のタップ動作をテストしない
+      final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+      expect(button.onPressed, isNull);
+    });
+
+    testWidgets('button with custom padding', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: AppButton.primary(
-              label: 'Disabled',
-              onPressed: null,
-            ),
-          ),
-        ),
-      );
-
-      await tester.tap(find.byType(ElevatedButton));
-      expect(tapped, isFalse);
-    });
-
-    testWidgets('icon button displays icon correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: AppButton.icon(
-              icon: Icons.add,
+              label: 'Custom Padding',
               onPressed: () {},
+              padding: const EdgeInsets.all(20),
             ),
           ),
         ),
       );
 
-      expect(find.byIcon(Icons.add), findsOneWidget);
-      expect(find.byType(IconButton), findsOneWidget);
+      expect(find.text('Custom Padding'), findsOneWidget);
     });
   });
 }

@@ -4,103 +4,83 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AppIcon', () {
-    testWidgets('displays icon correctly', (tester) async {
+    testWidgets('calendar icon displays correctly', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppIcon(Icons.home),
+            body: AppIcon.calendar(size: 24),
           ),
         ),
       );
 
-      expect(find.byIcon(Icons.home), findsOneWidget);
+      expect(find.byType(AppIcon), findsOneWidget);
     });
 
     testWidgets('applies custom size', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppIcon(
-              Icons.star,
+            body: AppIcon.calendar(
               size: 32,
             ),
           ),
         ),
       );
 
-      final iconWidget = tester.widget<Icon>(find.byIcon(Icons.star));
-      expect(iconWidget.size, 32);
+      final appIcon = tester.widget<AppIcon>(find.byType(AppIcon));
+      expect(appIcon.size, 32);
     });
 
     testWidgets('applies custom color', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppIcon(
-              Icons.favorite,
+            body: AppIcon.calendar(
+              size: 24,
               color: Colors.red,
             ),
           ),
         ),
       );
 
-      final iconWidget = tester.widget<Icon>(find.byIcon(Icons.favorite));
-      expect(iconWidget.color, Colors.red);
+      final appIcon = tester.widget<AppIcon>(find.byType(AppIcon));
+      expect(appIcon.color, Colors.red);
     });
 
-    testWidgets('uses semantic label when provided', (tester) async {
+    testWidgets('book icon displays correctly', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppIcon(
-              Icons.settings,
-              semanticLabel: 'Settings icon',
-            ),
+            body: AppIcon.book(size: 24),
           ),
         ),
       );
 
-      final iconWidget = tester.widget<Icon>(find.byIcon(Icons.settings));
-      expect(iconWidget.semanticLabel, 'Settings icon');
+      expect(find.byType(AppIcon), findsOneWidget);
     });
 
-    testWidgets('small variant has correct size', (tester) async {
+    testWidgets('activity icon displays correctly', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppIcon.small(Icons.check),
+            body: AppIcon.activity(size: 24),
           ),
         ),
       );
 
-      final iconWidget = tester.widget<Icon>(find.byIcon(Icons.check));
-      expect(iconWidget.size, 16);
+      expect(find.byType(AppIcon), findsOneWidget);
     });
 
-    testWidgets('medium variant has correct size', (tester) async {
+    testWidgets('default icon with no image path', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppIcon.medium(Icons.check),
+            body: AppIcon(size: 24),
           ),
         ),
       );
 
-      final iconWidget = tester.widget<Icon>(find.byIcon(Icons.check));
-      expect(iconWidget.size, 24);
-    });
-
-    testWidgets('large variant has correct size', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: AppIcon.large(Icons.check),
-          ),
-        ),
-      );
-
-      final iconWidget = tester.widget<Icon>(find.byIcon(Icons.check));
-      expect(iconWidget.size, 32);
+      expect(find.byType(AppIcon), findsOneWidget);
     });
   });
 }

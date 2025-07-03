@@ -1,16 +1,9 @@
-import 'package:family_coin/application/provider/active_user_state.dart';
-import 'package:family_coin/application/provider/transaction_log_list_state.dart';
 import 'package:family_coin/application/provider/wishitem_list_state.dart';
-import 'package:family_coin/application/usecase/wishitem/exchange_wishitem_usecase.dart';
-import 'package:family_coin/domain/error/domain_error.dart';
-import 'package:family_coin/domain/error/error_code.dart';
-import 'package:family_coin/domain/model/wishitem/wishitem.dart';
-import 'package:family_coin/presentation/routing/route_path.dart';
-import 'package:family_coin/presentation/util/extension/context_extension.dart';
+import 'package:family_coin/presentation/ui/components/organisms/coin_balance_section.dart';
+import 'package:family_coin/presentation/ui/components/organisms/history_section.dart';
+import 'package:family_coin/presentation/ui/components/organisms/wishitem_grid_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:go_router/go_router.dart';
 
 /// ほしいもの一覧
 class WishitemListPage extends ConsumerStatefulWidget {
@@ -25,86 +18,115 @@ class _WishitemListPageState extends ConsumerState<WishitemListPage> {
   @override
   Widget build(BuildContext context) {
     final wishitemListAsync = ref.watch(wishitemListStateProvider);
-
+    // 仮のコイン残高
+    const coinBalance = 1250;
+    // 仮の最近の交換履歴
+    final recentHistory = [
+      {'title': 'アイスクリーム', 'date': '3日前', 'coin': 50},
+      {'title': 'ゲーム30分', 'date': '1週間前', 'coin': 30},
+    ];
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.wishitemListTitle)),
-      body: RefreshIndicator(
-        onRefresh:
-            () async =>
-                await ref.read(wishitemListStateProvider.notifier).fetch(),
-        child: wishitemListAsync.when(
-          data:
-              (wishitems) => ListView.builder(
-                itemCount: wishitems.length,
-                itemBuilder: (context, index) {
-                  final wishitem = wishitems[index];
-                  return Slidable(
-                    endActionPane: ActionPane(
-                      motion: const ScrollMotion(),
-                      extentRatio: 0.3,
-                      children: [
-                        SlidableAction(
-                          onPressed:
-                              (context) async =>
-                                  await _exchangeWishitem(context, wishitem),
-                          backgroundColor: Colors.green,
-                          foregroundColor: Colors.white,
-                          icon: Icons.currency_exchange,
-                          label: context.l10n.wishItemExchange,
-                        ),
-                      ],
+      appBar: AppBar(
+        title: const Text('ごほうび'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(icon: const Icon(Icons.more_horiz), onPressed: () {}),
+        ],
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // コイン残高
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: CoinBalanceSection(balance: coinBalance, diff: 0),
+          ),
+          // ごほうびリストタイトル
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: Row(
+              children: [
+                const Icon(Icons.card_giftcard, size: 20),
+                const SizedBox(width: 8),
+                const Text(
+                  '交換できるごほうび',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                const Spacer(),
+                wishitemListAsync.when(
+                  data:
+                      (items) => Text(
+                        '${items.length}個',
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                  loading: () => const SizedBox.shrink(),
+                  error: (_, _) => const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+          // ごほうびグリッド
+          Expanded(
+            child: wishitemListAsync.when(
+              data:
+                  (wishitems) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
                     ),
-                    child: ListTile(
-                      title: Text(wishitem.name),
-                      subtitle: Text(wishitem.price.toString()),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap:
-                          () async => await context.push(
-                            RoutePath.wishItemDetail(wishitem.wishItemId),
-                          ),
+                    child: WishitemGridSection(
+                      wishitems: wishitems,
+                      onTap: (wishitem) {
+                        // 詳細ページ等へ遷移予定
+                      },
                     ),
-                  );
-                },
-              ),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error:
-              (error, stackTrace) =>
-                  Center(child: Text(context.l10n.error(error.toString()))),
+                  ),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stackTrace) => Center(child: Text('エラー: $error')),
+            ),
+          ),
+          // 最近の交換履歴
+          Padding(
+            padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
+            child: HistorySection(historyList: recentHistory, onSeeAll: () {}),
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: 56,
+          child: FloatingActionButton.extended(
+            onPressed: () {},
+            label: const Text('＋ 新しいごほうびを追加', style: TextStyle(fontSize: 18)),
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+            elevation: 2,
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => await context.push(RoutePath.wishItemCreate),
-        child: const Icon(Icons.add),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'タスク'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.card_giftcard),
+            label: 'ごほうび',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'プロフィール'),
+        ],
+        currentIndex: 2,
+        onTap: (_) {},
       ),
     );
-  }
-
-  /// ほしいものを購入する
-  Future<void> _exchangeWishitem(
-    BuildContext context,
-    Wishitem wishitem,
-  ) async {
-    try {
-      final activeUser = await ref.read(activeUserStateProvider.future);
-      if (activeUser == null) return;
-      final transactionLogListState = ref.read(
-        transactionLogListStateProvider.notifier,
-      );
-      await ExchangeWishitemUseCase(
-        transactionLogListState: transactionLogListState,
-      ).execute(user: activeUser, wishitem: wishitem);
-    } on DomainError catch (e) {
-      if (context.mounted) {
-        if (e.code == ErrorCode.familyCoinNegative) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.l10n.errorNotEnoughCoins)),
-          );
-        } else {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(context.l10n.error(e.code))));
-        }
-      }
-    }
   }
 }

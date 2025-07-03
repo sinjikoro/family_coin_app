@@ -14,30 +14,6 @@ import 'package:go_router/go_router.dart';
 
 part 'router.g.dart';
 
-/// アプリケーションのルーター
-final router = GoRouter(
-  initialLocation: RoutePath.home,
-  routes: [
-    ShellRoute(
-      builder: (context, state, child) => AppScaffold(child: child),
-      routes: [
-        GoRoute(
-          path: RoutePath.home,
-          builder: (context, state) => const HomePage(),
-        ),
-        GoRoute(
-          path: RoutePath.taskList,
-          builder: (context, state) => const TaskListPage(),
-        ),
-        GoRoute(
-          path: RoutePath.wishItemList,
-          builder: (context, state) => const WishitemListPage(),
-        ),
-      ],
-    ),
-  ],
-);
-
 /// アプリケーションのルート状態を管理するプロバイダー
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(

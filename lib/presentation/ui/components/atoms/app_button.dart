@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 /// アプリ共通ボタン（primary, secondary, disabled対応）
 class AppButton extends StatelessWidget {
-  /// コンストラクタ
   /// プライマリボタン
   const AppButton.primary({
     required this.label,
@@ -67,25 +66,20 @@ class AppButton extends StatelessWidget {
     );
   }
 
-  _AppButtonStyle _style(_AppButtonType type) {
-    switch (type) {
-      case _AppButtonType.primary:
-        return const _AppButtonStyle(
-          backgroundColor: Color(0xFF111827), // 濃紺
-          textColor: Colors.white,
-        );
-      case _AppButtonType.secondary:
-        return const _AppButtonStyle(
-          backgroundColor: Color(0xFFF3F4F6), // 薄グレー
-          textColor: Color(0xFF9CA3AF), // グレー
-        );
-      case _AppButtonType.disabled:
-        return const _AppButtonStyle(
-          backgroundColor: Color(0xFFF3F4F6), // 薄グレー
-          textColor: Color(0xFF9CA3AF), // グレー
-        );
-    }
-  }
+  _AppButtonStyle _style(_AppButtonType type) => switch (type) {
+    _AppButtonType.primary => const _AppButtonStyle(
+      backgroundColor: Color(0xFF111827), // 濃紺
+      textColor: Colors.white,
+    ),
+    _AppButtonType.secondary => const _AppButtonStyle(
+      backgroundColor: Color(0xFFF3F4F6), // 薄グレー
+      textColor: Color(0xFF9CA3AF), // グレー
+    ),
+    _AppButtonType.disabled => const _AppButtonStyle(
+      backgroundColor: Color(0xFFF3F4F6), // 薄グレー
+      textColor: Color(0xFF9CA3AF), // グレー
+    ),
+  };
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

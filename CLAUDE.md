@@ -256,3 +256,31 @@ flutter build ios --release
 - 大きなリスト: `ListView.builder`使用
 - 状態管理: 過度なrebuild回避
 - 画像: 適切なサイズ・フォーマット使用
+
+## Dart コーディング規約（analytics/lint対応）
+
+以下のdart analyticsルールに常に準拠してください：
+
+- prefer_expression_function_bodies: 可能な限り式形式の関数ボディを使うこと。
+- avoid_redundant_argument_values: デフォルト値と同じ引数は省略すること。
+- public_member_api_docs: すべてのpublicクラス・メンバーにdartdocコメントを付与すること。
+- diagnostic_describe_all_properties: StatelessWidget/StatefulWidgetではdebugFillPropertiesを実装し、プロパティを追加すること。
+- sort_constructors_first: クラス内でコンストラクタを最初に記述すること。
+- always_put_required_named_parameters_first: requiredなnamedパラメータは常に先頭に記述すること。
+- directives_ordering: import順はdart→package→自プロジェクトの順にすること。
+
+既存コードも順次このルールに合わせて修正してください。
+
+## Widgetbook用コンポーネント実装ルール
+
+WidgetbookのUseCaseは、必ずlib/presentation/ui/components配下のWidgetをimportし、
+@widgetbook.UseCaseアノテーションを使って定義してください。
+
+例：
+import 'package:family_coin/presentation/ui/components/atoms/app_button.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+@widgetbook.UseCase(name: 'Primary', type: AppButton)
+Widget primaryButtonUseCase(BuildContext context) {
+  return AppButton.primary(label: '保存', onPressed: () {});
+}

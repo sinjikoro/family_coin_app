@@ -1,9 +1,9 @@
 import 'package:family_coin/infrastructure/client/sqflite_client.dart';
 import 'package:family_coin/presentation/l10n/l10n.dart';
 import 'package:family_coin/presentation/routing/router.dart';
+import 'package:family_coin/presentation/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 /// アプリケーションルート
 class App extends ConsumerStatefulWidget {
@@ -35,14 +35,15 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final GoRouter router = ref.watch(routerProvider);
+    final router = ref.watch(routerProvider);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: MaterialApp.router(
         localizationsDelegates: L10n.localizationsDelegates,
         supportedLocales: L10n.supportedLocales,
-        theme: ThemeData(primarySwatch: Colors.indigo),
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
         routerConfig: router,
         builder:
             (context, child) =>

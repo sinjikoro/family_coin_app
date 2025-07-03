@@ -14,6 +14,7 @@ class AppTextField extends StatelessWidget {
     this.maxLines = 1,
     this.inputFormatters,
     this.obscureText = false,
+    this.textAlign = TextAlign.center,
     super.key,
   });
 
@@ -24,17 +25,13 @@ class AppTextField extends StatelessWidget {
     String? hintText,
     bool enabled = true,
     void Function(String)? onChanged,
-  }) {
-    return AppTextField(
-      key: key,
-      controller: controller,
-      hintText: hintText ?? '例: 田中太郎',
-      enabled: enabled,
-      onChanged: onChanged,
-      keyboardType: TextInputType.text,
-      maxLines: 1,
-    );
-  }
+  }) => AppTextField(
+    key: key,
+    controller: controller,
+    hintText: hintText ?? '例: 田中太郎',
+    enabled: enabled,
+    onChanged: onChanged,
+  );
 
   /// 金額用
   factory AppTextField.amount({
@@ -43,18 +40,15 @@ class AppTextField extends StatelessWidget {
     String? hintText,
     bool enabled = true,
     void Function(String)? onChanged,
-  }) {
-    return AppTextField(
-      key: key,
-      controller: controller,
-      hintText: hintText ?? '例: 1000',
-      enabled: enabled,
-      onChanged: onChanged,
-      keyboardType: TextInputType.number,
-      maxLines: 1,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-    );
-  }
+  }) => AppTextField(
+    key: key,
+    controller: controller,
+    hintText: hintText ?? '例: 1000',
+    enabled: enabled,
+    onChanged: onChanged,
+    keyboardType: TextInputType.number,
+    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  );
 
   /// 説明用
   factory AppTextField.description({
@@ -63,17 +57,15 @@ class AppTextField extends StatelessWidget {
     String? hintText,
     bool enabled = true,
     void Function(String)? onChanged,
-  }) {
-    return AppTextField(
-      key: key,
-      controller: controller,
-      hintText: hintText ?? '例: お小遣いの用途',
-      enabled: enabled,
-      onChanged: onChanged,
-      keyboardType: TextInputType.multiline,
-      maxLines: 5,
-    );
-  }
+  }) => AppTextField(
+    key: key,
+    controller: controller,
+    hintText: hintText ?? '例: お小遣いの用途',
+    enabled: enabled,
+    onChanged: onChanged,
+    keyboardType: TextInputType.multiline,
+    maxLines: 5,
+  );
 
   /// URL用
   factory AppTextField.url({
@@ -82,17 +74,14 @@ class AppTextField extends StatelessWidget {
     String? hintText,
     bool enabled = true,
     void Function(String)? onChanged,
-  }) {
-    return AppTextField(
-      key: key,
-      controller: controller,
-      hintText: hintText ?? '例: https://example.com',
-      enabled: enabled,
-      onChanged: onChanged,
-      keyboardType: TextInputType.url,
-      maxLines: 1,
-    );
-  }
+  }) => AppTextField(
+    key: key,
+    controller: controller,
+    hintText: hintText ?? '例: https://example.com',
+    enabled: enabled,
+    onChanged: onChanged,
+    keyboardType: TextInputType.url,
+  );
 
   /// コントローラー
   final TextEditingController? controller;
@@ -118,12 +107,15 @@ class AppTextField extends StatelessWidget {
   /// パスワード用
   final bool obscureText;
 
+  /// テキストアライン
+  final TextAlign textAlign;
+
   @override
   Widget build(BuildContext context) => TextField(
     controller: controller,
     enabled: enabled,
     onChanged: onChanged,
-    textAlign: TextAlign.center,
+    textAlign: textAlign,
     style: const TextStyle(
       color: Color(0xFF9CA3AF), // グレー
       fontSize: 20,

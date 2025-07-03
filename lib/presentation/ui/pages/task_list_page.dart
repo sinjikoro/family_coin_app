@@ -1,118 +1,125 @@
-import 'package:family_coin/application/provider/active_user_state.dart';
-import 'package:family_coin/application/provider/task_list_state.dart';
-import 'package:family_coin/application/usecase/task/create_task_usecase.dart';
-import 'package:family_coin/domain/model/task/task.dart';
-import 'package:family_coin/domain/value_object/family_coin.dart';
-import 'package:family_coin/presentation/routing/route_path.dart';
-import 'package:family_coin/presentation/ui/components/atoms/tappable_editable_text.dart';
-import 'package:family_coin/presentation/util/extension/context_extension.dart';
+import 'package:family_coin/presentation/ui/components/atoms/app_fab.dart';
+import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
+import 'package:family_coin/presentation/ui/components/molecules/task_list_item.dart';
+import 'package:family_coin/presentation/ui/components/molecules/task_tab_bar.dart';
+import 'package:family_coin/presentation/ui/components/organisms/progress_summary_section.dart';
+import 'package:family_coin/presentation/ui/components/organisms/task_list_section.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 /// タスク一覧
-class TaskListPage extends ConsumerStatefulWidget {
+class TaskListPage extends StatefulWidget {
   /// constructor
   const TaskListPage({super.key});
 
   @override
-  ConsumerState<TaskListPage> createState() => _TaskListPageState();
+  State<TaskListPage> createState() => _TaskListPageState();
 }
 
-class _TaskListPageState extends ConsumerState<TaskListPage> {
+class _TaskListPageState extends State<TaskListPage> {
+  /// 選択中のタブ
+  int selectedTab = 0;
+
+  /// タブラベルリスト
+  final tabs = ['すべて', '今日', '今週', '完了済み'];
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(context.l10n.taskListTitle)),
-    body: RefreshIndicator(
-      onRefresh:
-          () async => await ref.read(taskListStateProvider.notifier).fetch(),
-      child: ref
-          .watch(taskListStateProvider)
-          .when(
-            data:
-                (tasks) => ListView.builder(
-                  itemCount: tasks.length + 1,
-                  itemBuilder:
-                      (context, index) =>
-                          index < tasks.length
-                              ? TaskRow(task: tasks[index])
-                              : NewTaskRow(onChanged: _onNewTaskRowChanged),
-                ),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error:
-                (error, stackTrace) =>
-                    Center(child: Text(context.l10n.error(error.toString()))),
+  Widget build(BuildContext context) {
+    // ダミーデータ
+    final taskItems = [
+      const TaskListItem(
+        labelColor: Colors.green,
+        title: '宿題をする',
+        subTitle: '算数と国語の宿題を完了する',
+        coin: 50,
+        icon: AppIcon.book(size: 32),
+        isDone: true,
+        isDisabled: false,
+      ),
+      const TaskListItem(
+        labelColor: Colors.green,
+        title: 'お手伝いをする',
+        subTitle: '食器洗いのお手伝いをする',
+        coin: 30,
+        icon: AppIcon.activity(size: 32),
+        isDone: true,
+        isDisabled: false,
+      ),
+      const TaskListItem(
+        labelColor: Colors.green,
+        title: '早寝早起き',
+        subTitle: '21時までに就寝する',
+        coin: 50,
+        icon: AppIcon.heart(size: 32),
+        isDone: true,
+        isDisabled: false,
+      ),
+      const TaskListItem(
+        labelColor: Colors.grey,
+        title: '運動をする',
+        subTitle: '30分間の運動やストレッチ',
+        coin: 40,
+        icon: AppIcon.star(size: 32),
+        isDone: false,
+        isDisabled: true,
+      ),
+      const TaskListItem(
+        labelColor: Colors.grey,
+        title: '読書をする',
+        subTitle: '好きな本を読む',
+        coin: 30,
+        icon: AppIcon.bookOpen(size: 32),
+        isDone: false,
+        isDisabled: true,
+      ),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('タスク一覧'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(icon: const Icon(Icons.more_horiz), onPressed: () {}),
+        ],
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // タブバー
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: TaskTabBar(
+              selectedIndex: selectedTab,
+              tabs: tabs,
+              onTabSelected: (i) => setState(() => selectedTab = i),
+            ),
           ),
-    ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: () async => await context.push(RoutePath.taskCreate),
-      child: const Icon(Icons.add),
-    ),
-  );
-
-  /// 新規タスク行の変更
-  Future<void> _onNewTaskRowChanged(String text) async {
-    final activeUser = ref.read(activeUserStateProvider).value;
-    if (activeUser == null) {
-      return;
-    }
-    await CreateTaskUseCase(
-      taskListState: ref.read(taskListStateProvider.notifier),
-    ).execute(
-      name: text,
-      earnCoins: const FamilyCoin(0),
-      userId: activeUser.userId,
+          // 進捗サマリー
+          const ProgressSummarySection(
+            doneCount: 3,
+            remainCount: 2,
+            totalCount: 5,
+            doneCoin: 130,
+            remainCoin: 100,
+          ),
+          // タスクリスト
+          Expanded(child: TaskListSection(title: '今日のタスク', items: taskItems)),
+        ],
+      ),
+      floatingActionButton: const AppFab(label: '新しいタスクを追加'),
     );
   }
-}
-
-/// タスク行
-class TaskRow extends StatelessWidget {
-  /// constructor
-  const TaskRow({required this.task, super.key});
-
-  /// タスク
-  final Task task;
-
-  @override
-  Widget build(BuildContext context) => ListTile(
-    title: Text(task.name),
-    subtitle: Text(task.earnCoins.toString()),
-    trailing: const Icon(Icons.arrow_forward_ios),
-    onTap: () async => await context.push(RoutePath.taskDetail(task.taskId)),
-  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Task>('task', task));
+    properties
+      ..add(IntProperty('selectedTab', selectedTab))
+      ..add(IterableProperty<String>('tabs', tabs));
   }
-}
-
-/// 新規タスク行
-class NewTaskRow extends StatefulWidget {
-  /// constructor
-  const NewTaskRow({required this.onChanged, super.key});
-
-  /// タスク名の変更
-  final void Function(String) onChanged;
-
-  @override
-  State<NewTaskRow> createState() => _NewTaskRowState();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-      ObjectFlagProperty<void Function(String p1)>.has('onChanged', onChanged),
-    );
-  }
-}
-
-class _NewTaskRowState extends State<NewTaskRow> {
-  @override
-  Widget build(BuildContext context) => ListTile(
-    title: TappableEditableText(text: 'New Task', onChanged: widget.onChanged),
-  );
 }

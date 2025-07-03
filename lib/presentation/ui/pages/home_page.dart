@@ -1,8 +1,10 @@
 import 'package:family_coin/domain/value_object/avatar.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_text.dart';
-import 'package:family_coin/presentation/ui/components/molecules/progress_card.dart';
-import 'package:family_coin/presentation/ui/components/molecules/task_list_item.dart';
+import 'package:family_coin/presentation/ui/components/organisms/models/progress_data.dart';
+import 'package:family_coin/presentation/ui/components/organisms/models/task_item_data.dart';
+import 'package:family_coin/presentation/ui/components/organisms/progress_card_section.dart';
+import 'package:family_coin/presentation/ui/components/organisms/task_list_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/user_info_card.dart';
 import 'package:family_coin/presentation/ui/theme/spacing.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,60 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    // 進捗データの定義
+    const todayProgress = ProgressData(
+      icon: AppIcon.calendar(size: 24),
+      title: '今日のタスク',
+      valueText: '3/5 完了',
+    );
+
+    const weeklyProgress = ProgressData(
+      icon: AppIcon.trophy(size: 24),
+      title: '今週の進捗',
+      valueText: '85%',
+      progress: 0.85,
+    );
+
+    // タスクデータの定義
+    final tasks = [
+      const TaskItemData(
+        id: 'task_1',
+        labelColor: Colors.green,
+        title: '宿題を完了する',
+        subTitle: '算数・国語のワーク',
+        coin: 50,
+        isDone: true,
+        icon: AppIcon.book(size: 32),
+      ),
+      const TaskItemData(
+        id: 'task_2',
+        labelColor: Colors.orange,
+        title: 'お手伝いをする',
+        subTitle: '食器洗いのお手伝い',
+        coin: 30,
+        isDone: false,
+        icon: AppIcon.heart(size: 32),
+      ),
+      const TaskItemData(
+        id: 'task_3',
+        labelColor: Colors.grey,
+        title: '早寝早起き',
+        subTitle: '21時までに就寝',
+        coin: 20,
+        isDone: false,
+        icon: AppIcon.settings(size: 32),
+      ),
+      const TaskItemData(
+        id: 'task_4',
+        labelColor: Colors.grey,
+        title: '読書時間',
+        subTitle: '30分間の読書',
+        coin: 20,
+        isDone: false,
+        icon: AppIcon.book(size: 32),
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: theme.colorScheme.surfaceContainerLow,
       body: SafeArea(
@@ -38,104 +94,29 @@ class HomePage extends StatelessWidget {
                 balance: 1250,
                 diff: 50,
               ),
-              // 進捗カード2つ
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  // 画面幅が狭い場合は縦に並べる
-                  if (constraints.maxWidth < 400) {
-                    return const Column(
-                      children: [
-                        ProgressCard(
-                          icon: AppIcon.calendar(size: 24),
-                          title: '今日のタスク',
-                          valueText: '3/5 完了',
-                        ),
-                        SizedBox(height: 12),
-                        ProgressCard(
-                          icon: AppIcon.trophy(size: 24),
-                          title: '今週の進捗',
-                          valueText: '85%',
-                          progress: 0.85,
-                        ),
-                      ],
-                    );
-                  }
-                  // 画面幅が広い場合は横に並べる
-                  return const Row(
-                    children: [
-                      Expanded(
-                        child: ProgressCard(
-                          icon: AppIcon.calendar(size: 28),
-                          title: '今日のタスク',
-                          valueText: '3/5 完了',
-                        ),
-                      ),
-                      SizedBox(width: 12),
-                      Expanded(
-                        child: ProgressCard(
-                          icon: AppIcon.trophy(size: 28),
-                          title: '今週の進捗',
-                          valueText: '85%',
-                          progress: 0.85,
-                        ),
-                      ),
-                    ],
-                  );
-                },
+              // 進捗カードセクション（レスポンシブ対応）
+              const ProgressCardSection(
+                todayProgress: todayProgress,
+                weeklyProgress: weeklyProgress,
               ),
               // 「今日のタスク」タイトル
               const AppText.title(text: '今日のタスク'),
-              // タスクリスト
-              const Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: Spacing.s,
-                    children: [
-                      TaskListItem(
-                        labelColor: Colors.green,
-                        title: '宿題を完了する',
-                        subTitle: '算数・国語のワーク',
-                        coin: 50,
-                        isDone: true,
-                        icon: AppIcon.book(size: 32),
-                        isDisabled: false,
-                      ),
-                      TaskListItem(
-                        labelColor: Colors.orange,
-                        title: 'お手伝いをする',
-                        subTitle: '食器洗いのお手伝い',
-                        coin: 30,
-                        isDone: false,
-                        icon: AppIcon.heart(size: 32),
-                        isDisabled: false,
-                      ),
-                      TaskListItem(
-                        labelColor: Colors.grey,
-                        title: '早寝早起き',
-                        subTitle: '21時までに就寝',
-                        coin: 20,
-                        isDone: false,
-                        icon: AppIcon.settings(size: 32),
-                        isDisabled: false,
-                      ),
-                      TaskListItem(
-                        labelColor: Colors.grey,
-                        title: '早寝早起き',
-                        subTitle: '21時までに就寝',
-                        coin: 20,
-                        isDone: false,
-                        icon: AppIcon.settings(size: 32),
-                        isDisabled: false,
-                      ),
-                    ],
-                  ),
-                ),
+              // タスクリストセクション
+              TaskListSection(
+                tasks: tasks,
+                onTaskToggle: _handleTaskToggle,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  /// タスクの完了状態切り替えハンドラー
+  void _handleTaskToggle(String taskId) {
+    // TODO: 実際の状態管理（Riverpod等）での実装
+    // 現在はデモ用のスタブ
+    debugPrint('Task toggled: $taskId');
   }
 }

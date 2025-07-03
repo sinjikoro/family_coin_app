@@ -1,3 +1,5 @@
+import 'package:family_coin/domain/value_object/avatar.dart';
+import 'package:family_coin/domain/value_object/converter/avatar_json_converter.dart';
 import 'package:family_coin/domain/value_object/converter/family_coin_json_converter.dart';
 import 'package:family_coin/domain/value_object/converter/id_json_converter.dart';
 import 'package:family_coin/domain/value_object/family_coin.dart';
@@ -15,6 +17,7 @@ abstract class User with _$User {
     @UserIdJsonConverter() required UserId userId,
     required String name,
     @FamilyCoinJsonConverter() required FamilyCoin familyCoinBalance,
+    @AvatarJsonConverter() @Default(AvatarNone()) Avatar avatar,
   }) = _User;
 
   /// Constructor

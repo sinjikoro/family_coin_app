@@ -23,12 +23,15 @@ class EnableTaskList extends ConsumerWidget {
           if (asyncTasks.hasData) {
             final tasks = asyncTasks.data!;
             return ListView.builder(
-              padding: Spacing.screenPadding,
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.m,
+                vertical: 8,
+              ),
               itemCount: tasks.length,
               itemBuilder: (context, index) {
                 final task = tasks[index];
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: Spacing.sm),
+                  padding: const EdgeInsets.only(bottom: Spacing.s),
                   child: Slidable(
                     endActionPane: ActionPane(
                       motion: const ScrollMotion(),
@@ -47,7 +50,10 @@ class EnableTaskList extends ConsumerWidget {
                     ),
                     child: Card(
                       child: Padding(
-                        padding: Spacing.listItemPadding,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spacing.m,
+                          vertical: Spacing.s,
+                        ),
                         child: ListTile(
                           title: Text(task.name),
                           subtitle: Text(task.description),

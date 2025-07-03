@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-/// 汎用テキスト
+/// アプリケーション共通テキストコンポーネント
+/// 
+/// 各種テキストスタイルを提供し、一貫したタイポグラフィを実現します。
+/// title, xLarge, large, medium, small, captionの6つのプリセットと
+/// カスタムスタイルをサポートします。
 class AppText extends StatelessWidget {
-  /// コンストラクタ
+  /// カスタムテキストコンストラクタ
   const AppText({
     required this.text,
     super.key,

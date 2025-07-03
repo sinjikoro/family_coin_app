@@ -1,7 +1,5 @@
 import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_text.dart';
-import 'package:family_coin/presentation/ui/components/atoms/check_circle_icon.dart';
-import 'package:family_coin/presentation/ui/components/atoms/circle_icon.dart';
 import 'package:family_coin/presentation/ui/components/atoms/color_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +104,10 @@ class TaskListItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              if (isDone) const CheckCircleIcon() else const CircleIcon(),
+              if (isDone)
+                const AppIcon.checkCircle(size: 28)
+              else
+                const AppIcon.circle(size: 28),
             ],
           ),
         ),

@@ -13,10 +13,10 @@ void main() {
     });
 
     test('画像パスが正しく取得される', () {
-      expect(const AvatarNone().imagePath, 'images/avatar_default.svg');
-      expect(const AvatarBoy().imagePath, 'images/avatar_boy.svg');
-      expect(const AvatarCat().imagePath, 'images/avatar_cat.svg');
-      expect(const AvatarDog().imagePath, 'images/avatar_dog.svg');
+      expect(const AvatarNone().imagePath, 'images/avatar/default.svg');
+      expect(const AvatarBoy().imagePath, 'images/avatar/boy.svg');
+      expect(const AvatarCat().imagePath, 'images/avatar/cat.svg');
+      expect(const AvatarDog().imagePath, 'images/avatar/dog.svg');
     });
 
     test('文字列からアバターが正しく作成される', () {

@@ -1,9 +1,7 @@
 import 'package:family_coin/domain/value_object/avatar.dart';
+import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_text.dart';
-import 'package:family_coin/presentation/ui/components/atoms/arrow_up_icon.dart';
 import 'package:family_coin/presentation/ui/components/atoms/avatar_icon.dart';
-import 'package:family_coin/presentation/ui/components/atoms/coin_icon.dart';
-import 'package:family_coin/presentation/ui/components/atoms/settings_icon.dart';
 import 'package:family_coin/presentation/ui/theme/spacing.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -65,19 +63,22 @@ class UserInfoCard extends StatelessWidget {
                 ],
               ),
             ),
-            IconButton(icon: const SettingsIcon(), onPressed: onSettingsTap),
+            IconButton(
+              icon: const AppIcon.settings(size: 24),
+              onPressed: onSettingsTap,
+            ),
           ],
         ),
         Spacing.heightL,
         // コイン残高表示
         Row(
           children: [
-            const CoinIcon(size: 32),
+            const AppIcon.coin(size: 32),
             Spacing.widthM,
             AppText.xLarge(text: balance.toString()),
             if (diff != null && diff! > 0) ...[
               Spacing.widthS,
-              const ArrowUpIcon(),
+              const AppIcon.arrowUp(size: 18),
               Spacing.widthXS,
               AppText.small(text: '+$diff'),
             ],

@@ -55,8 +55,11 @@ class _TappableEditableTextState extends State<TappableEditableText> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      _isEditing ? _inputField() : _labelField();
+  Widget build(BuildContext context) => Container(
+    alignment: Alignment.centerLeft,
+    height: 48,
+    child: _isEditing ? _inputField() : _labelField(),
+  );
 
   /// ラベルフィールド
   GestureDetector _labelField() => GestureDetector(
@@ -64,11 +67,14 @@ class _TappableEditableTextState extends State<TappableEditableText> {
       setState(() => _isEditing = true);
       _focusNode.requestFocus();
     },
-    child: SizedBox(
-      height: 48,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(widget.text, style: widget.style),
+    child: Text(
+      _controller.text.isEmpty ? 'タップして編集' : _controller.text,
+      style: widget.style?.copyWith(
+        fontSize: widget.style?.fontSize,
+        color:
+            _controller.text.isEmpty
+                ? Colors.grey.withValues(alpha: 0.6)
+                : widget.style?.color,
       ),
     ),
   );

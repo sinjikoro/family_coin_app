@@ -1,7 +1,7 @@
 import 'package:family_coin/presentation/ui/components/atoms/app_fab.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
-import 'package:family_coin/presentation/ui/components/molecules/task_list_item.dart';
 import 'package:family_coin/presentation/ui/components/molecules/task_tab_bar.dart';
+import 'package:family_coin/presentation/ui/components/organisms/models/task_item_data.dart';
 import 'package:family_coin/presentation/ui/components/organisms/progress_summary_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/task_list_section.dart';
 import 'package:flutter/foundation.dart';
@@ -27,49 +27,49 @@ class _TaskListPageState extends State<TaskListPage> {
   Widget build(BuildContext context) {
     // ダミーデータ
     final taskItems = [
-      const TaskListItem(
+      const TaskItemData(
+        id: '1',
         labelColor: Colors.green,
         title: '宿題をする',
         subTitle: '算数と国語の宿題を完了する',
         coin: 50,
         icon: AppIcon.book(size: 32),
         isDone: true,
-        isDisabled: false,
       ),
-      const TaskListItem(
+      const TaskItemData(
+        id: '2',
         labelColor: Colors.green,
         title: 'お手伝いをする',
         subTitle: '食器洗いのお手伝いをする',
         coin: 30,
         icon: AppIcon.activity(size: 32),
         isDone: true,
-        isDisabled: false,
       ),
-      const TaskListItem(
+      const TaskItemData(
+        id: '3',
         labelColor: Colors.green,
         title: '早寝早起き',
         subTitle: '21時までに就寝する',
         coin: 50,
         icon: AppIcon.heart(size: 32),
         isDone: true,
-        isDisabled: false,
       ),
-      const TaskListItem(
+      const TaskItemData(
+        id: '4',
         labelColor: Colors.grey,
         title: '運動をする',
         subTitle: '30分間の運動やストレッチ',
         coin: 40,
         icon: AppIcon.star(size: 32),
-        isDone: false,
         isDisabled: true,
       ),
-      const TaskListItem(
+      const TaskItemData(
+        id: '5',
         labelColor: Colors.grey,
         title: '読書をする',
         subTitle: '好きな本を読む',
         coin: 30,
         icon: AppIcon.bookOpen(size: 32),
-        isDone: false,
         isDisabled: true,
       ),
     ];
@@ -108,7 +108,7 @@ class _TaskListPageState extends State<TaskListPage> {
             remainCoin: 100,
           ),
           // タスクリスト
-          Expanded(child: TaskListSection(title: '今日のタスク', items: taskItems)),
+          Expanded(child: TaskListSection(tasks: taskItems)),
         ],
       ),
       floatingActionButton: const AppFab(label: '新しいタスクを追加'),

@@ -29,9 +29,11 @@ Widget appIconAllUseCase(BuildContext context) {
         AppIcon.repeat(size: 24),
         AppIcon.settings(size: 24),
         AppIcon.star(size: 24),
-        AppIcon.tradingUp(size: 24),
+        AppIcon.trendingUp(size: 24),
         AppIcon.trophy(size: 24),
-        AppIcon.tradingDown(size: 24),
+        AppIcon.circle(size: 24),
+        AppIcon.checkCircle(size: 24),
+        AppIcon.arrowUp(size: 24),
       ],
     ),
   );
@@ -63,9 +65,11 @@ Widget appIconColoredUseCase(BuildContext context) {
         AppIcon.repeat(size: 24, color: Colors.teal),
         AppIcon.settings(size: 24, color: Colors.grey),
         AppIcon.star(size: 24, color: Colors.yellow),
-        AppIcon.tradingUp(size: 24, color: Colors.green),
+        AppIcon.trendingUp(size: 24, color: Colors.green),
         AppIcon.trophy(size: 24, color: Colors.amber),
-        AppIcon.tradingDown(size: 24, color: Colors.red),
+        AppIcon.circle(size: 24, color: Colors.grey),
+        AppIcon.checkCircle(size: 24, color: Colors.green),
+        AppIcon.arrowUp(size: 24, color: Colors.green),
       ],
     ),
   );
@@ -95,6 +99,43 @@ Widget appIconSizesUseCase(BuildContext context) {
         AppIcon.heart(size: 24),
         AppIcon.heart(size: 32),
         AppIcon.heart(size: 48),
+        AppIcon.circle(size: 16),
+        AppIcon.circle(size: 24),
+        AppIcon.circle(size: 32),
+        AppIcon.circle(size: 48),
+        AppIcon.checkCircle(size: 16),
+        AppIcon.checkCircle(size: 24),
+        AppIcon.checkCircle(size: 32),
+        AppIcon.checkCircle(size: 48),
+        AppIcon.arrowUp(size: 16),
+        AppIcon.arrowUp(size: 24),
+        AppIcon.arrowUp(size: 32),
+        AppIcon.arrowUp(size: 48),
+      ],
+    ),
+  );
+}
+
+@widgetbook.UseCase(
+  name: 'Material Icons',
+  type: AppIcon,
+  path: WidgetbookRoutePath.atoms,
+)
+Widget appIconMaterialUseCase(BuildContext context) {
+  return const Padding(
+    padding: EdgeInsets.all(16),
+    child: Wrap(
+      spacing: 16,
+      runSpacing: 16,
+      children: [
+        AppIcon.circle(size: 28),
+        AppIcon.circle(size: 28, color: Colors.blue),
+        AppIcon.checkCircle(size: 28),
+        AppIcon.checkCircle(size: 28, color: Colors.red),
+        AppIcon.arrowUp(size: 18),
+        AppIcon.arrowUp(size: 18, color: Colors.blue),
+        AppIcon.arrowUp(size: 24),
+        AppIcon.arrowUp(size: 24, color: Colors.red),
       ],
     ),
   );

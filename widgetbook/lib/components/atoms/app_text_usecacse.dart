@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_text.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:widgetbook_workspace/utils/routing/route_path.dart';
 
-@widgetbook.UseCase(name: 'Default', type: AppText)
+@widgetbook.UseCase(
+  name: 'Default',
+  type: AppText,
+  path: WidgetbookRoutePath.atoms,
+)
 Widget appTextDefaultUseCase(BuildContext context) {
   return const Padding(
     padding: EdgeInsets.all(16),
@@ -10,7 +15,11 @@ Widget appTextDefaultUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'LargeBold', type: AppText)
+@widgetbook.UseCase(
+  name: 'LargeBold',
+  type: AppText,
+  path: WidgetbookRoutePath.atoms,
+)
 Widget appTextLargeBoldUseCase(BuildContext context) {
   return const Padding(
     padding: EdgeInsets.all(16),
@@ -18,7 +27,11 @@ Widget appTextLargeBoldUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Colored', type: AppText)
+@widgetbook.UseCase(
+  name: 'Colored',
+  type: AppText,
+  path: WidgetbookRoutePath.atoms,
+)
 Widget appTextColoredUseCase(BuildContext context) {
   return const Padding(
     padding: EdgeInsets.all(16),

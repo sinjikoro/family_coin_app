@@ -5,9 +5,6 @@ import 'package:flutter_svg/svg.dart';
 /// アバターアイコンコンポーネント
 /// AvatarIconTypeに基づいて画像を表示
 class AvatarIcon extends StatelessWidget {
-  /// コンストラクタ (private)
-  const AvatarIcon._({required this.icon});
-
   /// コンストラクタ
   AvatarIcon.svgPath({required String svgPath, super.key})
     : icon = SvgPicture.asset(

@@ -6,17 +6,29 @@
 
 ### 重要なコマンド
 ```bash
-# コード生成
-dart run build_runner build --delete-conflicting-outputs
+# 初期設定（FVM使用、依存関係取得、コード生成）
+make setup-all
 
-# 依存性注入初期化
-DependencyInjection.local()
+# 個別設定
+make setup              # メインプロジェクトのみ
+make widgetbook-setup   # widgetbookプロジェクトのみ
 
-# テスト実行
-flutter test
+# 開発コマンド
+make codegen            # コード生成
+make codegen-watch      # ウォッチモードでコード生成
+make test               # テスト実行
+make analyze            # 静的解析
+make check              # テスト + 静的解析
 
-# 静的解析
-flutter analyze
+# その他
+make clean              # クリーンアップ
+make widgetbook         # widgetbookを起動
+make reset              # 開発環境の完全リセット
+
+# 従来のコマンド（FVM使用）
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+fvm flutter test
+fvm flutter analyze
 ```
 
 ### 主要ディレクトリ

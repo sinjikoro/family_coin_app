@@ -14,7 +14,7 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/calendar.svg',
+  }) : _imagePath = 'assets/images/icon/calendar.svg',
        _iconData = null;
 
   /// カレンダー(チェック)
@@ -22,12 +22,12 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/calendar_check.svg',
+  }) : _imagePath = 'assets/images/icon/calendar_check.svg',
        _iconData = null;
 
   /// 本
   const AppIcon.book({required this.size, this.color = Colors.black, super.key})
-    : _imagePath = 'images/icon/book.svg',
+    : _imagePath = 'assets/images/icon/book.svg',
       _iconData = null;
 
   /// 本(開く)
@@ -35,7 +35,7 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/book_open.svg',
+  }) : _imagePath = 'assets/images/icon/book_open.svg',
        _iconData = null;
 
   /// アクティビティ
@@ -43,12 +43,12 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/activity.svg',
+  }) : _imagePath = 'assets/images/icon/activity.svg',
        _iconData = null;
 
   /// コイン
   const AppIcon.coin({required this.size, this.color = Colors.black, super.key})
-    : _imagePath = 'images/icon/coins.svg',
+    : _imagePath = 'assets/images/icon/coins.svg',
       _iconData = null;
 
   /// ゲーム
@@ -56,12 +56,12 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/gamepad.svg',
+  }) : _imagePath = 'assets/images/icon/gamepad.svg',
        _iconData = null;
 
   /// 贈り物
   const AppIcon.gift({required this.size, this.color = Colors.black, super.key})
-    : _imagePath = 'images/icon/gift.svg',
+    : _imagePath = 'assets/images/icon/gift.svg',
       _iconData = null;
 
   /// ハート
@@ -69,7 +69,7 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/heart.svg',
+  }) : _imagePath = 'assets/images/icon/heart.svg',
        _iconData = null;
 
   /// アイスクリーム
@@ -77,7 +77,7 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/icecream.svg',
+  }) : _imagePath = 'assets/images/icon/icecream.svg',
        _iconData = null;
 
   /// ピザ
@@ -85,7 +85,7 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/pizza.svg',
+  }) : _imagePath = 'assets/images/icon/pizza.svg',
        _iconData = null;
 
   /// リピート
@@ -93,7 +93,7 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/repeat.svg',
+  }) : _imagePath = 'assets/images/icon/repeat.svg',
        _iconData = null;
 
   /// 設定
@@ -101,12 +101,12 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/settings.svg',
+  }) : _imagePath = 'assets/images/icon/settings.svg',
        _iconData = null;
 
   /// 星
   const AppIcon.star({required this.size, this.color = Colors.black, super.key})
-    : _imagePath = 'images/icon/star.svg',
+    : _imagePath = 'assets/images/icon/star.svg',
       _iconData = null;
 
   /// トレード（UP）
@@ -114,7 +114,7 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/trending_up.svg',
+  }) : _imagePath = 'assets/images/icon/trending_up.svg',
        _iconData = null;
 
   /// トロフィー
@@ -122,7 +122,7 @@ class AppIcon extends StatelessWidget {
     required this.size,
     this.color = Colors.black,
     super.key,
-  }) : _imagePath = 'images/icon/trophy.svg',
+  }) : _imagePath = 'assets/images/icon/trophy.svg',
        _iconData = null;
 
   /// 未完了用サークルアイコン

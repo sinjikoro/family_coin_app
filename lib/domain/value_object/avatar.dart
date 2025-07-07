@@ -42,7 +42,7 @@ final class AvatarNone extends Avatar {
 
   /// 画像パス
   @override
-  String get imagePath => 'images/avatar/default.svg';
+  String get imagePath => 'assets/images/avatar/default.svg';
 }
 
 /// 男の子
@@ -56,7 +56,7 @@ final class AvatarBoy extends Avatar {
 
   /// 画像パス
   @override
-  String get imagePath => 'images/avatar/boy.svg';
+  String get imagePath => 'assets/images/avatar/boy.svg';
 }
 
 /// 猫
@@ -70,7 +70,7 @@ final class AvatarCat extends Avatar {
 
   /// 画像パス
   @override
-  String get imagePath => 'images/avatar/cat.svg';
+  String get imagePath => 'assets/images/avatar/cat.svg';
 }
 
 /// 犬
@@ -84,5 +84,5 @@ final class AvatarDog extends Avatar {
 
   /// 画像パス
   @override
-  String get imagePath => 'images/avatar/dog.svg';
+  String get imagePath => 'assets/images/avatar/dog.svg';
 }

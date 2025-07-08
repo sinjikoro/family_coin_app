@@ -6,10 +6,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(name: 'Empty List', type: TaskListSection)
 Widget taskListSectionEmptyUseCase(BuildContext context) {
-  return const TaskListSection(
-    tasks: [],
-    emptyMessage: 'タスクがありません',
-  );
+  return const TaskListSection(tasks: [], emptyMessage: 'タスクがありません');
 }
 
 @widgetbook.UseCase(name: 'Single Item', type: TaskListSection)
@@ -22,7 +19,7 @@ Widget taskListSectionSingleUseCase(BuildContext context) {
         title: 'お手伝いをする',
         subTitle: '毎日',
         coin: 10,
-        icon: AppIcon.heart(size: 32),
+        icon: AppIcon(type: AppIconType.heart, size: 32),
         isDone: false,
         isDisabled: false,
       ),
@@ -41,7 +38,7 @@ Widget taskListSectionMultipleUseCase(BuildContext context) {
         title: '宿題を完了する',
         subTitle: '算数・国語のワーク',
         coin: 50,
-        icon: AppIcon.book(size: 32),
+        icon: AppIcon(type: AppIconType.book, size: 32),
         isDone: true,
       ),
       TaskItemData(
@@ -50,7 +47,7 @@ Widget taskListSectionMultipleUseCase(BuildContext context) {
         title: 'お手伝いをする',
         subTitle: '食器洗いのお手伝い',
         coin: 30,
-        icon: AppIcon.heart(size: 32),
+        icon: AppIcon(type: AppIconType.heart, size: 32),
         isDone: false,
       ),
       TaskItemData(
@@ -59,7 +56,7 @@ Widget taskListSectionMultipleUseCase(BuildContext context) {
         title: '早寝早起き',
         subTitle: '21時までに就寝',
         coin: 20,
-        icon: AppIcon.settings(size: 32),
+        icon: AppIcon(type: AppIconType.settings, size: 32),
         isDone: false,
       ),
     ],
@@ -77,7 +74,7 @@ Widget taskListSectionWithDisabledUseCase(BuildContext context) {
         title: 'お手伝いをする',
         subTitle: '毎日',
         coin: 10,
-        icon: AppIcon.heart(size: 32),
+        icon: AppIcon(type: AppIconType.heart, size: 32),
         isDone: false,
         isDisabled: false,
       ),
@@ -87,7 +84,7 @@ Widget taskListSectionWithDisabledUseCase(BuildContext context) {
         title: '無効なタスク',
         subTitle: '無効',
         coin: 5,
-        icon: AppIcon.settings(size: 32),
+        icon: AppIcon(type: AppIconType.settings, size: 32),
         isDone: false,
         isDisabled: true,
       ),

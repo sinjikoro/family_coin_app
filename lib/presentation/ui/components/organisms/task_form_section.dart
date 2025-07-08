@@ -1,9 +1,14 @@
+import 'package:family_coin/presentation/ui/components/atoms/app_text_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:family_coin/presentation/ui/components/atoms/app_text_field.dart';
 
 /// タスクフォームセクション
 class TaskFormSection extends StatelessWidget {
+
+  /// constructor
+  const TaskFormSection({
+    required this.taskType, required this.taskName, required this.description, required this.onTaskNameChanged, required this.onDescriptionChanged, super.key,
+  });
   /// タスク種別（0:チャレンジ、1:ルーティン）
   final int taskType;
 
@@ -18,16 +23,6 @@ class TaskFormSection extends StatelessWidget {
 
   /// 説明変更コールバック
   final ValueChanged<String> onDescriptionChanged;
-
-  /// constructor
-  const TaskFormSection({
-    super.key,
-    required this.taskType,
-    required this.taskName,
-    required this.description,
-    required this.onTaskNameChanged,
-    required this.onDescriptionChanged,
-  });
 
   @override
   Widget build(BuildContext context) => Column(
@@ -60,5 +55,7 @@ class TaskFormSection extends StatelessWidget {
       ..add(IntProperty('taskType', taskType))
       ..add(StringProperty('taskName', taskName))
       ..add(StringProperty('description', description));
+      properties.add(ObjectFlagProperty<ValueChanged<String>>.has('onTaskNameChanged', onTaskNameChanged));
+      properties.add(ObjectFlagProperty<ValueChanged<String>>.has('onDescriptionChanged', onDescriptionChanged));
   }
 }

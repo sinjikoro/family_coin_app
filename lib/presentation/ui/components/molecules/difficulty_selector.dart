@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 
 /// 難易度選択ウィジェット
 class DifficultySelector extends StatelessWidget {
+
+  /// constructor
+  const DifficultySelector({
+    required this.difficulties, required this.selectedDifficulty, required this.onSelected, super.key,
+  });
   /// 難易度リスト
   final List<String> difficulties;
 
@@ -11,14 +16,6 @@ class DifficultySelector extends StatelessWidget {
 
   /// 難易度選択コールバック
   final ValueChanged<String> onSelected;
-
-  /// constructor
-  const DifficultySelector({
-    super.key,
-    required this.difficulties,
-    required this.selectedDifficulty,
-    required this.onSelected,
-  });
 
   @override
   Widget build(BuildContext context) => Row(
@@ -41,5 +38,6 @@ class DifficultySelector extends StatelessWidget {
     properties
       ..add(IterableProperty<String>('difficulties', difficulties))
       ..add(StringProperty('selectedDifficulty', selectedDifficulty));
+      properties.add(ObjectFlagProperty<ValueChanged<String>>.has('onSelected', onSelected));
   }
 }

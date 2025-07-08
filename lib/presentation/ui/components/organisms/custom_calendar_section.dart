@@ -1,11 +1,18 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:family_coin/presentation/ui/components/atoms/custom_calendar_day.dart';
 import 'package:family_coin/presentation/ui/components/molecules/calendar_header.dart';
 import 'package:family_coin/presentation/ui/components/molecules/calendar_legend.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 /// カスタムカレンダーセクション
 class CustomCalendarSection extends StatelessWidget {
+
+  /// constructor
+  const CustomCalendarSection({
+    required this.yearMonth, required this.executionDays, required this.startDay, super.key,
+    this.onPrevMonth,
+    this.onNextMonth,
+  });
   /// 年月表示テキスト
   final String yearMonth;
 
@@ -20,16 +27,6 @@ class CustomCalendarSection extends StatelessWidget {
 
   /// 次月ボタンコールバック
   final VoidCallback? onNextMonth;
-
-  /// constructor
-  const CustomCalendarSection({
-    super.key,
-    required this.yearMonth,
-    required this.executionDays,
-    required this.startDay,
-    this.onPrevMonth,
-    this.onNextMonth,
-  });
 
   @override
   Widget build(BuildContext context) => Column(
@@ -52,9 +49,9 @@ class CustomCalendarSection extends StatelessWidget {
         child: Column(
           children: [
             // 曜日ヘッダー
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text('日', style: TextStyle(color: Colors.red)),
                 Text('月'),
                 Text('火'),
@@ -94,5 +91,7 @@ class CustomCalendarSection extends StatelessWidget {
       ..add(StringProperty('yearMonth', yearMonth))
       ..add(IterableProperty<int>('executionDays', executionDays))
       ..add(IntProperty('startDay', startDay));
+      properties.add(ObjectFlagProperty<VoidCallback?>.has('onPrevMonth', onPrevMonth));
+      properties.add(ObjectFlagProperty<VoidCallback?>.has('onNextMonth', onNextMonth));
   }
 }

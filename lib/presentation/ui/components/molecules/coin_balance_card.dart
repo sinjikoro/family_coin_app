@@ -1,5 +1,5 @@
-import 'package:family_coin/presentation/ui/components/atoms/app_text.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
+import 'package:family_coin/presentation/ui/components/atoms/app_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ class CoinBalanceCard extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
     child: Row(
       children: [
-        const AppIcon.coin(size: 48),
+        const AppIcon(type: AppIconType.coin, size: 48),
         const SizedBox(width: 20),
         Expanded(
           child: AppText(
@@ -33,7 +33,7 @@ class CoinBalanceCard extends StatelessWidget {
           ),
         ),
         if (diff != null && diff! > 0) ...[
-          const AppIcon.arrowUp(size: 18),
+          const AppIcon(type: AppIconType.arrowUp, size: 18),
           const SizedBox(width: 4),
           AppText(
             text: '+$diff',

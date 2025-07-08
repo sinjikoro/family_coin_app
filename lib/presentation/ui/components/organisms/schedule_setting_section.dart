@@ -1,13 +1,18 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:family_coin/presentation/ui/components/molecules/schedule_frequency_selector.dart';
 import 'package:family_coin/presentation/ui/components/molecules/weekday_selector.dart';
-import 'package:family_coin/presentation/ui/components/organisms/schedule_summary_box.dart';
 import 'package:family_coin/presentation/ui/components/organisms/custom_calendar_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/custom_schedule_bottom_sheet.dart';
+import 'package:family_coin/presentation/ui/components/organisms/schedule_summary_box.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 /// スケジュール設定セクション
 class ScheduleSettingSection extends StatelessWidget {
+
+  /// constructor
+  const ScheduleSettingSection({
+    required this.scheduleFrequency, required this.selectedWeekdays, required this.onFrequencyChanged, required this.onWeekdayChanged, super.key,
+  });
   /// スケジュール頻度（0:毎日, 1:毎週, 2:カスタム）
   final int scheduleFrequency;
 
@@ -19,15 +24,6 @@ class ScheduleSettingSection extends StatelessWidget {
 
   /// 曜日選択コールバック
   final ValueChanged<int> onWeekdayChanged;
-
-  /// constructor
-  const ScheduleSettingSection({
-    super.key,
-    required this.scheduleFrequency,
-    required this.selectedWeekdays,
-    required this.onFrequencyChanged,
-    required this.onWeekdayChanged,
-  });
 
   @override
   Widget build(BuildContext context) => Container(
@@ -41,8 +37,8 @@ class ScheduleSettingSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // ヘッダー
-        Row(
-          children: const [
+        const Row(
+          children: [
             Icon(Icons.repeat, color: Colors.blue),
             SizedBox(width: 8),
             Text(
@@ -96,9 +92,9 @@ class ScheduleSettingSection extends StatelessWidget {
               border: Border.all(color: Colors.green.shade200),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Row(
                   children: [
                     Icon(Icons.calendar_today, color: Colors.green),
@@ -119,7 +115,7 @@ class ScheduleSettingSection extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           // カスタムカレンダー
-          CustomCalendarSection(
+          const CustomCalendarSection(
             yearMonth: '2024年1月',
             executionDays: [15, 17, 19, 21, 23, 25, 27, 29, 31],
             startDay: 15,
@@ -135,5 +131,7 @@ class ScheduleSettingSection extends StatelessWidget {
     properties
       ..add(IntProperty('scheduleFrequency', scheduleFrequency))
       ..add(IterableProperty<bool>('selectedWeekdays', selectedWeekdays));
+      properties.add(ObjectFlagProperty<ValueChanged<int>>.has('onFrequencyChanged', onFrequencyChanged));
+      properties.add(ObjectFlagProperty<ValueChanged<int>>.has('onWeekdayChanged', onWeekdayChanged));
   }
 }

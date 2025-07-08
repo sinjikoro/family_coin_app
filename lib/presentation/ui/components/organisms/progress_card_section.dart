@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// 進捗カードセクション（レスポンシブ対応）
-/// 
+///
 /// 画面幅に応じて縦並び/横並びを切り替える進捗カードのセクション。
 /// 狭い画面では縦に並べ、広い画面では横に並べる。
 class ProgressCardSection extends StatelessWidget {
@@ -12,14 +12,14 @@ class ProgressCardSection extends StatelessWidget {
   const ProgressCardSection({
     required this.todayProgress,
     required this.weeklyProgress,
-    this.breakpoint = 400,
+    this.breakpoint = 355,
     super.key,
   });
 
   /// 今日の進捗データ
   final ProgressData todayProgress;
 
-  /// 今週の進捗データ  
+  /// 今週の進捗データ
   final ProgressData weeklyProgress;
 
   /// レスポンシブ切り替えのブレークポイント（デフォルト400px）
@@ -48,7 +48,7 @@ class ProgressCardSection extends StatelessWidget {
           ],
         );
       }
-      
+
       // 画面幅が広い場合は横に並べる
       return Row(
         children: [

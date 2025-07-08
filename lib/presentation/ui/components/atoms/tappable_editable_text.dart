@@ -6,7 +6,7 @@ class TappableEditableText extends StatefulWidget {
   /// コンストラクタ
   const TappableEditableText({
     required this.text,
-    required this.onChanged,
+    this.onChanged,
     this.style,
     super.key,
   });
@@ -14,8 +14,8 @@ class TappableEditableText extends StatefulWidget {
   /// テキスト
   final String text;
 
-  /// テキスト変更時のコールバック
-  final ValueChanged<String> onChanged;
+  /// テキスト変更時のコールバック（nullの場合は読み取り専用）
+  final ValueChanged<String>? onChanged;
 
   /// テキストスタイル
   final TextStyle? style;
@@ -29,7 +29,7 @@ class TappableEditableText extends StatefulWidget {
     properties
       ..add(StringProperty('text', text))
       ..add(
-        ObjectFlagProperty<ValueChanged<String>>.has('onChanged', onChanged),
+        ObjectFlagProperty<ValueChanged<String>?>.has('onChanged', onChanged),
       )
       ..add(DiagnosticsProperty<TextStyle?>('style', style));
   }
@@ -62,22 +62,39 @@ class _TappableEditableTextState extends State<TappableEditableText> {
   );
 
   /// ラベルフィールド
-  GestureDetector _labelField() => GestureDetector(
-    onTap: () {
-      setState(() => _isEditing = true);
-      _focusNode.requestFocus();
-    },
-    child: Text(
-      _controller.text.isEmpty ? 'タップして編集' : _controller.text,
-      style: widget.style?.copyWith(
-        fontSize: widget.style?.fontSize,
-        color:
-            _controller.text.isEmpty
-                ? Colors.grey.withValues(alpha: 0.6)
-                : widget.style?.color,
+  Widget _labelField() {
+    // onChangedがnullの場合は読み取り専用
+    if (widget.onChanged == null) {
+      return Text(
+        _controller.text.isEmpty ? '未設定' : _controller.text,
+        style: widget.style?.copyWith(
+          fontSize: widget.style?.fontSize,
+          color:
+              _controller.text.isEmpty
+                  ? Colors.grey.withValues(alpha: 0.6)
+                  : widget.style?.color,
+        ),
+      );
+    }
+
+    // 編集可能な場合
+    return GestureDetector(
+      onTap: () {
+        setState(() => _isEditing = true);
+        _focusNode.requestFocus();
+      },
+      child: Text(
+        _controller.text.isEmpty ? 'タップして編集' : _controller.text,
+        style: widget.style?.copyWith(
+          fontSize: widget.style?.fontSize,
+          color:
+              _controller.text.isEmpty
+                  ? Colors.grey.withValues(alpha: 0.6)
+                  : widget.style?.color,
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   /// 入力フィールド
   TextField _inputField() => TextField(
@@ -91,7 +108,7 @@ class _TappableEditableTextState extends State<TappableEditableText> {
     ),
     onSubmitted: (value) {
       setState(() => _isEditing = false);
-      widget.onChanged(value);
+      widget.onChanged?.call(value);
     },
   );
 }

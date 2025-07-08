@@ -64,7 +64,7 @@ class UserInfoCard extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: const AppIcon.settings(size: 24),
+              icon: const AppIcon(type: AppIconType.settings, size: 24),
               onPressed: onSettingsTap,
             ),
           ],
@@ -73,12 +73,12 @@ class UserInfoCard extends StatelessWidget {
         // コイン残高表示
         Row(
           children: [
-            const AppIcon.coin(size: 32),
+            const AppIcon(type: AppIconType.coin, size: 32),
             Spacing.widthM,
             AppText.xLarge(text: balance.toString()),
             if (diff != null && diff! > 0) ...[
               Spacing.widthS,
-              const AppIcon.arrowUp(size: 18),
+              const AppIcon(type: AppIconType.arrowUp, size: 18),
               Spacing.widthXS,
               AppText.small(text: '+$diff'),
             ],

@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 
 /// カスタムカレンダー日付セル
 class CustomCalendarDay extends StatelessWidget {
+
+  /// constructor
+  const CustomCalendarDay({
+    required this.day, required this.isStart, required this.isExec, super.key,
+  });
   /// 日付
   final int day;
 
@@ -11,14 +16,6 @@ class CustomCalendarDay extends StatelessWidget {
 
   /// 実行日かどうか
   final bool isExec;
-
-  /// constructor
-  const CustomCalendarDay({
-    super.key,
-    required this.day,
-    required this.isStart,
-    required this.isExec,
-  });
 
   @override
   Widget build(BuildContext context) => Container(

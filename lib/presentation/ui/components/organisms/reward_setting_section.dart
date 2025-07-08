@@ -1,10 +1,15 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_text_field.dart';
 import 'package:family_coin/presentation/ui/components/molecules/coin_amount_selector.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 /// 報酬設定セクション
 class RewardSettingSection extends StatelessWidget {
+
+  /// constructor
+  const RewardSettingSection({
+    required this.taskType, required this.selectedCoinIndex, required this.onCoinSelected, required this.onCoinChanged, super.key,
+  });
   /// タスク種別（0:チャレンジ、1:ルーティン）
   final int taskType;
 
@@ -16,15 +21,6 @@ class RewardSettingSection extends StatelessWidget {
 
   /// コイン数変更コールバック
   final ValueChanged<String> onCoinChanged;
-
-  /// constructor
-  const RewardSettingSection({
-    super.key,
-    required this.taskType,
-    required this.selectedCoinIndex,
-    required this.onCoinSelected,
-    required this.onCoinChanged,
-  });
 
   @override
   Widget build(BuildContext context) => Column(
@@ -60,5 +56,7 @@ class RewardSettingSection extends StatelessWidget {
     properties
       ..add(IntProperty('taskType', taskType))
       ..add(IntProperty('selectedCoinIndex', selectedCoinIndex));
+      properties.add(ObjectFlagProperty<ValueChanged<int>>.has('onCoinSelected', onCoinSelected));
+      properties.add(ObjectFlagProperty<ValueChanged<String>>.has('onCoinChanged', onCoinChanged));
   }
 }

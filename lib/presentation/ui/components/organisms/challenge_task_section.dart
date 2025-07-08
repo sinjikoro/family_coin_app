@@ -1,10 +1,15 @@
+import 'package:family_coin/presentation/ui/components/molecules/achievement_condition_field.dart';
+import 'package:family_coin/presentation/ui/components/molecules/difficulty_selector.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:family_coin/presentation/ui/components/molecules/difficulty_selector.dart';
-import 'package:family_coin/presentation/ui/components/molecules/achievement_condition_field.dart';
 
 /// チャレンジタスク設定セクション
 class ChallengeTaskSection extends StatelessWidget {
+
+  /// constructor
+  const ChallengeTaskSection({
+    required this.difficulties, required this.selectedDifficulty, required this.condition, required this.onDifficultySelected, required this.onConditionChanged, super.key,
+  });
   /// 難易度リスト
   final List<String> difficulties;
 
@@ -20,16 +25,6 @@ class ChallengeTaskSection extends StatelessWidget {
   /// 達成条件変更コールバック
   final ValueChanged<String> onConditionChanged;
 
-  /// constructor
-  const ChallengeTaskSection({
-    super.key,
-    required this.difficulties,
-    required this.selectedDifficulty,
-    required this.condition,
-    required this.onDifficultySelected,
-    required this.onConditionChanged,
-  });
-
   @override
   Widget build(BuildContext context) => Container(
     width: double.infinity,
@@ -41,8 +36,8 @@ class ChallengeTaskSection extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: const [
+        const Row(
+          children: [
             Icon(Icons.emoji_events, color: Colors.orange),
             SizedBox(width: 8),
             Text(
@@ -74,5 +69,7 @@ class ChallengeTaskSection extends StatelessWidget {
       ..add(IterableProperty<String>('difficulties', difficulties))
       ..add(StringProperty('selectedDifficulty', selectedDifficulty))
       ..add(StringProperty('condition', condition));
+      properties.add(ObjectFlagProperty<ValueChanged<String>>.has('onDifficultySelected', onDifficultySelected));
+      properties.add(ObjectFlagProperty<ValueChanged<String>>.has('onConditionChanged', onConditionChanged));
   }
 }

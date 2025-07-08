@@ -8,7 +8,7 @@ Widget progressCardTodayTaskUseCase(BuildContext context) {
   return const Padding(
     padding: EdgeInsets.all(16),
     child: ProgressCard(
-      icon: AppIcon.calendar(size: 24),
+      icon: AppIcon(type: AppIconType.calendar, size: 24),
       title: '今日のタスク',
       valueText: '3/5 完了',
       subText: null,
@@ -22,7 +22,7 @@ Widget progressCardWeeklyUseCase(BuildContext context) {
   return const Padding(
     padding: EdgeInsets.all(16),
     child: ProgressCard(
-      icon: AppIcon.trophy(size: 24),
+      icon: AppIcon(type: AppIconType.trophy, size: 24),
       title: '今週の進捗',
       valueText: '85%',
       subText: null,

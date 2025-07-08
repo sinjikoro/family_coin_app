@@ -2,44 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_tab_button.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:widgetbook_workspace/utils/routing/route_path.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 @widgetbook.UseCase(
-  name: 'Selected',
+  name: 'Interactive',
   type: AppTabButton,
   path: WidgetbookRoutePath.atoms,
 )
-Widget appTabButtonSelectedUseCase(BuildContext context) {
-  return const Center(
-    child: AppTabButton(label: '選択済み', selected: true, onTap: null),
+Widget appTabButtonInteractiveUseCase(BuildContext context) {
+  final label = context.knobs.string(
+    label: 'Label',
+    description: 'タブボタンのラベル',
+    initialValue: 'タブボタン',
   );
-}
 
-@widgetbook.UseCase(
-  name: 'Unselected',
-  type: AppTabButton,
-  path: WidgetbookRoutePath.atoms,
-)
-Widget appTabButtonUnselectedUseCase(BuildContext context) {
-  return const Center(
-    child: AppTabButton(label: '未選択', selected: false, onTap: null),
+  final selected = context.knobs.boolean(
+    label: 'Selected',
+    description: '選択状態',
+    initialValue: false,
   );
-}
 
-@widgetbook.UseCase(
-  name: 'With Callback',
-  type: AppTabButton,
-  path: WidgetbookRoutePath.atoms,
-)
-Widget appTabButtonWithCallbackUseCase(BuildContext context) {
+  final hasCallback = context.knobs.boolean(
+    label: 'Has Callback',
+    description: 'タップ時のコールバックを有効にする',
+    initialValue: true,
+  );
+
   return Center(
     child: AppTabButton(
-      label: 'タップ可能',
-      selected: false,
-      onTap: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Tab button tapped!')));
-      },
+      label: label,
+      selected: selected,
+      onTap: hasCallback ? () {} : null,
     ),
   );
 }

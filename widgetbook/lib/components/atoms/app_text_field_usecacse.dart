@@ -2,54 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_text_field.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:widgetbook_workspace/utils/routing/route_path.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+const _default = 'Default';
+const _name = 'Name';
+const _amount = 'Amount';
+const _description = 'Description';
+const _url = 'URL';
 
 @widgetbook.UseCase(
-  name: 'Default',
+  name: 'Interactive',
   type: AppTextField,
   path: WidgetbookRoutePath.atoms,
 )
-Widget defaultTextFieldUseCase(BuildContext context) {
-  return const Padding(padding: EdgeInsets.all(16), child: AppTextField());
-}
-
-@widgetbook.UseCase(
-  name: 'Name',
-  type: AppTextField,
-  path: WidgetbookRoutePath.atoms,
-)
-Widget nameTextFieldUseCase(BuildContext context) {
-  return Padding(padding: const EdgeInsets.all(16), child: AppTextField.name());
-}
-
-@widgetbook.UseCase(
-  name: 'Amount',
-  type: AppTextField,
-  path: WidgetbookRoutePath.atoms,
-)
-Widget amountTextFieldUseCase(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.all(16),
-    child: AppTextField.amount(),
+Widget appTextFieldInteractiveUseCase(BuildContext context) {
+  final fieldType = context.knobs.list(
+    label: 'Field Type',
+    description: 'テキストフィールドの種類',
+    options: [_default, _name, _amount, _description, _url],
+    initialOption: _default,
   );
-}
 
-@widgetbook.UseCase(
-  name: 'Description',
-  type: AppTextField,
-  path: WidgetbookRoutePath.atoms,
-)
-Widget descriptionTextFieldUseCase(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.all(16),
-    child: AppTextField.description(),
+  final enabled = context.knobs.boolean(
+    label: 'Enabled',
+    description: '有効/無効状態',
+    initialValue: true,
   );
-}
 
-@widgetbook.UseCase(
-  name: 'URL',
-  type: AppTextField,
-  path: WidgetbookRoutePath.atoms,
-)
-Widget urlTextFieldUseCase(BuildContext context) {
-  return Padding(padding: const EdgeInsets.all(16), child: AppTextField.url());
+  final hintText = context.knobs.string(
+    label: 'Hint Text',
+    description: 'プレースホルダーテキスト',
+    initialValue: '入力してください',
+  );
+
+  return Center(
+    child: switch (fieldType) {
+      _default => AppTextField(hintText: hintText, enabled: enabled),
+      _name => AppTextField.name(enabled: enabled),
+      _amount => AppTextField.amount(enabled: enabled),
+      _description => AppTextField.description(enabled: enabled),
+      _url => AppTextField.url(enabled: enabled),
+      _ => AppTextField(hintText: hintText, enabled: enabled),
+    },
+  );
 }

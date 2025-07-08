@@ -88,7 +88,11 @@ class TaskListItem extends StatelessWidget {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        AppIcon.coin(size: 18, color: Colors.orange),
+                        const AppIcon(
+                          type: AppIconType.coin,
+                          size: 18,
+                          color: Colors.orange,
+                        ),
                         const SizedBox(width: 2),
                         AppText(
                           text: '$coinコイン',
@@ -97,7 +101,7 @@ class TaskListItem extends StatelessWidget {
                           color: Colors.orange,
                         ),
                         const SizedBox(width: 12),
-                        AppIcon.settings(size: 18),
+                        const AppIcon(type: AppIconType.settings, size: 18),
                       ],
                     ),
                   ],
@@ -105,9 +109,9 @@ class TaskListItem extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               if (isDone)
-                const AppIcon.checkCircle(size: 28)
+                const AppIcon(type: AppIconType.checkCircle, size: 28)
               else
-                const AppIcon.circle(size: 28),
+                const AppIcon(type: AppIconType.circle, size: 28),
             ],
           ),
         ),

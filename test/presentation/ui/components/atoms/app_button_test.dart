@@ -46,7 +46,7 @@ void main() {
 
     testWidgets('disabled button does not respond to tap', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: AppButton.disabled(
               label: 'Disabled',

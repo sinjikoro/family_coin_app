@@ -7,9 +7,7 @@ void main() {
     testWidgets('calendar icon displays correctly', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppIcon.calendar(size: 24),
-          ),
+          home: Scaffold(body: AppIcon(type: AppIconType.calendar, size: 24)),
         ),
       );
 
@@ -19,11 +17,7 @@ void main() {
     testWidgets('applies custom size', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppIcon.calendar(
-              size: 32,
-            ),
-          ),
+          home: Scaffold(body: AppIcon(type: AppIconType.calendar, size: 32)),
         ),
       );
 
@@ -35,7 +29,8 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppIcon.calendar(
+            body: AppIcon(
+              type: AppIconType.calendar,
               size: 24,
               color: Colors.red,
             ),
@@ -50,9 +45,7 @@ void main() {
     testWidgets('book icon displays correctly', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppIcon.book(size: 24),
-          ),
+          home: Scaffold(body: AppIcon(type: AppIconType.book, size: 24)),
         ),
       );
 
@@ -62,9 +55,7 @@ void main() {
     testWidgets('activity icon displays correctly', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppIcon.activity(size: 24),
-          ),
+          home: Scaffold(body: AppIcon(type: AppIconType.activity, size: 24)),
         ),
       );
 
@@ -74,9 +65,7 @@ void main() {
     testWidgets('default icon with no image path', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppIcon(size: 24),
-          ),
+          home: Scaffold(body: AppIcon(type: AppIconType.calendar, size: 24)),
         ),
       );
 

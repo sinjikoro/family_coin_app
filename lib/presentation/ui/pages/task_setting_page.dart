@@ -1,10 +1,10 @@
 import 'package:family_coin/presentation/ui/components/molecules/category_choice_chips.dart';
-import 'package:family_coin/presentation/ui/components/organisms/preview_section.dart';
-import 'package:family_coin/presentation/ui/components/organisms/task_type_selector_section.dart';
-import 'package:family_coin/presentation/ui/components/organisms/task_form_section.dart';
-import 'package:family_coin/presentation/ui/components/organisms/reward_setting_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/challenge_task_section.dart';
+import 'package:family_coin/presentation/ui/components/organisms/preview_section.dart';
+import 'package:family_coin/presentation/ui/components/organisms/reward_setting_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/schedule_setting_section.dart';
+import 'package:family_coin/presentation/ui/components/organisms/task_form_section.dart';
+import 'package:family_coin/presentation/ui/components/organisms/task_type_selector_section.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -106,7 +106,7 @@ class _TaskSettingPageState extends State<TaskSettingPage> {
           // カテゴリ
           const Text('カテゴリ'),
           CategoryChoiceChips(
-            categories: ['勉強', '運動', '生活'],
+            categories: const ['勉強', '運動', '生活'],
             selectedIndex: selectedCategory,
             onSelected: (i) => setState(() => selectedCategory = i),
           ),
@@ -178,6 +178,8 @@ class _TaskSettingPageState extends State<TaskSettingPage> {
       ..add(IterableProperty<int>('coinAmounts', coinAmounts))
       ..add(IterableProperty<String>('difficulties', difficulties))
       ..add(IterableProperty<IconData>('icons', icons));
+      properties.add(IntProperty('scheduleFrequency', scheduleFrequency));
+      properties.add(IterableProperty<bool>('selectedWeekdays', selectedWeekdays));
   }
 }
 

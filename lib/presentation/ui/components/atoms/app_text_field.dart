@@ -193,5 +193,6 @@ class AppTextField extends StatelessWidget {
       ..add(
         DiagnosticsProperty<TextEditingController?>('controller', controller),
       );
+      properties.add(EnumProperty<TextAlign>('textAlign', textAlign));
   }
 }

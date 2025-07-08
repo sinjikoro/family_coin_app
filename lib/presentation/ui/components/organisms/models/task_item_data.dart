@@ -1,5 +1,4 @@
 import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// タスクアイテムのデータモデル

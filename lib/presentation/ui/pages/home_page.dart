@@ -25,13 +25,13 @@ class HomePage extends StatelessWidget {
 
     // 進捗データの定義
     const todayProgress = ProgressData(
-      icon: AppIcon.calendar(size: 24),
+      icon: AppIcon(type: AppIconType.calendar, size: 24),
       title: '今日のタスク',
       valueText: '3/5 完了',
     );
 
     const weeklyProgress = ProgressData(
-      icon: AppIcon.trophy(size: 24),
+      icon: AppIcon(type: AppIconType.trophy, size: 24),
       title: '今週の進捗',
       valueText: '85%',
       progress: 0.85,
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
         subTitle: '算数・国語のワーク',
         coin: 50,
         isDone: true,
-        icon: AppIcon.book(size: 32),
+        icon: AppIcon(type: AppIconType.book, size: 32),
       ),
       const TaskItemData(
         id: 'task_2',
@@ -54,8 +54,7 @@ class HomePage extends StatelessWidget {
         title: 'お手伝いをする',
         subTitle: '食器洗いのお手伝い',
         coin: 30,
-        isDone: false,
-        icon: AppIcon.heart(size: 32),
+        icon: AppIcon(type: AppIconType.heart, size: 32),
       ),
       const TaskItemData(
         id: 'task_3',
@@ -63,8 +62,7 @@ class HomePage extends StatelessWidget {
         title: '早寝早起き',
         subTitle: '21時までに就寝',
         coin: 20,
-        isDone: false,
-        icon: AppIcon.settings(size: 32),
+        icon: AppIcon(type: AppIconType.settings, size: 32),
       ),
       const TaskItemData(
         id: 'task_4',
@@ -72,8 +70,7 @@ class HomePage extends StatelessWidget {
         title: '読書時間',
         subTitle: '30分間の読書',
         coin: 20,
-        isDone: false,
-        icon: AppIcon.book(size: 32),
+        icon: AppIcon(type: AppIconType.book, size: 32),
       ),
     ];
 
@@ -102,10 +99,7 @@ class HomePage extends StatelessWidget {
               // 「今日のタスク」タイトル
               const AppText.title(text: '今日のタスク'),
               // タスクリストセクション
-              TaskListSection(
-                tasks: tasks,
-                onTaskToggle: _handleTaskToggle,
-              ),
+              TaskListSection(tasks: tasks, onTaskToggle: _handleTaskToggle),
             ],
           ),
         ),

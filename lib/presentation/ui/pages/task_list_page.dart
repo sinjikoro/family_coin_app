@@ -33,7 +33,7 @@ class _TaskListPageState extends State<TaskListPage> {
         title: '宿題をする',
         subTitle: '算数と国語の宿題を完了する',
         coin: 50,
-        icon: AppIcon.book(size: 32),
+        icon: AppIcon(type: AppIconType.book, size: 32),
         isDone: true,
       ),
       const TaskItemData(
@@ -42,7 +42,7 @@ class _TaskListPageState extends State<TaskListPage> {
         title: 'お手伝いをする',
         subTitle: '食器洗いのお手伝いをする',
         coin: 30,
-        icon: AppIcon.activity(size: 32),
+        icon: AppIcon(type: AppIconType.activity, size: 32),
         isDone: true,
       ),
       const TaskItemData(
@@ -51,7 +51,7 @@ class _TaskListPageState extends State<TaskListPage> {
         title: '早寝早起き',
         subTitle: '21時までに就寝する',
         coin: 50,
-        icon: AppIcon.heart(size: 32),
+        icon: AppIcon(type: AppIconType.heart, size: 32),
         isDone: true,
       ),
       const TaskItemData(
@@ -60,7 +60,7 @@ class _TaskListPageState extends State<TaskListPage> {
         title: '運動をする',
         subTitle: '30分間の運動やストレッチ',
         coin: 40,
-        icon: AppIcon.star(size: 32),
+        icon: AppIcon(type: AppIconType.star, size: 32),
         isDisabled: true,
       ),
       const TaskItemData(
@@ -69,7 +69,7 @@ class _TaskListPageState extends State<TaskListPage> {
         title: '読書をする',
         subTitle: '好きな本を読む',
         coin: 30,
-        icon: AppIcon.bookOpen(size: 32),
+        icon: AppIcon(type: AppIconType.bookOpen, size: 32),
         isDisabled: true,
       ),
     ];

@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 
 /// カレンダーヘッダー
 class CalendarHeader extends StatelessWidget {
+
+  /// constructor
+  const CalendarHeader({
+    required this.yearMonth, super.key,
+    this.onPrevMonth,
+    this.onNextMonth,
+  });
   /// 年月表示テキスト
   final String yearMonth;
 
@@ -11,14 +18,6 @@ class CalendarHeader extends StatelessWidget {
 
   /// 次月ボタンコールバック
   final VoidCallback? onNextMonth;
-
-  /// constructor
-  const CalendarHeader({
-    super.key,
-    required this.yearMonth,
-    this.onPrevMonth,
-    this.onNextMonth,
-  });
 
   @override
   Widget build(BuildContext context) => Row(
@@ -46,5 +45,7 @@ class CalendarHeader extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(StringProperty('yearMonth', yearMonth));
+    properties.add(ObjectFlagProperty<VoidCallback?>.has('onPrevMonth', onPrevMonth));
+    properties.add(ObjectFlagProperty<VoidCallback?>.has('onNextMonth', onNextMonth));
   }
 }

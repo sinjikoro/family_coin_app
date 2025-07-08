@@ -3,24 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:family_coin/presentation/ui/components/atoms/avatar_icon.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:widgetbook_workspace/utils/routing/route_path.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 @widgetbook.UseCase(
-  name: 'AvatarIcon',
+  name: 'Interactive',
   type: AvatarIcon,
   path: WidgetbookRoutePath.atoms,
 )
-Widget avatarIconUseCase(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.all(16),
-    child: Wrap(
-      spacing: 16,
-      runSpacing: 16,
-      children: [
-        AvatarIcon.svgPath(svgPath: AvatarNone().imagePath),
-        AvatarIcon.svgPath(svgPath: AvatarBoy().imagePath),
-        AvatarIcon.svgPath(svgPath: AvatarCat().imagePath),
-        AvatarIcon.svgPath(svgPath: AvatarDog().imagePath),
-      ],
+Widget avatarIconInteractiveUseCase(BuildContext context) {
+  final avatarOptions = [
+    AvatarNone().value,
+    AvatarBoy().value,
+    AvatarCat().value,
+    AvatarDog().value,
+  ];
+
+  final selectedAvatar = context.knobs.list(
+    label: 'Avatar',
+    description: 'アバターの種類',
+    options: avatarOptions,
+    initialOption: AvatarNone().value,
+  );
+
+  final size = context.knobs.double.slider(
+    label: 'Size',
+    description: 'アバターのサイズ',
+    min: 16.0,
+    max: 96.0,
+    divisions: 20,
+    initialValue: 24.0,
+  );
+
+  return Center(
+    child: AvatarIcon.svgPath(
+      svgPath: Avatar.byName(selectedAvatar).imagePath,
+      size: size,
     ),
   );
 }

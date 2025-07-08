@@ -6,11 +6,11 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 @widgetbook.UseCase(name: 'Basic Progress Data', type: ProgressData)
 Widget progressDataBasicUseCase(BuildContext context) {
   const progressData = ProgressData(
-    icon: AppIcon.calendar(size: 24),
+    icon: AppIcon(type: AppIconType.calendar, size: 24),
     title: '今日のタスク',
     valueText: '3/5 完了',
   );
-  
+
   return Card(
     child: ListTile(
       leading: progressData.icon,
@@ -29,12 +29,12 @@ Widget progressDataBasicUseCase(BuildContext context) {
 @widgetbook.UseCase(name: 'With Progress Bar', type: ProgressData)
 Widget progressDataWithProgressUseCase(BuildContext context) {
   const progressData = ProgressData(
-    icon: AppIcon.trophy(size: 24),
+    icon: AppIcon(type: AppIconType.trophy, size: 24),
     title: '今週の進捗',
     valueText: '85%',
     progress: 0.85,
   );
-  
+
   return Card(
     child: Padding(
       padding: const EdgeInsets.all(16.0),

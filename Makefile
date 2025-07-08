@@ -6,7 +6,23 @@ setup:
 	fvm use
 	fvm flutter pub get
 	fvm flutter pub run build_runner build --delete-conflicting-outputs
-	@echo "✅ 初期設定が完了しました！"
+	@echo "✅ 全プロジェクトの初期設定が完了しました！"
+
+# 初期設定（FVM使用、依存関係取得、コード生成）
+setup_all:
+	@echo "🚀 Flutterプロジェクトの初期設定を開始します..."
+	fvm use
+	fvm flutter pub get
+	fvm flutter pub run build_runner build --delete-conflicting-outputs
+	@echo "📚 Widgetbookプロジェクトの設定を開始します..."
+	cd widgetbook && fvm use && fvm flutter pub get && fvm flutter pub run build_runner build --delete-conflicting-outputs
+	@echo "✅ 全プロジェクトの初期設定が完了しました！"
+
+# 初期設定（FVM使用、依存関係取得、コード生成）
+setup_wb:
+	@echo "📚 Widgetbookプロジェクトの設定を開始します..."
+	cd widgetbook && fvm use && fvm flutter pub get && fvm flutter pub run build_runner build --delete-conflicting-outputs
+	@echo "✅ 全プロジェクトの初期設定が完了しました！"
 
 # クリーンアップ
 clean:
@@ -44,12 +60,6 @@ codegen-watch:
 	@echo "👀 ウォッチモードでコード生成を開始します..."
 	fvm flutter pub run build_runner watch --delete-conflicting-outputs
 
-# widgetbookプロジェクトの設定
-widgetbook-setup:
-	@echo "📚 Widgetbookプロジェクトの設定を開始します..."
-	cd widgetbook && fvm use && fvm flutter pub get && fvm flutter pub run build_runner build --delete-conflicting-outputs
-	@echo "✅ Widgetbook設定が完了しました！"
-
 # widgetbookの起動
 widgetbook:
 	@echo "🚀 Widgetbookを起動します..."
@@ -61,8 +71,4 @@ check: test analyze
 
 # 開発環境の完全リセット
 reset: clean setup
-	@echo "🔄 開発環境をリセットしました！"
-
-# 全プロジェクトの初期設定
-setup-all: setup widgetbook-setup
-	@echo "🎉 全プロジェクトの初期設定が完了しました！" 
+	@echo "🔄 開発環境をリセットしました！" 

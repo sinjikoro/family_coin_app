@@ -8,12 +8,12 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 Widget progressCardSectionDefaultUseCase(BuildContext context) {
   return const ProgressCardSection(
     todayProgress: ProgressData(
-      icon: AppIcon.calendar(size: 24),
+      icon: AppIcon(type: AppIconType.calendar, size: 24),
       title: '今日のタスク',
       valueText: '3/5 完了',
     ),
     weeklyProgress: ProgressData(
-      icon: AppIcon.trophy(size: 24),
+      icon: AppIcon(type: AppIconType.trophy, size: 24),
       title: '今週の進捗',
       valueText: '85%',
       progress: 0.85,
@@ -25,13 +25,13 @@ Widget progressCardSectionDefaultUseCase(BuildContext context) {
 Widget progressCardSectionWithProgressUseCase(BuildContext context) {
   return const ProgressCardSection(
     todayProgress: ProgressData(
-      icon: AppIcon.calendar(size: 24),
+      icon: AppIcon(type: AppIconType.calendar, size: 24),
       title: '今日のタスク',
       valueText: '3/5 完了',
       progress: 0.6,
     ),
     weeklyProgress: ProgressData(
-      icon: AppIcon.trophy(size: 24),
+      icon: AppIcon(type: AppIconType.trophy, size: 24),
       title: '今週の進捗',
       valueText: '85%',
       progress: 0.85,
@@ -43,13 +43,13 @@ Widget progressCardSectionWithProgressUseCase(BuildContext context) {
 Widget progressCardSectionLowProgressUseCase(BuildContext context) {
   return const ProgressCardSection(
     todayProgress: ProgressData(
-      icon: AppIcon.calendar(size: 24),
+      icon: AppIcon(type: AppIconType.calendar, size: 24),
       title: '今日のタスク',
       valueText: '1/5 完了',
       progress: 0.2,
     ),
     weeklyProgress: ProgressData(
-      icon: AppIcon.trophy(size: 24),
+      icon: AppIcon(type: AppIconType.trophy, size: 24),
       title: '今週の進捗',
       valueText: '25%',
       progress: 0.25,
@@ -61,13 +61,13 @@ Widget progressCardSectionLowProgressUseCase(BuildContext context) {
 Widget progressCardSectionCompleteUseCase(BuildContext context) {
   return const ProgressCardSection(
     todayProgress: ProgressData(
-      icon: AppIcon.calendar(size: 24),
+      icon: AppIcon(type: AppIconType.calendar, size: 24),
       title: '今日のタスク',
       valueText: '5/5 完了',
       progress: 1.0,
     ),
     weeklyProgress: ProgressData(
-      icon: AppIcon.trophy(size: 24),
+      icon: AppIcon(type: AppIconType.trophy, size: 24),
       title: '今週の進捗',
       valueText: '100%',
       progress: 1.0,
@@ -79,13 +79,13 @@ Widget progressCardSectionCompleteUseCase(BuildContext context) {
 Widget progressCardSectionDifferentIconsUseCase(BuildContext context) {
   return const ProgressCardSection(
     todayProgress: ProgressData(
-      icon: AppIcon.star(size: 24),
+      icon: AppIcon(type: AppIconType.star, size: 24),
       title: '今日の目標',
       valueText: '4/6 達成',
       progress: 0.67,
     ),
     weeklyProgress: ProgressData(
-      icon: AppIcon.heart(size: 24),
+      icon: AppIcon(type: AppIconType.heart, size: 24),
       title: '今週の活動',
       valueText: '12日',
       progress: 0.9,

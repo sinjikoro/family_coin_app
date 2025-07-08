@@ -7,11 +7,7 @@
 ### 重要なコマンド
 ```bash
 # 初期設定（FVM使用、依存関係取得、コード生成）
-make setup-all
-
-# 個別設定
-make setup              # メインプロジェクトのみ
-make widgetbook-setup   # widgetbookプロジェクトのみ
+make setup
 
 # 開発コマンド
 make codegen            # コード生成

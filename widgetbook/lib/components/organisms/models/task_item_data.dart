@@ -11,10 +11,10 @@ Widget taskItemDataBasicUseCase(BuildContext context) {
     title: 'お手伝いをする',
     subTitle: '食器洗いのお手伝い',
     coin: 30,
-    icon: AppIcon.heart(size: 32),
+    icon: AppIcon(type: AppIconType.heart, size: 32),
     isDone: false,
   );
-  
+
   return Card(
     child: ListTile(
       leading: Container(
@@ -52,10 +52,10 @@ Widget taskItemDataCompletedUseCase(BuildContext context) {
     title: '宿題を完了する',
     subTitle: '算数・国語のワーク',
     coin: 50,
-    icon: AppIcon.book(size: 32),
+    icon: AppIcon(type: AppIconType.book, size: 32),
     isDone: true,
   );
-  
+
   return Card(
     child: ListTile(
       leading: Container(
@@ -99,11 +99,11 @@ Widget taskItemDataDisabledUseCase(BuildContext context) {
     title: '無効なタスク',
     subTitle: '無効',
     coin: 5,
-    icon: AppIcon.settings(size: 32),
+    icon: AppIcon(type: AppIconType.settings, size: 32),
     isDone: false,
     isDisabled: true,
   );
-  
+
   return Card(
     child: ListTile(
       leading: Container(
@@ -116,9 +116,7 @@ Widget taskItemDataDisabledUseCase(BuildContext context) {
       ),
       title: Text(
         taskData.title,
-        style: TextStyle(
-          color: taskData.isDisabled ? Colors.grey : null,
-        ),
+        style: TextStyle(color: taskData.isDisabled ? Colors.grey : null),
       ),
       subtitle: Text(taskData.subTitle),
       trailing: Row(
@@ -131,10 +129,7 @@ Widget taskItemDataDisabledUseCase(BuildContext context) {
           const SizedBox(width: 8),
           Text('${taskData.coin}コイン'),
           const SizedBox(width: 8),
-          Icon(
-            Icons.block,
-            color: Colors.grey,
-          ),
+          Icon(Icons.block, color: Colors.grey),
         ],
       ),
     ),

@@ -1,3 +1,7 @@
+# CLAUDE.md
+
+常に日本語で会話する
+
 # Family Coin App - Development Guidelines
 
 ## プロジェクト概要

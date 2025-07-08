@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class CustomScheduleBottomSheet extends StatefulWidget {
   const CustomScheduleBottomSheet({super.key});
@@ -367,34 +368,72 @@ class _CalendarSection extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Column(
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('日', style: TextStyle(color: Colors.red)),
-                Text('月'),
-                Text('火'),
-                Text('水'),
-                Text('木'),
-                Text('金'),
-                Text('土', style: TextStyle(color: Colors.blue)),
-              ],
+        child: TableCalendar(
+          firstDay: DateTime.now(),
+          lastDay: DateTime.now().add(const Duration(days: 365)),
+          focusedDay: DateTime.now(),
+          selectedDayPredicate: (day) => false, // 選択機能は無効
+          onDaySelected: null, // 選択機能は無効
+          onFormatChanged: (format) {},
+          calendarStyle: const CalendarStyle(
+            outsideDaysVisible: false,
+            defaultDecoration: BoxDecoration(
+              color: Colors.transparent,
+              shape: BoxShape.circle,
             ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (int i = 1; i <= 31; i++)
-                  _CustomCalendarDay(
-                    day: i,
-                    isStart: i == 15,
-                    isExec: execDays.contains(i),
+            weekendDecoration: BoxDecoration(
+              color: Colors.transparent,
+              shape: BoxShape.circle,
+            ),
+            todayDecoration: BoxDecoration(
+              color: Colors.transparent,
+              shape: BoxShape.circle,
+            ),
+            selectedDecoration: BoxDecoration(
+              color: Colors.transparent,
+              shape: BoxShape.circle,
+            ),
+            cellMargin: EdgeInsets.all(4),
+          ),
+          headerVisible: false, // ヘッダーは非表示（独自のヘッダーを使用）
+          calendarBuilders: CalendarBuilders(
+            defaultBuilder: (context, day, focusedDay) {
+              final dayNumber = day.day;
+              final isStart = dayNumber == 15; // 固定値
+              final isExec = execDays.contains(dayNumber);
+
+              return Container(
+                width: 36,
+                height: 36,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color:
+                      isStart
+                          ? Colors.black
+                          : isExec
+                          ? Colors.blue[100]
+                          : Colors.transparent,
+                  border: Border.all(
+                    color: isExec ? Colors.blue : Colors.transparent,
+                    width: isExec ? 2 : 0,
                   ),
-              ],
-            ),
-          ],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '$dayNumber',
+                  style: TextStyle(
+                    color:
+                        isStart
+                            ? Colors.white
+                            : isExec
+                            ? Colors.blue[900]
+                            : Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     ],
@@ -404,56 +443,6 @@ class _CalendarSection extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(IterableProperty<int>('execDays', execDays));
-  }
-}
-
-class _CustomCalendarDay extends StatelessWidget {
-  const _CustomCalendarDay({
-    required this.day,
-    required this.isStart,
-    required this.isExec,
-  });
-  final int day;
-  final bool isStart;
-  final bool isExec;
-  @override
-  Widget build(BuildContext context) => Container(
-    width: 36,
-    height: 36,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      color:
-          isStart
-              ? Colors.black
-              : isExec
-              ? Colors.blue[100]
-              : Colors.transparent,
-      border: Border.all(
-        color: isExec ? Colors.blue : Colors.transparent,
-        width: isExec ? 2 : 0,
-      ),
-      borderRadius: BorderRadius.circular(8),
-    ),
-    child: Text(
-      '$day',
-      style: TextStyle(
-        color:
-            isStart
-                ? Colors.white
-                : isExec
-                ? Colors.blue[900]
-                : Colors.black,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-  );
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(IntProperty('day', day));
-    properties.add(DiagnosticsProperty<bool>('isStart', isStart));
-    properties.add(DiagnosticsProperty<bool>('isExec', isExec));
   }
 }
 

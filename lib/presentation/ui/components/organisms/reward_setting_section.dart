@@ -1,5 +1,5 @@
 import 'package:family_coin/presentation/ui/components/atoms/app_text_field.dart';
-import 'package:family_coin/presentation/ui/components/molecules/coin_amount_selector.dart';
+import 'package:family_coin/presentation/ui/components/molecules/choice_chip_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -42,10 +42,10 @@ class RewardSettingSection extends StatelessWidget {
           const Text('コイン'),
         ],
       ),
-      CoinAmountSelector(
-        amounts: taskType == 0 ? [50, 100, 200, 500] : [20, 30, 50, 100],
+      ChoiceChipRow<int>.withIndex(
+        choices: taskType == 0 ? [50, 100, 200, 500] : [20, 30, 50, 100],
         selectedIndex: selectedCoinIndex,
-        onSelected: onCoinSelected,
+        onIndexSelected: onCoinSelected,
       ),
     ],
   );

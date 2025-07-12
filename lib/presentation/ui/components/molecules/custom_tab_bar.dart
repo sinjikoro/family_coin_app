@@ -2,14 +2,15 @@ import 'package:family_coin/presentation/ui/components/atoms/app_tab_button.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-/// タスク一覧画面用タブバー
-class TaskTabBar extends StatelessWidget {
+/// カスタムタブバー
+class CustomTabBar extends StatelessWidget {
   /// コンストラクタ
-  const TaskTabBar({
+  const CustomTabBar({
     required this.selectedIndex,
     required this.tabs,
     required this.onTabSelected,
     super.key,
+    this.spacing = 8,
   });
 
   /// 選択中インデックス
@@ -21,12 +22,15 @@ class TaskTabBar extends StatelessWidget {
   /// タブ選択時コールバック
   final ValueChanged<int> onTabSelected;
 
+  /// タブ間のスペース
+  final double spacing;
+
   @override
   Widget build(BuildContext context) => Row(
     children: List.generate(
       tabs.length,
       (i) => Padding(
-        padding: EdgeInsets.only(right: i < tabs.length - 1 ? 8 : 0),
+        padding: EdgeInsets.only(right: i < tabs.length - 1 ? spacing : 0),
         child: AppTabButton(
           label: tabs[i],
           selected: i == selectedIndex,
@@ -42,6 +46,7 @@ class TaskTabBar extends StatelessWidget {
     properties
       ..add(IntProperty('selectedIndex', selectedIndex))
       ..add(IterableProperty<String>('tabs', tabs))
+      ..add(DoubleProperty('spacing', spacing))
       ..add(
         ObjectFlagProperty<ValueChanged<int>>.has(
           'onTabSelected',

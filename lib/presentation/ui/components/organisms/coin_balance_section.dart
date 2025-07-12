@@ -1,4 +1,5 @@
-import 'package:family_coin/presentation/ui/components/molecules/coin_balance_card.dart';
+import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
+import 'package:family_coin/presentation/ui/components/molecules/value_display_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,12 @@ class CoinBalanceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    child: CoinBalanceCard(balance: balance, diff: diff),
+    child: ValueDisplayCard(
+      icon: const AppIcon(type: AppIconType.coin, size: 48),
+      value: balance.toString(),
+      changeValue: diff != null && diff! > 0 ? '+$diff' : null,
+      changeIcon: diff != null && diff! > 0 ? const AppIcon(type: AppIconType.arrowUp, size: 18) : null,
+    ),
   );
 
   @override

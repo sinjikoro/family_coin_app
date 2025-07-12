@@ -1,4 +1,4 @@
-import 'package:family_coin/presentation/ui/components/molecules/category_choice_chips.dart';
+import 'package:family_coin/presentation/ui/components/molecules/choice_chip_row.dart';
 import 'package:family_coin/presentation/ui/components/organisms/challenge_task_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/preview_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/reward_setting_section.dart';
@@ -105,10 +105,10 @@ class _TaskSettingPageState extends State<TaskSettingPage> {
           const SizedBox(height: 16),
           // カテゴリ
           const Text('カテゴリ'),
-          CategoryChoiceChips(
-            categories: const ['勉強', '運動', '生活'],
+          ChoiceChipRow<String>.withIndex(
+            choices: const ['勉強', '運動', '生活'],
             selectedIndex: selectedCategory,
-            onSelected: (i) => setState(() => selectedCategory = i),
+            onIndexSelected: (i) => setState(() => selectedCategory = i),
           ),
           const SizedBox(height: 16),
           // 報酬設定

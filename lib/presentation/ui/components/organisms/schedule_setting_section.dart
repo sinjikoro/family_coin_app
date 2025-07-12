@@ -1,4 +1,4 @@
-import 'package:family_coin/presentation/ui/components/molecules/schedule_frequency_selector.dart';
+import 'package:family_coin/presentation/ui/components/molecules/choice_chip_row.dart';
 import 'package:family_coin/presentation/ui/components/molecules/weekday_selector.dart';
 import 'package:family_coin/presentation/ui/components/organisms/custom_calendar_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/custom_schedule_bottom_sheet.dart';
@@ -50,9 +50,10 @@ class ScheduleSettingSection extends StatelessWidget {
         const SizedBox(height: 8),
         // 頻度選択
         const Text('頻度'),
-        ScheduleFrequencySelector(
+        ChoiceChipRow<String>.withIndex(
+          choices: const ['毎日', '毎週', 'カスタム'],
           selectedIndex: scheduleFrequency,
-          onChanged: (i) async {
+          onIndexSelected: (i) async {
             if (i == 2) {
               // カスタム選択時にボトムシートを表示
               await showModalBottomSheet<void>(

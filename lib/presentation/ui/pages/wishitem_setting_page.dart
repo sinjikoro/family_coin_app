@@ -1,5 +1,4 @@
-import 'package:family_coin/presentation/ui/components/molecules/category_choice_chips.dart';
-import 'package:family_coin/presentation/ui/components/molecules/coin_amount_selector.dart';
+import 'package:family_coin/presentation/ui/components/molecules/choice_chip_row.dart';
 import 'package:family_coin/presentation/ui/components/molecules/icon_choice_row.dart';
 import 'package:family_coin/presentation/ui/components/organisms/preview_section.dart';
 import 'package:flutter/foundation.dart';
@@ -89,10 +88,10 @@ class _WishitemSettingPageState extends State<WishitemSettingPage> {
           const SizedBox(height: 16),
           // カテゴリ
           const Text('カテゴリ'),
-          CategoryChoiceChips(
-            categories: categories,
+          ChoiceChipRow<String>.withIndex(
+            choices: categories,
             selectedIndex: selectedCategory,
-            onSelected: (i) => setState(() => selectedCategory = i),
+            onIndexSelected: (i) => setState(() => selectedCategory = i),
           ),
           const SizedBox(height: 16),
           // アイコン
@@ -123,10 +122,10 @@ class _WishitemSettingPageState extends State<WishitemSettingPage> {
               const Text('コイン'),
             ],
           ),
-          CoinAmountSelector(
-            amounts: coinAmounts,
+          ChoiceChipRow<int>.withIndex(
+            choices: coinAmounts,
             selectedIndex: selectedCoin,
-            onSelected: (i) => setState(() => selectedCoin = i),
+            onIndexSelected: (i) => setState(() => selectedCoin = i),
           ),
           const SizedBox(height: 24),
           // プレビュー

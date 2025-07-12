@@ -1,15 +1,20 @@
-import 'package:family_coin/presentation/ui/components/molecules/achievement_condition_field.dart';
-import 'package:family_coin/presentation/ui/components/molecules/difficulty_selector.dart';
+import 'package:family_coin/presentation/ui/components/molecules/choice_chip_row.dart';
+import 'package:family_coin/presentation/ui/components/molecules/labeled_text_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// チャレンジタスク設定セクション
 class ChallengeTaskSection extends StatelessWidget {
-
   /// constructor
   const ChallengeTaskSection({
-    required this.difficulties, required this.selectedDifficulty, required this.condition, required this.onDifficultySelected, required this.onConditionChanged, super.key,
+    required this.difficulties,
+    required this.selectedDifficulty,
+    required this.condition,
+    required this.onDifficultySelected,
+    required this.onConditionChanged,
+    super.key,
   });
+
   /// 難易度リスト
   final List<String> difficulties;
 
@@ -40,22 +45,20 @@ class ChallengeTaskSection extends StatelessWidget {
           children: [
             Icon(Icons.emoji_events, color: Colors.orange),
             SizedBox(width: 8),
-            Text(
-              'チャレンジタスク設定',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            Text('チャレンジタスク設定', style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
         const SizedBox(height: 8),
         const Text('難易度レベル'),
-        DifficultySelector(
-          difficulties: difficulties,
-          selectedDifficulty: selectedDifficulty,
+        ChoiceChipRow(
+          choices: difficulties,
+          selectedChoice: selectedDifficulty,
           onSelected: onDifficultySelected,
         ),
         const SizedBox(height: 8),
-        AchievementConditionField(
-          condition: condition,
+        LabeledTextField(
+          label: '達成条件',
+          hintText: '10回タスクを完了する',
           onChanged: onConditionChanged,
         ),
       ],
@@ -68,8 +71,18 @@ class ChallengeTaskSection extends StatelessWidget {
     properties
       ..add(IterableProperty<String>('difficulties', difficulties))
       ..add(StringProperty('selectedDifficulty', selectedDifficulty))
-      ..add(StringProperty('condition', condition));
-      properties.add(ObjectFlagProperty<ValueChanged<String>>.has('onDifficultySelected', onDifficultySelected));
-      properties.add(ObjectFlagProperty<ValueChanged<String>>.has('onConditionChanged', onConditionChanged));
+      ..add(StringProperty('condition', condition))
+      ..add(
+        ObjectFlagProperty<ValueChanged<String>>.has(
+          'onDifficultySelected',
+          onDifficultySelected,
+        ),
+      )
+      ..add(
+        ObjectFlagProperty<ValueChanged<String>>.has(
+          'onConditionChanged',
+          onConditionChanged,
+        ),
+      );
   }
 }

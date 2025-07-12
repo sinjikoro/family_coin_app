@@ -31,6 +31,7 @@ class AppTextField extends StatelessWidget {
     hintText: hintText ?? '例: 田中太郎',
     enabled: enabled,
     onChanged: onChanged,
+    textAlign: TextAlign.left,
   );
 
   /// 金額用
@@ -48,6 +49,7 @@ class AppTextField extends StatelessWidget {
     onChanged: onChanged,
     keyboardType: TextInputType.number,
     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+    textAlign: TextAlign.right,
   );
 
   /// 説明用
@@ -65,6 +67,7 @@ class AppTextField extends StatelessWidget {
     onChanged: onChanged,
     keyboardType: TextInputType.multiline,
     maxLines: 5,
+    textAlign: TextAlign.left,
   );
 
   /// URL用
@@ -81,6 +84,7 @@ class AppTextField extends StatelessWidget {
     enabled: enabled,
     onChanged: onChanged,
     keyboardType: TextInputType.url,
+    textAlign: TextAlign.left,
   );
 
   /// コントローラー
@@ -134,7 +138,7 @@ class AppTextField extends StatelessWidget {
       ),
       filled: true,
       fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(vertical: 18),
+      contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(
@@ -193,6 +197,6 @@ class AppTextField extends StatelessWidget {
       ..add(
         DiagnosticsProperty<TextEditingController?>('controller', controller),
       );
-      properties.add(EnumProperty<TextAlign>('textAlign', textAlign));
+    properties.add(EnumProperty<TextAlign>('textAlign', textAlign));
   }
 }

@@ -20,8 +20,7 @@ Widget primaryButtonUseCase(BuildContext context) {
     options: [_primary, _secondary, _disabled],
   );
 
-  return Padding(
-    padding: const EdgeInsets.all(16),
+  return Center(
     child: switch (buttonType) {
       _primary => AppButton.primary(label: '保存', onPressed: () {}),
       _secondary => AppButton.secondary(label: 'タスクを作成', onPressed: () {}),

@@ -1,6 +1,6 @@
 import 'package:family_coin/presentation/ui/components/atoms/app_fab.dart';
 import 'package:family_coin/presentation/ui/components/atoms/app_icon.dart';
-import 'package:family_coin/presentation/ui/components/molecules/task_tab_bar.dart';
+import 'package:family_coin/presentation/ui/components/molecules/custom_tab_bar.dart';
 import 'package:family_coin/presentation/ui/components/organisms/models/task_item_data.dart';
 import 'package:family_coin/presentation/ui/components/organisms/progress_summary_section.dart';
 import 'package:family_coin/presentation/ui/components/organisms/task_list_section.dart';
@@ -93,7 +93,7 @@ class _TaskListPageState extends State<TaskListPage> {
           // タブバー
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: TaskTabBar(
+            child: CustomTabBar(
               selectedIndex: selectedTab,
               tabs: tabs,
               onTabSelected: (i) => setState(() => selectedTab = i),

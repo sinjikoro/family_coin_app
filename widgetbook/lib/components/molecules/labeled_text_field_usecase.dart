@@ -1,4 +1,4 @@
-import 'package:family_coin/presentation/ui/components/molecules/achievement_condition_field.dart';
+import 'package:family_coin/presentation/ui/components/molecules/labeled_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:widgetbook_workspace/utils/routing/route_path.dart';
@@ -6,13 +6,18 @@ import 'package:widgetbook/widgetbook.dart';
 
 @widgetbook.UseCase(
   name: 'Interactive',
-  type: AchievementConditionField,
+  type: LabeledTextField,
   path: WidgetbookRoutePath.molecules,
 )
-Widget achievementConditionFieldUseCase(BuildContext context) {
-  final condition = context.knobs.string(
-    label: 'Condition',
-    description: '達成条件のテキスト',
+Widget labeledTextFieldUseCase(BuildContext context) {
+  final label = context.knobs.string(
+    label: 'Label',
+    description: 'ラベルテキスト',
+    initialValue: '達成条件',
+  );
+  final hintText = context.knobs.string(
+    label: 'Hint Text',
+    description: 'ヒントテキスト',
     initialValue: '10回タスクを完了する',
   );
 
@@ -22,11 +27,11 @@ Widget achievementConditionFieldUseCase(BuildContext context) {
     initialValue: true,
   );
 
-  return Padding(
-    padding: const EdgeInsets.all(16),
-    child: AchievementConditionField(
-      condition: condition,
-      onChanged: hasCallback ? (v) {} : (_) {},
+  return Center(
+    child: LabeledTextField(
+      label: label,
+      hintText: hintText,
+      onChanged: hasCallback ? (_) {} : null,
     ),
   );
 }
